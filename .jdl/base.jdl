@@ -96,14 +96,14 @@ relationship ManyToOne{
     Institution { region(name)} to Region,
     Program{ institution(name) } to Institution,
     Room {institution(name)} to Institution,
-    ClassTime {prof(code)} to Prof{preferenceTime},
+    ClassTime {person(code)} to Person{preferenceTime},
     ClassTime {classGroup(name)} to ClassGroup{preferenceTime},
     ClassRoom {classGroup(name)} to ClassGroup{classRooms(name)},
-    ClassRoom {prof(code)} to Prof,
+    ClassRoom {person(code)} to Person,
     ClassRoom {course(name)} to Course,
     ClassRoom {room(name)} to Room,
-    Prof { region(name)} to Region{ Prof(fullName)},
-    Prof {institution(name)} to Institution{profs(code)},
+    Person { region(name)} to Region{ Person(fullName)},
+    Person {institution(name)} to Institution{persons(code)},
     ClassGroup {program(name)} to Program{classGroup(name)},
     ClassGroup{semester(name) } to Semester{classGroup(name)},
     Semester{institution(name) } to Institution{semester(name)}
@@ -115,7 +115,7 @@ relationship OneToOne{
 
 relationship ManyToMany{
     Course {program(name)} to Program{course(name)},
-    Course {prof(name)} to Prof{course(name)}
+    Course {person(name)} to Person{course(name)}
 }
 
 dto * with mapstruct

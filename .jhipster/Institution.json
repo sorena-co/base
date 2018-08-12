@@ -1,0 +1,77 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "region",
+            "otherEntityName": "region",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "persons",
+            "otherEntityName": "person",
+            "otherEntityRelationshipName": "institution"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "semester",
+            "otherEntityName": "semester",
+            "otherEntityRelationshipName": "institution"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "code",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "population",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "website",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phoneNumber1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phoneNumber2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "faxNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "postalCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "institutionType",
+            "fieldType": "InstitutionType",
+            "fieldValues": "EDUCATION,GYM"
+        }
+    ],
+    "changelogDate": "20180812190641",
+    "entityTableName": "institution",
+    "dto": "mapstruct",
+    "pagination": "pager",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "base"
+}

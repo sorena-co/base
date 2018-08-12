@@ -1,0 +1,62 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "course",
+            "relationshipName": "program",
+            "otherEntityName": "program",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "course",
+            "relationshipName": "person",
+            "otherEntityName": "person",
+            "otherEntityField": "name",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "code",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "needLab",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "needProjector",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "practicalCredit",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "theoreticalCredit",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "practicalHours",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "theoreticalHours",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180812190644",
+    "entityTableName": "course",
+    "dto": "mapstruct",
+    "pagination": "pager",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "base"
+}

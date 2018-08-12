@@ -1,0 +1,159 @@
+package ir.sp.base.service.dto;
+
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
+
+/**
+ * A DTO for the Course entity.
+ */
+public class CourseDTO implements Serializable {
+
+    private Long id;
+
+    private String name;
+
+    private String code;
+
+    private Boolean needLab;
+
+    private Boolean needProjector;
+
+    private Integer practicalCredit;
+
+    private Integer theoreticalCredit;
+
+    private Integer practicalHours;
+
+    private Integer theoreticalHours;
+
+    private Set<ProgramDTO> programs = new HashSet<>();
+
+    private Set<PersonDTO> people = new HashSet<>();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Boolean isNeedLab() {
+        return needLab;
+    }
+
+    public void setNeedLab(Boolean needLab) {
+        this.needLab = needLab;
+    }
+
+    public Boolean isNeedProjector() {
+        return needProjector;
+    }
+
+    public void setNeedProjector(Boolean needProjector) {
+        this.needProjector = needProjector;
+    }
+
+    public Integer getPracticalCredit() {
+        return practicalCredit;
+    }
+
+    public void setPracticalCredit(Integer practicalCredit) {
+        this.practicalCredit = practicalCredit;
+    }
+
+    public Integer getTheoreticalCredit() {
+        return theoreticalCredit;
+    }
+
+    public void setTheoreticalCredit(Integer theoreticalCredit) {
+        this.theoreticalCredit = theoreticalCredit;
+    }
+
+    public Integer getPracticalHours() {
+        return practicalHours;
+    }
+
+    public void setPracticalHours(Integer practicalHours) {
+        this.practicalHours = practicalHours;
+    }
+
+    public Integer getTheoreticalHours() {
+        return theoreticalHours;
+    }
+
+    public void setTheoreticalHours(Integer theoreticalHours) {
+        this.theoreticalHours = theoreticalHours;
+    }
+
+    public Set<ProgramDTO> getPrograms() {
+        return programs;
+    }
+
+    public void setPrograms(Set<ProgramDTO> programs) {
+        this.programs = programs;
+    }
+
+    public Set<PersonDTO> getPeople() {
+        return people;
+    }
+
+    public void setPeople(Set<PersonDTO> people) {
+        this.people = people;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        CourseDTO courseDTO = (CourseDTO) o;
+        if(courseDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), courseDTO.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
+    @Override
+    public String toString() {
+        return "CourseDTO{" +
+            "id=" + getId() +
+            ", name='" + getName() + "'" +
+            ", code='" + getCode() + "'" +
+            ", needLab='" + isNeedLab() + "'" +
+            ", needProjector='" + isNeedProjector() + "'" +
+            ", practicalCredit=" + getPracticalCredit() +
+            ", theoreticalCredit=" + getTheoreticalCredit() +
+            ", practicalHours=" + getPracticalHours() +
+            ", theoreticalHours=" + getTheoreticalHours() +
+            "}";
+    }
+}

@@ -1,0 +1,41 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "institution",
+            "otherEntityName": "institution",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "classGroup",
+            "otherEntityName": "classGroup",
+            "otherEntityRelationshipName": "program"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "program"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "code",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180812190643",
+    "entityTableName": "program",
+    "dto": "mapstruct",
+    "pagination": "pager",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "base"
+}

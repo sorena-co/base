@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ClassRoom.
+    -->
+    <changeSet id="20180812190646-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="classes_time_id"
+                                 baseTableName="class_room"
+                                 constraintName="fk_class_room_classes_time_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="class_time"/>
+
+        <addForeignKeyConstraint baseColumnNames="class_group_id"
+                                 baseTableName="class_room"
+                                 constraintName="fk_class_room_class_group_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="class_group"/>
+
+        <addForeignKeyConstraint baseColumnNames="person_id"
+                                 baseTableName="class_room"
+                                 constraintName="fk_class_room_person_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="person"/>
+
+        <addForeignKeyConstraint baseColumnNames="course_id"
+                                 baseTableName="class_room"
+                                 constraintName="fk_class_room_course_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course"/>
+
+        <addForeignKeyConstraint baseColumnNames="room_id"
+                                 baseTableName="class_room"
+                                 constraintName="fk_class_room_room_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="room"/>
+
+    </changeSet>
+</databaseChangeLog>
