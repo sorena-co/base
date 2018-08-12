@@ -1,0 +1,124 @@
+entity Person{
+	firstName String ,
+    lastName String ,
+    fatherName String ,
+    code String,
+    gender Gender ,
+    degree Degree ,
+    major String ,
+    nationalId String ,
+    birthCertificate String ,
+    birthDate ZonedDateTime ,
+    email String ,
+    mobileNumber String ,
+    phoneNumber String ,
+    postalCode String ,
+    address String ,
+    maxCredits Integer,
+    priority Float,
+    personType PersonType
+}
+entity Institution{
+	name String ,
+    code String,
+    population Integer ,
+    email String ,
+    website String,
+    phoneNumber1 String ,
+    phoneNumber2 String,
+    faxNumber String,
+    postalCode String ,
+    address String ,
+    institutionType InstitutionType
+}
+entity Room{
+	name String ,
+    size Integer ,
+    hasProjector Boolean,
+    isLab Boolean
+}
+entity Program{
+	name String ,
+    code String
+}
+entity Course{
+	name String ,
+    code String,
+    needLab Boolean,
+    needProjector Boolean,
+    practicalCredit Integer ,
+    theoreticalCredit Integer ,
+    practicalHours Integer ,
+    theoreticalHours Integer
+}
+entity ClassGroup{
+	name String ,
+    code String
+}
+entity ClassRoom{
+	name String ,
+    code String
+}
+entity Region{
+	name String ,
+    code String,
+    lvl String
+}
+entity ClassTime{
+	day Day ,
+    startTime Float ,
+    endTime Float ,
+    priority Float
+}
+entity Semester{
+    name String ,
+    code String,
+    startDate ZonedDateTime ,
+    endDate ZonedDateTime
+}
+enum InstitutionType {
+	EDUCATION,GYM
+}
+enum PersonType {
+	PROF
+}
+enum Gender {
+	MALE,WOMAN
+}
+enum Degree {
+	ASSOCIATE,BACHELORS,MASTERS,PHD
+}
+enum Day {
+	SATURDAY,SUNDAY,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY
+}
+relationship ManyToOne{
+	Region { parentRegion(name)} to Region,
+    Institution { region(name)} to Region,
+    Program{ institution(name) } to Institution,
+    Room {institution(name)} to Institution,
+    ClassTime {prof(code)} to Prof{preferenceTime},
+    ClassTime {classGroup(name)} to ClassGroup{preferenceTime},
+    ClassRoom {classGroup(name)} to ClassGroup{classRooms(name)},
+    ClassRoom {prof(code)} to Prof,
+    ClassRoom {course(name)} to Course,
+    ClassRoom {room(name)} to Room,
+    Prof { region(name)} to Region{ Prof(fullName)},
+    Prof {institution(name)} to Institution{profs(code)},
+    ClassGroup {program(name)} to Program{classGroup(name)},
+    ClassGroup{semester(name) } to Semester{classGroup(name)},
+    Semester{institution(name) } to Institution{semester(name)}
+}
+
+relationship OneToOne{
+    ClassRoom {classesTime} to ClassTime
+}
+
+relationship ManyToMany{
+    Course {program(name)} to Program{course(name)},
+    Course {prof(name)} to Prof{course(name)}
+}
+
+dto * with mapstruct
+paginate * with pager
+service * with serviceClass
+microservice * with base
