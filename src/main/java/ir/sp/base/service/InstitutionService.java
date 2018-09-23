@@ -1,8 +1,10 @@
 package ir.sp.base.service;
 
-import ir.sp.base.domain.Institution;
-import ir.sp.base.repository.InstitutionRepository;
+import ir.sp.base.domain.*;
+import ir.sp.base.repository.*;
 import ir.sp.base.service.dto.InstitutionDTO;
+import ir.sp.base.service.dto.PlanDTO;
+import ir.sp.base.service.feign.AiFeignClient;
 import ir.sp.base.service.mapper.InstitutionMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**
@@ -25,9 +29,21 @@ public class InstitutionService {
 
     private final InstitutionMapper institutionMapper;
 
-    public InstitutionService(InstitutionRepository institutionRepository, InstitutionMapper institutionMapper) {
+    private final AiFeignClient aiFeignClient;
+
+    private final PersonRepository personRepository;
+    private final RoomRepository roomRepository;
+    private final ClassRoomRepository classRoomRepository;
+    private final CourseRepository courseRepository;
+
+    public InstitutionService(InstitutionRepository institutionRepository, InstitutionMapper institutionMapper, AiFeignClient aiFeignClient, PersonRepository personRepository, RoomRepository roomRepository, ClassRoomRepository classRoomRepository, CourseRepository courseRepository) {
         this.institutionRepository = institutionRepository;
         this.institutionMapper = institutionMapper;
+        this.aiFeignClient = aiFeignClient;
+        this.personRepository = personRepository;
+        this.roomRepository = roomRepository;
+        this.classRoomRepository = classRoomRepository;
+        this.courseRepository = courseRepository;
     }
 
     /**
@@ -77,5 +93,15 @@ public class InstitutionService {
     public void delete(Long id) {
         log.debug("Request to delete Institution : {}", id);
         institutionRepository.delete(id);
+    }
+
+    public String startPlaning(Long id) {
+        List<Person> profs = personRepository.findAllByInstitution_Id(id);
+        List<Room> rooms = roomRepository.findAllByInstitution_Id(id);
+        List<ClassRoom> classRooms = classRoomRepository.findAllClassRoomByInstitutionId(id);
+        List<Course> courses = courseRepository.findAllByInstitutionId(id);
+
+        PlanDTO planDTO = institutionMapper.toPlanDTO(id, profs, rooms, courses, classRooms);
+        return aiFeignClient.startPlaning(planDTO);
     }
 }

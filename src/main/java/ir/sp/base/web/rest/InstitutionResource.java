@@ -123,4 +123,13 @@ public class InstitutionResource {
         institutionService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+
+    @GetMapping("/institutions/start-plan/{id}")
+    @Timed
+    public ResponseEntity<String> startPlaning(@PathVariable Long id) {
+        log.debug("REST request to get Institution : {}", id);
+        String institutionDTO = institutionService.startPlaning(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(institutionDTO));
+    }
 }
