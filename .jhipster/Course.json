@@ -2,6 +2,12 @@
     "fluentMethods": true,
     "relationships": [
         {
+            "relationshipType": "many-to-one",
+            "relationshipName": "institution",
+            "otherEntityName": "institution",
+            "otherEntityField": "name"
+        },
+        {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "course",
             "relationshipName": "program",

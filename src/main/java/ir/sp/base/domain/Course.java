@@ -46,6 +46,9 @@ public class Course implements Serializable {
     @Column(name = "theoretical_hours")
     private Integer theoreticalHours;
 
+    @ManyToOne
+    private Institution institution;
+
     @ManyToMany
     @JoinTable(name = "course_program",
                joinColumns = @JoinColumn(name="courses_id", referencedColumnName="id"),
@@ -169,6 +172,19 @@ public class Course implements Serializable {
 
     public void setTheoreticalHours(Integer theoreticalHours) {
         this.theoreticalHours = theoreticalHours;
+    }
+
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public Course institution(Institution institution) {
+        this.institution = institution;
+        return this;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
     }
 
     public Set<Program> getPrograms() {

@@ -29,6 +29,10 @@ public class CourseDTO implements Serializable {
 
     private Integer theoreticalHours;
 
+    private Long institutionId;
+
+    private String institutionName;
+
     private Set<ProgramDTO> programs = new HashSet<>();
 
     private Set<PersonDTO> people = new HashSet<>();
@@ -103,6 +107,22 @@ public class CourseDTO implements Serializable {
 
     public void setTheoreticalHours(Integer theoreticalHours) {
         this.theoreticalHours = theoreticalHours;
+    }
+
+    public Long getInstitutionId() {
+        return institutionId;
+    }
+
+    public void setInstitutionId(Long institutionId) {
+        this.institutionId = institutionId;
+    }
+
+    public String getInstitutionName() {
+        return institutionName;
+    }
+
+    public void setInstitutionName(String institutionName) {
+        this.institutionName = institutionName;
     }
 
     public Set<ProgramDTO> getPrograms() {

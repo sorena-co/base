@@ -106,7 +106,8 @@ relationship ManyToOne{
     Person {institution(name)} to Institution{persons(code)},
     ClassGroup {program(name)} to Program{classGroup(name)},
     ClassGroup{semester(name) } to Semester{classGroup(name)},
-    Semester{institution(name) } to Institution{semester(name)}
+    Semester{institution(name) } to Institution{semester(name)},
+    Course {institution(name)} to Institution
 }
 
 relationship OneToOne{
