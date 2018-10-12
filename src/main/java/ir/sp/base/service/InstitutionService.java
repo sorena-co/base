@@ -2,10 +2,9 @@ package ir.sp.base.service;
 
 import ir.sp.base.domain.*;
 import ir.sp.base.repository.*;
-import ir.sp.base.service.dto.InstitutionDTO;
-import ir.sp.base.service.dto.PlanDTO;
+import ir.sp.base.service.dto.*;
 import ir.sp.base.service.feign.AiFeignClient;
-import ir.sp.base.service.mapper.InstitutionMapper;
+import ir.sp.base.service.mapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -31,12 +30,22 @@ public class InstitutionService {
 
     private final AiFeignClient aiFeignClient;
 
-    private final PersonRepository personRepository;
-    private final RoomRepository roomRepository;
     private final ClassRoomRepository classRoomRepository;
     private final CourseRepository courseRepository;
 
-    public InstitutionService(InstitutionRepository institutionRepository, InstitutionMapper institutionMapper, AiFeignClient aiFeignClient, PersonRepository personRepository, RoomRepository roomRepository, ClassRoomRepository classRoomRepository, CourseRepository courseRepository) {
+    private final ProgramRepository programRepository;
+    private final ProgramMapper programMapper;
+
+    private final RoomRepository roomRepository;
+    private final RoomMapper roomMapper;
+
+    private final PersonRepository personRepository;
+    private final PersonMapper personMapper;
+
+    private final SemesterRepository semesterRepository;
+    private final SemesterMapper semesterMapper;
+
+    public InstitutionService(InstitutionRepository institutionRepository, InstitutionMapper institutionMapper, AiFeignClient aiFeignClient, PersonRepository personRepository, RoomRepository roomRepository, ClassRoomRepository classRoomRepository, CourseRepository courseRepository, ProgramRepository programRepository, ProgramMapper programMapper, RoomMapper roomMapper, PersonMapper personMapper, SemesterRepository semesterRepository, SemesterMapper semesterMapper) {
         this.institutionRepository = institutionRepository;
         this.institutionMapper = institutionMapper;
         this.aiFeignClient = aiFeignClient;
@@ -44,6 +53,12 @@ public class InstitutionService {
         this.roomRepository = roomRepository;
         this.classRoomRepository = classRoomRepository;
         this.courseRepository = courseRepository;
+        this.programRepository = programRepository;
+        this.programMapper = programMapper;
+        this.roomMapper = roomMapper;
+        this.personMapper = personMapper;
+        this.semesterRepository = semesterRepository;
+        this.semesterMapper = semesterMapper;
     }
 
     /**
@@ -102,6 +117,28 @@ public class InstitutionService {
         List<Course> courses = courseRepository.findAllByInstitutionId(id);
 
         PlanDTO planDTO = institutionMapper.toPlanDTO(id, profs, rooms, courses, classRooms);
-        return aiFeignClient.startPlaning(planDTO);
+        String s = aiFeignClient.startPlaning(planDTO);
+        System.out.println(s);
+        return s;
+    }
+
+    public Page<ProgramDTO> findAllPrograms(Long institutionId, Pageable pageable) {
+        return programRepository.findAllByInstitution_Id(institutionId, pageable)
+            .map(programMapper::toDto);
+    }
+
+    public Page<PersonDTO> findAllPersons(Long institutionId, Pageable pageable) {
+        return personRepository.findAllByInstitution_Id(institutionId, pageable)
+            .map(personMapper::toDto);
+    }
+
+    public Page<SemesterDTO> findAllSemester(Long institutionId, Pageable pageable) {
+        return semesterRepository.findAllByInstitution_Id(institutionId, pageable)
+            .map(semesterMapper::toDto);
+    }
+
+    public Page<RoomDTO> findAllRoom(Long institutionId, Pageable pageable) {
+        return roomRepository.findAllByInstitution_Id(institutionId, pageable)
+            .map(roomMapper::toDto);
     }
 }

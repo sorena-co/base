@@ -2,10 +2,10 @@ package ir.sp.base.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import ir.sp.base.service.InstitutionService;
+import ir.sp.base.service.dto.*;
 import ir.sp.base.web.rest.errors.BadRequestAlertException;
 import ir.sp.base.web.rest.util.HeaderUtil;
 import ir.sp.base.web.rest.util.PaginationUtil;
-import ir.sp.base.service.dto.InstitutionDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,5 +131,41 @@ public class InstitutionResource {
         log.debug("REST request to get Institution : {}", id);
         String institutionDTO = institutionService.startPlaning(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(institutionDTO));
+    }
+
+    @GetMapping("/institutions/{institutionId}/programs")
+    @Timed
+    public ResponseEntity<List<ProgramDTO>> getAllPrograms(@PathVariable Long institutionId, Pageable pageable) {
+        log.debug("REST request to get a page of Institutions");
+        Page<ProgramDTO> page = institutionService.findAllPrograms(institutionId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/institutions/{institutionId}/people")
+    @Timed
+    public ResponseEntity<List<PersonDTO>> getAllPersons(@PathVariable Long institutionId, Pageable pageable) {
+        log.debug("REST request to get a page of Institutions");
+        Page<PersonDTO> page = institutionService.findAllPersons(institutionId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/institutions/{institutionId}/semesters")
+    @Timed
+    public ResponseEntity<List<SemesterDTO>> getAllSemester(@PathVariable Long institutionId, Pageable pageable) {
+        log.debug("REST request to get a page of Institutions");
+        Page<SemesterDTO> page = institutionService.findAllSemester(institutionId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/institutions/{institutionId}/rooms")
+    @Timed
+    public ResponseEntity<List<RoomDTO>> getAllRooms(@PathVariable Long institutionId, Pageable pageable) {
+        log.debug("REST request to get a page of Institutions");
+        Page<RoomDTO> page = institutionService.findAllRoom(institutionId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 }

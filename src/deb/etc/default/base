@@ -1,0 +1,3 @@
+LOG_FOLDER=/var/log/base
+RUN_ARGS="--spring.config.location=/etc/base/ --spring.profiles.active=prod --logging.file=$LOG_FOLDER/base.log --logging.config=/etc/base/logback-spring.xml"
+
