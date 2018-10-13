@@ -168,4 +168,13 @@ public class InstitutionResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+
+    @GetMapping("/institutions/{institutionId}/courses")
+    @Timed
+    public ResponseEntity<List<CourseDTO>> getAllCourse(@PathVariable Long institutionId, Pageable pageable) {
+        log.debug("REST request to get a page of Institutions");
+        Page<CourseDTO> page = institutionService.findAllCourses(institutionId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 }

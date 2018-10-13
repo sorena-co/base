@@ -31,7 +31,9 @@ public class InstitutionService {
     private final AiFeignClient aiFeignClient;
 
     private final ClassRoomRepository classRoomRepository;
+
     private final CourseRepository courseRepository;
+    private final CourseMapper courseMapper;
 
     private final ProgramRepository programRepository;
     private final ProgramMapper programMapper;
@@ -45,7 +47,7 @@ public class InstitutionService {
     private final SemesterRepository semesterRepository;
     private final SemesterMapper semesterMapper;
 
-    public InstitutionService(InstitutionRepository institutionRepository, InstitutionMapper institutionMapper, AiFeignClient aiFeignClient, PersonRepository personRepository, RoomRepository roomRepository, ClassRoomRepository classRoomRepository, CourseRepository courseRepository, ProgramRepository programRepository, ProgramMapper programMapper, RoomMapper roomMapper, PersonMapper personMapper, SemesterRepository semesterRepository, SemesterMapper semesterMapper) {
+    public InstitutionService(InstitutionRepository institutionRepository, InstitutionMapper institutionMapper, AiFeignClient aiFeignClient, PersonRepository personRepository, RoomRepository roomRepository, ClassRoomRepository classRoomRepository, CourseRepository courseRepository, CourseMapper courseMapper, ProgramRepository programRepository, ProgramMapper programMapper, RoomMapper roomMapper, PersonMapper personMapper, SemesterRepository semesterRepository, SemesterMapper semesterMapper) {
         this.institutionRepository = institutionRepository;
         this.institutionMapper = institutionMapper;
         this.aiFeignClient = aiFeignClient;
@@ -53,6 +55,7 @@ public class InstitutionService {
         this.roomRepository = roomRepository;
         this.classRoomRepository = classRoomRepository;
         this.courseRepository = courseRepository;
+        this.courseMapper = courseMapper;
         this.programRepository = programRepository;
         this.programMapper = programMapper;
         this.roomMapper = roomMapper;
@@ -140,5 +143,10 @@ public class InstitutionService {
     public Page<RoomDTO> findAllRoom(Long institutionId, Pageable pageable) {
         return roomRepository.findAllByInstitution_Id(institutionId, pageable)
             .map(roomMapper::toDto);
+    }
+
+    public Page<CourseDTO> findAllCourses(Long institutionId, Pageable pageable) {
+        return courseRepository.findAllByInstitution_Id(institutionId, pageable)
+            .map(courseMapper::toDto);
     }
 }
