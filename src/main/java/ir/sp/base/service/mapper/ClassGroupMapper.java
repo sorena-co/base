@@ -15,6 +15,8 @@ public interface ClassGroupMapper extends EntityMapper<ClassGroupDTO, ClassGroup
     @Mapping(source = "program.name", target = "programName")
     @Mapping(source = "semester.id", target = "semesterId")
     @Mapping(source = "semester.name", target = "semesterName")
+    @Mapping(source = "program.institution.id", target = "institutionId")
+    @Mapping(source = "program.institution.name", target = "institutionName")
     ClassGroupDTO toDto(ClassGroup classGroup);
 
     @Mapping(source = "programId", target = "program")

@@ -35,6 +35,14 @@ public class ClassRoomDTO implements Serializable {
 
     private String roomName;
 
+    private Long institutionId;
+
+    private String institutionName;
+
+    private Long programId;
+
+    private String programName;
+
     public Long getId() {
         return id;
     }
@@ -129,6 +137,38 @@ public class ClassRoomDTO implements Serializable {
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;
+    }
+
+    public Long getInstitutionId() {
+        return institutionId;
+    }
+
+    public void setInstitutionId(Long institutionId) {
+        this.institutionId = institutionId;
+    }
+
+    public String getInstitutionName() {
+        return institutionName;
+    }
+
+    public void setInstitutionName(String institutionName) {
+        this.institutionName = institutionName;
+    }
+
+    public Long getProgramId() {
+        return programId;
+    }
+
+    public void setProgramId(Long programId) {
+        this.programId = programId;
+    }
+
+    public String getProgramName() {
+        return programName;
+    }
+
+    public void setProgramName(String programName) {
+        this.programName = programName;
     }
 
     @Override

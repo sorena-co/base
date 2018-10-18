@@ -25,6 +25,10 @@ public class ClassGroupDTO implements Serializable {
 
     private String semesterName;
 
+    private Long institutionId;
+
+    private String institutionName;
+
     public Long getId() {
         return id;
     }
@@ -81,6 +85,23 @@ public class ClassGroupDTO implements Serializable {
         this.semesterName = semesterName;
     }
 
+
+    public Long getInstitutionId() {
+        return institutionId;
+    }
+
+    public void setInstitutionId(Long institutionId) {
+        this.institutionId = institutionId;
+    }
+
+    public String getInstitutionName() {
+        return institutionName;
+    }
+
+    public void setInstitutionName(String institutionName) {
+        this.institutionName = institutionName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -91,7 +112,7 @@ public class ClassGroupDTO implements Serializable {
         }
 
         ClassGroupDTO classGroupDTO = (ClassGroupDTO) o;
-        if(classGroupDTO.getId() == null || getId() == null) {
+        if (classGroupDTO.getId() == null || getId() == null) {
             return false;
         }
         return Objects.equals(getId(), classGroupDTO.getId());

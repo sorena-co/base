@@ -2,6 +2,7 @@ package ir.sp.base.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import ir.sp.base.service.ClassGroupService;
+import ir.sp.base.service.dto.ClassRoomDTO;
 import ir.sp.base.web.rest.errors.BadRequestAlertException;
 import ir.sp.base.web.rest.util.HeaderUtil;
 import ir.sp.base.web.rest.util.PaginationUtil;
@@ -122,5 +123,14 @@ public class ClassGroupResource {
         log.debug("REST request to delete ClassGroup : {}", id);
         classGroupService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/class-groups/{id}/class-rooms")
+    @Timed
+    public ResponseEntity<List<ClassRoomDTO>> getAllClassRoom(@PathVariable Long id, Pageable pageable) {
+        log.debug("REST request to get a page of Class Room");
+        Page<ClassRoomDTO> page = classGroupService.findAllClassRooms(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 }

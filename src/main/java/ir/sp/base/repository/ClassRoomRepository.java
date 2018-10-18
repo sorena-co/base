@@ -1,6 +1,8 @@
 package ir.sp.base.repository;
 
 import ir.sp.base.domain.ClassRoom;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +25,7 @@ public interface ClassRoomRepository extends JpaRepository<ClassRoom, Long> {
             "where institution.id = :institutionId"
     )
     List<ClassRoom> findAllClassRoomByInstitutionId(@Param("institutionId") Long institutionId);
+
+
+    Page<ClassRoom> findAllByClassGroup_Id(Long classGroupId, Pageable pageable);
 }

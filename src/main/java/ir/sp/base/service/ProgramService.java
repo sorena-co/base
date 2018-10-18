@@ -1,8 +1,11 @@
 package ir.sp.base.service;
 
 import ir.sp.base.domain.Program;
+import ir.sp.base.repository.ClassGroupRepository;
 import ir.sp.base.repository.ProgramRepository;
+import ir.sp.base.service.dto.ClassGroupDTO;
 import ir.sp.base.service.dto.ProgramDTO;
+import ir.sp.base.service.mapper.ClassGroupMapper;
 import ir.sp.base.service.mapper.ProgramMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +28,14 @@ public class ProgramService {
 
     private final ProgramMapper programMapper;
 
-    public ProgramService(ProgramRepository programRepository, ProgramMapper programMapper) {
+    private final ClassGroupRepository classGroupRepository;
+    private final ClassGroupMapper classGroupMapper;
+
+    public ProgramService(ProgramRepository programRepository, ProgramMapper programMapper, ClassGroupRepository classGroupRepository, ClassGroupMapper classGroupMapper) {
         this.programRepository = programRepository;
         this.programMapper = programMapper;
+        this.classGroupRepository = classGroupRepository;
+        this.classGroupMapper = classGroupMapper;
     }
 
     /**
@@ -77,5 +85,10 @@ public class ProgramService {
     public void delete(Long id) {
         log.debug("Request to delete Program : {}", id);
         programRepository.delete(id);
+    }
+
+    public Page<ClassGroupDTO> findAllClassGroups(Long id, Pageable pageable) {
+        return classGroupRepository.findAllByProgram_Id(id, pageable)
+            .map(classGroupMapper::toDto);
     }
 }

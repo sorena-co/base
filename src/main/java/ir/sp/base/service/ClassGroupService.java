@@ -2,8 +2,11 @@ package ir.sp.base.service;
 
 import ir.sp.base.domain.ClassGroup;
 import ir.sp.base.repository.ClassGroupRepository;
+import ir.sp.base.repository.ClassRoomRepository;
 import ir.sp.base.service.dto.ClassGroupDTO;
+import ir.sp.base.service.dto.ClassRoomDTO;
 import ir.sp.base.service.mapper.ClassGroupMapper;
+import ir.sp.base.service.mapper.ClassRoomMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -25,9 +28,14 @@ public class ClassGroupService {
 
     private final ClassGroupMapper classGroupMapper;
 
-    public ClassGroupService(ClassGroupRepository classGroupRepository, ClassGroupMapper classGroupMapper) {
+    private final ClassRoomRepository classRoomRepository;
+    private final ClassRoomMapper classRoomMapper;
+
+    public ClassGroupService(ClassGroupRepository classGroupRepository, ClassGroupMapper classGroupMapper, ClassRoomRepository classRoomRepository, ClassRoomMapper classRoomMapper) {
         this.classGroupRepository = classGroupRepository;
         this.classGroupMapper = classGroupMapper;
+        this.classRoomRepository = classRoomRepository;
+        this.classRoomMapper = classRoomMapper;
     }
 
     /**
@@ -77,5 +85,10 @@ public class ClassGroupService {
     public void delete(Long id) {
         log.debug("Request to delete ClassGroup : {}", id);
         classGroupRepository.delete(id);
+    }
+
+    public Page<ClassRoomDTO> findAllClassRooms(Long id, Pageable pageable) {
+        return classRoomRepository.findAllByClassGroup_Id(id, pageable)
+            .map(classRoomMapper::toDto);
     }
 }
