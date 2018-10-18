@@ -1,18 +1,23 @@
 package ir.sp.base.service;
 
 import ir.sp.base.domain.ClassGroup;
+import ir.sp.base.domain.ClassTime;
 import ir.sp.base.repository.ClassGroupRepository;
 import ir.sp.base.repository.ClassRoomRepository;
+import ir.sp.base.repository.ClassTimeRepository;
 import ir.sp.base.service.dto.ClassGroupDTO;
 import ir.sp.base.service.dto.ClassRoomDTO;
 import ir.sp.base.service.mapper.ClassGroupMapper;
 import ir.sp.base.service.mapper.ClassRoomMapper;
+import ir.sp.base.service.mapper.ClassTimeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 
 /**
@@ -31,11 +36,16 @@ public class ClassGroupService {
     private final ClassRoomRepository classRoomRepository;
     private final ClassRoomMapper classRoomMapper;
 
-    public ClassGroupService(ClassGroupRepository classGroupRepository, ClassGroupMapper classGroupMapper, ClassRoomRepository classRoomRepository, ClassRoomMapper classRoomMapper) {
+    private final ClassTimeRepository classTimeRepository;
+    private final ClassTimeMapper classTimeMapper;
+
+    public ClassGroupService(ClassGroupRepository classGroupRepository, ClassGroupMapper classGroupMapper, ClassRoomRepository classRoomRepository, ClassRoomMapper classRoomMapper, ClassTimeRepository classTimeRepository, ClassTimeMapper classTimeMapper) {
         this.classGroupRepository = classGroupRepository;
         this.classGroupMapper = classGroupMapper;
         this.classRoomRepository = classRoomRepository;
         this.classRoomMapper = classRoomMapper;
+        this.classTimeRepository = classTimeRepository;
+        this.classTimeMapper = classTimeMapper;
     }
 
     /**
@@ -47,7 +57,17 @@ public class ClassGroupService {
     public ClassGroupDTO save(ClassGroupDTO classGroupDTO) {
         log.debug("Request to save ClassGroup : {}", classGroupDTO);
         ClassGroup classGroup = classGroupMapper.toEntity(classGroupDTO);
+        if (classGroupDTO.getId() != null)
+            classTimeRepository.deleteAllByClassGroup_Id(classGroupDTO.getId());
+
+        Set<ClassTime> preferenceTimes = classGroupDTO.getPreferenceTimes();
         classGroup = classGroupRepository.save(classGroup);
+        ClassGroup finalClassGroup = classGroup;
+        preferenceTimes.forEach(classTime -> {
+            classTime.setId(null);
+            classTime.setClassGroup(finalClassGroup);
+        });
+        classTimeRepository.save(preferenceTimes);
         return classGroupMapper.toDto(classGroup);
     }
 

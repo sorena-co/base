@@ -19,7 +19,7 @@ public interface PersonMapper extends EntityMapper<PersonDTO, Person> {
 
     @Mapping(source = "regionId", target = "region")
     @Mapping(source = "institutionId", target = "institution")
-    @Mapping(target = "preferenceTimes", ignore = true)
+    @Mapping(source = "preferenceTimes", target = "preferenceTimes")
     @Mapping(target = "courses", ignore = true)
     Person toEntity(PersonDTO personDTO);
 

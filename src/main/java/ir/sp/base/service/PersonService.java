@@ -1,6 +1,8 @@
 package ir.sp.base.service;
 
+import ir.sp.base.domain.ClassTime;
 import ir.sp.base.domain.Person;
+import ir.sp.base.repository.ClassTimeRepository;
 import ir.sp.base.repository.PersonRepository;
 import ir.sp.base.service.dto.PersonDTO;
 import ir.sp.base.service.mapper.PersonMapper;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 
 /**
@@ -25,9 +29,12 @@ public class PersonService {
 
     private final PersonMapper personMapper;
 
-    public PersonService(PersonRepository personRepository, PersonMapper personMapper) {
+    private final ClassTimeRepository classTimeRepository;
+
+    public PersonService(PersonRepository personRepository, PersonMapper personMapper, ClassTimeRepository classTimeRepository) {
         this.personRepository = personRepository;
         this.personMapper = personMapper;
+        this.classTimeRepository = classTimeRepository;
     }
 
     /**
@@ -39,7 +46,18 @@ public class PersonService {
     public PersonDTO save(PersonDTO personDTO) {
         log.debug("Request to save Person : {}", personDTO);
         Person person = personMapper.toEntity(personDTO);
+
+        if (personDTO.getId() != null)
+            classTimeRepository.deleteAllByPerson_Id(personDTO.getId());
+
         person = personRepository.save(person);
+        Set<ClassTime> preferenceTimes = personDTO.getPreferenceTimes();
+        Person finalPerson = person;
+        preferenceTimes.forEach(classTime -> {
+            classTime.setId(null);
+            classTime.setPerson(finalPerson);
+        });
+        classTimeRepository.save(preferenceTimes);
         return personMapper.toDto(person);
     }
 

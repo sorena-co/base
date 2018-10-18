@@ -1,6 +1,8 @@
 package ir.sp.base.service.dto;
 
 
+import ir.sp.base.domain.ClassTime;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +30,8 @@ public class ClassGroupDTO implements Serializable {
     private Long institutionId;
 
     private String institutionName;
+
+    private Set<ClassTime> preferenceTimes = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -130,5 +134,13 @@ public class ClassGroupDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", code='" + getCode() + "'" +
             "}";
+    }
+
+    public Set<ClassTime> getPreferenceTimes() {
+        return preferenceTimes;
+    }
+
+    public void setPreferenceTimes(Set<ClassTime> preferenceTimes) {
+        this.preferenceTimes = preferenceTimes;
     }
 }

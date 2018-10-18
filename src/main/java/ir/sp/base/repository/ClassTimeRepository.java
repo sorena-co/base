@@ -12,5 +12,6 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface ClassTimeRepository extends JpaRepository<ClassTime, Long> {
-
+    void deleteAllByClassGroup_Id(Long classGroupId);
+    void deleteAllByPerson_Id(Long personId);
 }
