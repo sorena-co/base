@@ -117,12 +117,12 @@ public class InstitutionService {
         List<Person> profs = personRepository.findAllByInstitution_Id(id);
         List<Room> rooms = roomRepository.findAllByInstitution_Id(id);
         List<ClassRoom> classRooms = classRoomRepository.findAllClassRoomByInstitutionId(id);
-        List<Course> courses = courseRepository.findAllByInstitutionId(id);
+//        List<Course> courses = courseRepository.findAllByInstitutionId(id);
 
-        PlanDTO planDTO = institutionMapper.toPlanDTO(id, profs, rooms, courses, classRooms);
-        String s = aiFeignClient.startPlaning(planDTO);
-        System.out.println(s);
-        return s;
+//        PlanDTO planDTO = institutionMapper.toPlanDTO(id, profs, rooms, courses, classRooms);
+//        String s = aiFeignClient.startPlaning(planDTO);
+        System.out.println("");
+        return "";
     }
 
     public Page<ProgramDTO> findAllPrograms(Long institutionId, Pageable pageable) {

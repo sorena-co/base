@@ -19,14 +19,14 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-    @Query(
+/*    @Query(
         "select distinct course from Course course " +
             "inner join course.programs programs " +
             "inner join programs.institution institution " +
             "where " +
             "institution.id = :institutionId"
     )
-    List<Course> findAllByInstitutionId(@Param("institutionId") Long institutionId);
+    List<Course> findAllByInstitutionId(@Param("institutionId") Long institutionId);*/
 
     Page<Course> findAllByInstitution_Id(Long institutionId, Pageable pageable);
 }
