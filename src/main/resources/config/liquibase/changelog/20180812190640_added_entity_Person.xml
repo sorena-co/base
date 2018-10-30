@@ -105,6 +105,17 @@
         </createTable>
         <dropDefaultValue tableName="person" columnName="birth_date" columnDataType="datetime"/>
         
+        <createTable tableName="person_course">
+            <column name="courses_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="people_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="people_id, courses_id" tableName="person_course"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

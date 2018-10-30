@@ -14,27 +14,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="institution"/>
 
-        <addForeignKeyConstraint baseColumnNames="courses_id"
-                                 baseTableName="course_program"
-                                 constraintName="fk_course_program_courses_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="course"/>
-        <addForeignKeyConstraint baseColumnNames="programs_id"
-                                 baseTableName="course_program"
-                                 constraintName="fk_course_program_programs_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="program"/>
-        
-        <addForeignKeyConstraint baseColumnNames="courses_id"
-                                 baseTableName="course_person"
-                                 constraintName="fk_course_person_courses_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="course"/>
-        <addForeignKeyConstraint baseColumnNames="people_id"
-                                 baseTableName="course_person"
-                                 constraintName="fk_course_person_people_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="person"/>
-        
     </changeSet>
 </databaseChangeLog>

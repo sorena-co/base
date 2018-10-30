@@ -8,16 +8,17 @@
             "otherEntityField": "name"
         },
         {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
             "relationshipType": "one-to-many",
             "relationshipName": "classGroup",
             "otherEntityName": "classGroup",
-            "otherEntityRelationshipName": "program"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "relationshipName": "course",
-            "otherEntityName": "course",
-            "ownerSide": false,
             "otherEntityRelationshipName": "program"
         }
     ],

@@ -4,8 +4,6 @@ package ir.sp.base.domain;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -48,18 +46,6 @@ public class Course implements Serializable {
 
     @ManyToOne
     private Institution institution;
-
-    @ManyToMany
-    @JoinTable(name = "course_program",
-               joinColumns = @JoinColumn(name="courses_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="programs_id", referencedColumnName="id"))
-    private Set<Program> programs = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "course_person",
-               joinColumns = @JoinColumn(name="courses_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="people_id", referencedColumnName="id"))
-    private Set<Person> people = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -185,56 +171,6 @@ public class Course implements Serializable {
 
     public void setInstitution(Institution institution) {
         this.institution = institution;
-    }
-
-    public Set<Program> getPrograms() {
-        return programs;
-    }
-
-    public Course programs(Set<Program> programs) {
-        this.programs = programs;
-        return this;
-    }
-
-    public Course addProgram(Program program) {
-        this.programs.add(program);
-        program.getCourses().add(this);
-        return this;
-    }
-
-    public Course removeProgram(Program program) {
-        this.programs.remove(program);
-        program.getCourses().remove(this);
-        return this;
-    }
-
-    public void setPrograms(Set<Program> programs) {
-        this.programs = programs;
-    }
-
-    public Set<Person> getPeople() {
-        return people;
-    }
-
-    public Course people(Set<Person> people) {
-        this.people = people;
-        return this;
-    }
-
-    public Course addPerson(Person person) {
-        this.people.add(person);
-        person.getCourses().add(this);
-        return this;
-    }
-
-    public Course removePerson(Person person) {
-        this.people.remove(person);
-        person.getCourses().remove(this);
-        return this;
-    }
-
-    public void setPeople(Set<Person> people) {
-        this.people = people;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

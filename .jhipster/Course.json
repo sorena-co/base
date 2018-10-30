@@ -6,22 +6,6 @@
             "relationshipName": "institution",
             "otherEntityName": "institution",
             "otherEntityField": "name"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "course",
-            "relationshipName": "program",
-            "otherEntityName": "program",
-            "otherEntityField": "name",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "course",
-            "relationshipName": "person",
-            "otherEntityName": "person",
-            "otherEntityField": "name",
-            "ownerSide": true
         }
     ],
     "fields": [

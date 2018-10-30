@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Program and its DTO ProgramDTO.
  */
-@Mapper(componentModel = "spring", uses = {InstitutionMapper.class})
+@Mapper(componentModel = "spring", uses = {InstitutionMapper.class, CourseMapper.class})
 public interface ProgramMapper extends EntityMapper<ProgramDTO, Program> {
 
     @Mapping(source = "institution.id", target = "institutionId")
@@ -17,7 +17,6 @@ public interface ProgramMapper extends EntityMapper<ProgramDTO, Program> {
 
     @Mapping(source = "institutionId", target = "institution")
     @Mapping(target = "classGroups", ignore = true)
-    @Mapping(target = "courses", ignore = true)
     Program toEntity(ProgramDTO programDTO);
 
     default Program fromId(Long id) {
