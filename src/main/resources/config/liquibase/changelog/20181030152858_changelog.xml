@@ -1,0 +1,59 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="mohammad (generated)" id="1540913349614-1">
+        <createTable tableName="person_course">
+            <column name="people_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="courses_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-2">
+        <createTable tableName="program_course">
+            <column name="programs_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="courses_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-3">
+        <addPrimaryKey columnNames="people_id, courses_id" tableName="person_course"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-4">
+        <addPrimaryKey columnNames="programs_id, courses_id" tableName="program_course"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-5">
+        <addForeignKeyConstraint baseColumnNames="people_id" baseTableName="person_course" constraintName="FK1alfonvy4laona4b38ek2r4se" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-6">
+        <addForeignKeyConstraint baseColumnNames="courses_id" baseTableName="program_course" constraintName="FK84x7fev30qj8jcm7wgq7d1ivd" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-7">
+        <addForeignKeyConstraint baseColumnNames="courses_id" baseTableName="person_course" constraintName="FKjwl6xtjn4krlpc50en7uncmpv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-8">
+        <addForeignKeyConstraint baseColumnNames="programs_id" baseTableName="program_course" constraintName="FKmwdg3efvo2mg3cus29bwswfwb" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="program"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-9">
+        <dropForeignKeyConstraint baseTableName="course_person" constraintName="FK1782cdn5w9tuyol13yq98ygc7"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-10">
+        <dropForeignKeyConstraint baseTableName="course_program" constraintName="FKdbxgo4qprqq5484ofc97kvxcg"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-11">
+        <dropForeignKeyConstraint baseTableName="course_person" constraintName="FKk5iqln4pys4j64mcjamj1fxpq"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-12">
+        <dropForeignKeyConstraint baseTableName="course_program" constraintName="FKnr4cjmaq3qdm8qs5gb36s20ik"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-13">
+        <dropTable tableName="course_person"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1540913349614-14">
+        <dropTable tableName="course_program"/>
+    </changeSet>
+</databaseChangeLog>
