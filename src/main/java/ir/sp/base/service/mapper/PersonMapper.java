@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Person and its DTO PersonDTO.
  */
-@Mapper(componentModel = "spring", uses = {RegionMapper.class, InstitutionMapper.class})
+@Mapper(componentModel = "spring", uses = {RegionMapper.class, InstitutionMapper.class, CourseMapper.class})
 public interface PersonMapper extends EntityMapper<PersonDTO, Person> {
 
     @Mapping(source = "region.id", target = "regionId")
@@ -19,9 +19,9 @@ public interface PersonMapper extends EntityMapper<PersonDTO, Person> {
 
     @Mapping(source = "regionId", target = "region")
     @Mapping(source = "institutionId", target = "institution")
-    @Mapping(source = "preferenceTimes", target = "preferenceTimes")
-    @Mapping(target = "courses", ignore = true)
     Person toEntity(PersonDTO personDTO);
+    @Mapping(source = "preferenceTimes", target = "preferenceTimes")
+    @Mapping(source = "courses", target = "courses")
 
     default Person fromId(Long id) {
         if (id == null) {

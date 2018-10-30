@@ -115,8 +115,8 @@ relationship OneToOne{
 }
 
 relationship ManyToMany{
-    Course {program(name)} to Program{course(name)},
-    Course {person(name)} to Person{course(name)}
+    Program {course(name)} to Course,
+    Person {course(name)} to Course
 }
 
 dto * with mapstruct

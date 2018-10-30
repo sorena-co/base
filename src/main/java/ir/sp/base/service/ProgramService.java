@@ -73,7 +73,7 @@ public class ProgramService {
     @Transactional(readOnly = true)
     public ProgramDTO findOne(Long id) {
         log.debug("Request to get Program : {}", id);
-        Program program = programRepository.findOne(id);
+        Program program = programRepository.findOneWithEagerRelationships(id);
         return programMapper.toDto(program);
     }
 

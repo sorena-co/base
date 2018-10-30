@@ -65,6 +65,8 @@ public class PersonDTO implements Serializable {
 
     private Set<ClassTime> preferenceTimes = new HashSet<>();
 
+    private Set<CourseDTO> courses = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -247,6 +249,14 @@ public class PersonDTO implements Serializable {
 
     public void setInstitutionName(String institutionName) {
         this.institutionName = institutionName;
+    }
+
+    public Set<CourseDTO> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<CourseDTO> courses) {
+        this.courses = courses;
     }
 
     @Override

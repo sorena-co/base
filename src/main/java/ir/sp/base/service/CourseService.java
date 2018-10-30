@@ -65,7 +65,7 @@ public class CourseService {
     @Transactional(readOnly = true)
     public CourseDTO findOne(Long id) {
         log.debug("Request to get Course : {}", id);
-        Course course = courseRepository.findOneWithEagerRelationships(id);
+        Course course = courseRepository.findOne(id);
         return courseMapper.toDto(course);
     }
 

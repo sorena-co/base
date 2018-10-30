@@ -14,16 +14,17 @@
             "otherEntityField": "name"
         },
         {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
             "relationshipType": "one-to-many",
             "relationshipName": "preferenceTime",
             "otherEntityName": "classTime",
-            "otherEntityRelationshipName": "person"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "relationshipName": "course",
-            "otherEntityName": "course",
-            "ownerSide": false,
             "otherEntityRelationshipName": "person"
         }
     ],
