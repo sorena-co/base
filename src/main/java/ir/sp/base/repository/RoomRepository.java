@@ -1,5 +1,6 @@
 package ir.sp.base.repository;
 
+import ir.sp.base.domain.Course;
 import ir.sp.base.domain.Room;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,5 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     Page<Room> findAllByInstitution_Id(Long institutionId, Pageable pageable);
 
+    List<Room> findAllByIdIn(List<Long> roomIds);
 }

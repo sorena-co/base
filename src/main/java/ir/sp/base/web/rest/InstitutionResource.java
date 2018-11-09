@@ -133,6 +133,14 @@ public class InstitutionResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(institutionDTO));
     }
 
+    @GetMapping("/institutions/get-plan/{id}")
+    @Timed
+    public ResponseEntity<GetPlanDTO> getPlaning(@PathVariable Long id) {
+        log.debug("REST request to get Institution : {}", id);
+        GetPlanDTO institutionDTO = institutionService.getPlan(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(institutionDTO));
+    }
+
     @GetMapping("/institutions/{institutionId}/programs")
     @Timed
     public ResponseEntity<List<ProgramDTO>> getAllPrograms(@PathVariable Long institutionId, Pageable pageable) {
@@ -176,5 +184,13 @@ public class InstitutionResource {
         Page<CourseDTO> page = institutionService.findAllCourses(institutionId, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/institutions/{institutionId}/courses/all")
+    @Timed
+    public ResponseEntity<List<CourseDTO>> getAllCourseAll(@PathVariable Long institutionId) {
+        log.debug("REST request to get a page of Institutions");
+        List<CourseDTO> page = institutionService.findAllCourses(institutionId);
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 }

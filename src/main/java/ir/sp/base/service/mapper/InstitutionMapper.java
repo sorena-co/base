@@ -119,8 +119,8 @@ public interface InstitutionMapper extends EntityMapper<InstitutionDTO, Institut
     default TimePlanDTO getTime(ClassTime classTime, List<TimePlanDTO> preferenceHours) {
         TimePlanDTO timeDTO = new TimePlanDTO();
         timeDTO.setDay(classTime.getDay().ordinal());
-        timeDTO.setStartHour(classTime.getStartTime());
-        timeDTO.setEndHour(classTime.getEndTime());
+        timeDTO.setStartTime(classTime.getStartTime());
+        timeDTO.setEndTime(classTime.getEndTime());
         preferenceHours.add(timeDTO);
         return timeDTO;
     }

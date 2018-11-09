@@ -1,33 +1,33 @@
 package ir.sp.base.service.dto;
 
 public class TimePlanDTO {
-    private Float startHour;
-    private Float endHour;
+    private Float startTime;
+    private Float endTime;
     private Integer day;
 
-    public TimePlanDTO(Float startHour, Float endHour, Integer day) {
-        this.startHour = startHour;
-        this.endHour = endHour;
+    public TimePlanDTO(Float startTime, Float endTime, Integer day) {
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.day = day;
     }
 
     public TimePlanDTO() {
     }
 
-    public Float getStartHour() {
-        return startHour;
+    public Float getStartTime() {
+        return startTime;
     }
 
-    public void setStartHour(Float startHour) {
-        this.startHour = startHour;
+    public void setStartTime(Float startTime) {
+        this.startTime = startTime;
     }
 
-    public Float getEndHour() {
-        return endHour;
+    public Float getEndTime() {
+        return endTime;
     }
 
-    public void setEndHour(Float endHour) {
-        this.endHour = endHour;
+    public void setEndTime(Float endTime) {
+        this.endTime = endTime;
     }
 
     public Integer getDay() {

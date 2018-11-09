@@ -29,4 +29,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findAllByInstitutionId(@Param("institutionId") Long institutionId);*/
 
     Page<Course> findAllByInstitution_Id(Long institutionId, Pageable pageable);
+    List<Course> findAllByInstitution_Id(Long institutionId);
+
+    List<Course> findAllByIdIn(List<Long> courseIds);
 }

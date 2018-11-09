@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -47,7 +48,9 @@ public class InstitutionService {
     private final SemesterRepository semesterRepository;
     private final SemesterMapper semesterMapper;
 
-    public InstitutionService(InstitutionRepository institutionRepository, InstitutionMapper institutionMapper, AiFeignClient aiFeignClient, PersonRepository personRepository, RoomRepository roomRepository, ClassRoomRepository classRoomRepository, CourseRepository courseRepository, CourseMapper courseMapper, ProgramRepository programRepository, ProgramMapper programMapper, RoomMapper roomMapper, PersonMapper personMapper, SemesterRepository semesterRepository, SemesterMapper semesterMapper) {
+    private final ClassGroupRepository classGroupRepository;
+
+    public InstitutionService(InstitutionRepository institutionRepository, InstitutionMapper institutionMapper, AiFeignClient aiFeignClient, PersonRepository personRepository, RoomRepository roomRepository, ClassRoomRepository classRoomRepository, CourseRepository courseRepository, CourseMapper courseMapper, ProgramRepository programRepository, ProgramMapper programMapper, RoomMapper roomMapper, PersonMapper personMapper, SemesterRepository semesterRepository, SemesterMapper semesterMapper, ClassGroupRepository classGroupRepository) {
         this.institutionRepository = institutionRepository;
         this.institutionMapper = institutionMapper;
         this.aiFeignClient = aiFeignClient;
@@ -62,6 +65,7 @@ public class InstitutionService {
         this.personMapper = personMapper;
         this.semesterRepository = semesterRepository;
         this.semesterMapper = semesterMapper;
+        this.classGroupRepository = classGroupRepository;
     }
 
     /**
@@ -117,12 +121,11 @@ public class InstitutionService {
         List<Person> profs = personRepository.findAllByInstitution_Id(id);
         List<Room> rooms = roomRepository.findAllByInstitution_Id(id);
         List<ClassRoom> classRooms = classRoomRepository.findAllClassRoomByInstitutionId(id);
-//        List<Course> courses = courseRepository.findAllByInstitutionId(id);
+        List<Course> courses = courseRepository.findAllByInstitution_Id(id);
 
-//        PlanDTO planDTO = institutionMapper.toPlanDTO(id, profs, rooms, courses, classRooms);
-//        String s = aiFeignClient.startPlaning(planDTO);
-        System.out.println("");
-        return "";
+        PlanDTO planDTO = institutionMapper.toPlanDTO(id, profs, rooms, courses, classRooms);
+        String s = aiFeignClient.startPlaning(planDTO);
+        return s;
     }
 
     public Page<ProgramDTO> findAllPrograms(Long institutionId, Pageable pageable) {
@@ -148,5 +151,29 @@ public class InstitutionService {
     public Page<CourseDTO> findAllCourses(Long institutionId, Pageable pageable) {
         return courseRepository.findAllByInstitution_Id(institutionId, pageable)
             .map(courseMapper::toDto);
+    }
+
+    public List<CourseDTO> findAllCourses(Long institutionId) {
+        return courseMapper.toDto(courseRepository.findAllByInstitution_Id(institutionId));
+    }
+
+    public GetPlanDTO getPlan(Long id) {
+        GetPlanDTO planing = aiFeignClient.getPlaning(id);
+        List<Long> courseIds = planing.getPlan().getEntity().stream().map(Entity::getCourseId).collect(Collectors.toList());
+        List<Long> groupIds = planing.getPlan().getEntity().stream().map(Entity::getGroupId).collect(Collectors.toList());
+        List<Long> profIds = planing.getPlan().getEntity().stream().map(Entity::getProfId).collect(Collectors.toList());
+        List<Long> roomIds = planing.getPlan().getEntity().stream().map(Entity::getRoomId).collect(Collectors.toList());
+        List<Course> courses = courseRepository.findAllByIdIn(courseIds);
+        List<ClassGroup> groups = classGroupRepository.findAllByIdIn(groupIds);
+        List<Person> profs = personRepository.findAllByIdIn(profIds);
+        List<Room> rooms = roomRepository.findAllByIdIn(roomIds);
+
+        for (Entity entity : planing.getPlan().getEntity()) {
+            entity.setGroupName(groups.stream().filter(classGroup -> classGroup.getId().equals(entity.getGroupId())).map(ClassGroup::getName).findFirst().orElse(null));
+            entity.setCourseName(courses.stream().filter(course -> course.getId().equals(entity.getCourseId())).map(Course::getName).findFirst().orElse(null));
+            entity.setProfName(profs.stream().filter(prof -> prof.getId().equals(entity.getProfId())).map(prof -> prof.getFirstName() + " " + prof.getLastName()).findFirst().orElse(null));
+            entity.setRoomName(rooms.stream().filter(room -> room.getId().equals(entity.getRoomId())).map(Room::getName).findFirst().orElse(null));
+        }
+        return planing;
     }
 }
