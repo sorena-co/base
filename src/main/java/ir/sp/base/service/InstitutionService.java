@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -173,6 +174,9 @@ public class InstitutionService {
             entity.setCourseName(courses.stream().filter(course -> course.getId().equals(entity.getCourseId())).map(Course::getName).findFirst().orElse(null));
             entity.setProfName(profs.stream().filter(prof -> prof.getId().equals(entity.getProfId())).map(prof -> prof.getFirstName() + " " + prof.getLastName()).findFirst().orElse(null));
             entity.setRoomName(rooms.stream().filter(room -> room.getId().equals(entity.getRoomId())).map(Room::getName).findFirst().orElse(null));
+            entity.setRoomConflict(new ArrayList());
+            entity.setProfConflict(new ArrayList());
+            entity.setGroupConflict(new ArrayList());
         }
         return planing;
     }

@@ -3,19 +3,27 @@ package ir.sp.base.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import ir.sp.base.service.InstitutionService;
 import ir.sp.base.service.dto.*;
+import ir.sp.base.service.util.Utils;
 import ir.sp.base.web.rest.errors.BadRequestAlertException;
 import ir.sp.base.web.rest.util.HeaderUtil;
 import ir.sp.base.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.apache.commons.io.IOUtils;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -193,4 +201,97 @@ public class InstitutionResource {
         List<CourseDTO> page = institutionService.findAllCourses(institutionId);
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
+
+    @GetMapping("/institutions/get-excel/{id}")
+    @Timed
+    @ResponseBody
+    public ResponseEntity<Void> getExcel(HttpServletResponse response,
+                         @PathVariable Long id) throws IOException {
+        log.debug("REST request to get Institution : {}", id);
+        GetPlanDTO institutionDTO = institutionService.getPlan(id);
+
+        Workbook workbook = new XSSFWorkbook();
+
+        // Create a Sheet
+        Sheet sheet = workbook.createSheet("برنامه");
+
+        // Create a Font for styling header cells
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short) 14);
+        headerFont.setColor(IndexedColors.RED.getIndex());
+
+        // Create a CellStyle with the font
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+
+        // Create a Row
+        Row headerRow = sheet.createRow(0);
+
+        Cell cell0 = headerRow.createCell(0);
+        cell0.setCellValue("گروه");
+        cell0.setCellStyle(headerCellStyle);
+
+        Cell cell1 = headerRow.createCell(1);
+        cell1.setCellValue("درس");
+        cell1.setCellStyle(headerCellStyle);
+
+        Cell cell2 = headerRow.createCell(2);
+        cell2.setCellValue("استاد");
+        cell2.setCellStyle(headerCellStyle);
+
+        Cell cell3 = headerRow.createCell(3);
+        cell3.setCellValue("اتاق");
+        cell3.setCellStyle(headerCellStyle);
+
+        Cell cell4 = headerRow.createCell(4);
+        cell4.setCellValue("روز");
+        cell4.setCellStyle(headerCellStyle);
+
+        Cell cell5 = headerRow.createCell(5);
+        cell5.setCellValue("ساعت شروع");
+        cell5.setCellStyle(headerCellStyle);
+
+        Cell cell6 = headerRow.createCell(6);
+        cell6.setCellValue("ساعت پایان");
+        cell6.setCellStyle(headerCellStyle);
+
+
+        int rowNum = 1;
+        for (Entity entity : institutionDTO.getPlan().getEntity()) {
+            Row row = sheet.createRow(rowNum);
+
+            row.createCell(0).setCellValue(entity.getGroupName());
+            row.createCell(1).setCellValue(entity.getCourseName());
+            row.createCell(2).setCellValue(entity.getProfName());
+            row.createCell(3).setCellValue(entity.getRoomName());
+            row.createCell(4).setCellValue(Utils.getDayFA(entity.getClassTime().getDay()));
+            row.createCell(5).setCellValue(entity.getClassTime().getStartTime());
+            row.createCell(6).setCellValue(entity.getClassTime().getEndTime());
+            rowNum++;
+        }
+
+        // Resize all columns to fit the content size
+//        for (int i = 0; i < 6; i++) {
+//            sheet.autoSizeColumn(i);
+//        }
+
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        workbook.write(bos);
+        bos.close();
+        byte[] bytes = bos.toByteArray();
+        InputStream inputStream = new ByteArrayInputStream(bytes);
+        response.setHeader("Content-Disposition", "attachment; filename=\"testExcel.xlsx\"");
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+
+        ServletOutputStream outputStream = response.getOutputStream();
+        IOUtils.copy(inputStream, outputStream);
+
+        outputStream.close();
+        inputStream.close();
+
+        return ResponseEntity.ok().build();
+    }
+
 }

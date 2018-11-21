@@ -15,6 +15,9 @@ public class Entity {
     private List<ClassTimeDTO> preferenceHours = new ArrayList<>();
     private Long roomId;
     private String roomName;
+    private List roomConflict = new ArrayList();
+    private List profConflict = new ArrayList();
+    private List groupConflict = new ArrayList();
 
     public Long getId() {
         return id;
@@ -102,5 +105,29 @@ public class Entity {
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;
+    }
+
+    public List getRoomConflict() {
+        return roomConflict;
+    }
+
+    public void setRoomConflict(List roomConflict) {
+        this.roomConflict = roomConflict;
+    }
+
+    public List getProfConflict() {
+        return profConflict;
+    }
+
+    public void setProfConflict(List profConflict) {
+        this.profConflict = profConflict;
+    }
+
+    public List getGroupConflict() {
+        return groupConflict;
+    }
+
+    public void setGroupConflict(List groupConflict) {
+        this.groupConflict = groupConflict;
     }
 }
