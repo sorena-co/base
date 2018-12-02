@@ -3,6 +3,7 @@ package ir.sp.base.service.mapper;
 import ir.sp.base.domain.*;
 import ir.sp.base.service.dto.*;
 
+import ir.sp.base.service.dto.custom.FeignPlanDTO;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -32,96 +33,79 @@ public interface InstitutionMapper extends EntityMapper<InstitutionDTO, Institut
         return institution;
     }
 
-    default PlanDTO toPlanDTO(
+    default FeignPlanDTO toFeignPlanDTO(
         Long institutionId,
         List<Person> profs,
         List<Room> rooms,
         List<Course> courses,
         List<ClassRoom> classes
     ) {
-        PlanDTO result = new PlanDTO();
-        //fill institution
-        result.setInstitutionId(institutionId);
-        //end
-
-        //fill profs
-        profs.forEach(person -> {
-            ProfPlanDTO dto = new ProfPlanDTO();
-            dto.setId(person.getId());
-            dto.setCourseIds(person.getCourses().stream().map(Course::getId).collect(Collectors.toList()));
-            dto.setMaxCredits(person.getMaxCredits());
-            if (!person.getPreferenceTimes().isEmpty()) {
-                person.getPreferenceTimes().forEach(classTime -> {
-                    TimePlanDTO time = getTime(classTime, dto.getPreferenceHours());
-                    dto.getPreferenceHours().add(time);
-                });
+        FeignPlanDTO result = new FeignPlanDTO();
+        classes.forEach(classRoom -> {
+            ir.sp.base.service.dto.custom.ClassRoomDTO cls = new ir.sp.base.service.dto.custom.ClassRoomDTO();
+            cls.setInstitutionId(institutionId);
+            cls.setClassGroupId(classRoom.getClassGroup().getId());
+            cls.setClassGroupName(classRoom.getClassGroup().getName());
+            cls.setCourseId(classRoom.getCourse().getId());
+            cls.setCourseName(classRoom.getCourse().getName());
+            cls.setNeedLab(classRoom.getCourse().isNeedLab());
+            cls.setNeedProjector(classRoom.getCourse().isNeedProjector());
+            cls.setPracticalCredit(classRoom.getCourse().getPracticalCredit());
+            cls.setPracticalHour(classRoom.getCourse().getPracticalHours());
+            cls.setTheoreticalCredit(classRoom.getCourse().getTheoreticalCredit());
+            cls.setTheoreticalHour(classRoom.getCourse().getTheoreticalHours());
+            for (ClassTime classTime : classRoom.getClassGroup().getPreferenceTimes()) {
+                ir.sp.base.service.dto.custom.ClassTime ct = new ir.sp.base.service.dto.custom.ClassTime();
+                ct.setDay((short) classTime.getDay().ordinal());
+                ct.setEndTime(classTime.getEndTime());
+                ct.setStartTime(classTime.getStartTime());
+                ct.setPriority(classTime.getPriority());
+                cls.getClassTimes().add(ct);
             }
-            result.getProfs().add(dto);
+            result.getClassRooms().add(cls);
         });
-        //end profs
-
-        //fill classes
-        classes.forEach(classGroup -> {
-            ClassPlanDTO dto = new ClassPlanDTO();
-            dto.setGroupId(classGroup.getClassGroup().getId());
-            dto.setCourseId(classGroup.getCourse().getId());
-            if (classGroup.getClassesTime() != null) {
-                dto.setClassTime(new TimePlanDTO(
-                    classGroup.getClassesTime().getStartTime(),
-                    classGroup.getClassesTime().getEndTime(),
-                    classGroup.getClassesTime().getDay().ordinal()
-                ));
-            }
-            dto.setId(classGroup.getId());
-            if (classGroup.getPerson() != null)
-                dto.setProfId(classGroup.getPerson().getId());
-            if (classGroup.getRoom() != null)
-                dto.setRoomId(classGroup.getRoom().getId());
-            if (!classGroup.getClassGroup().getPreferenceTimes().isEmpty()) {
-                classGroup.getClassGroup().getPreferenceTimes().forEach(classTime -> {
-                    TimePlanDTO timeDTO = getTime(classTime, dto.getPreferenceHours());
-                    dto.getPreferenceHours().add(timeDTO);
-                });
-            }
-            result.getClasses().add(dto);
-        });
-        //end classes
-
-        //fill rooms
-        rooms.forEach(room -> {
-            RoomPlanDTO dto = new RoomPlanDTO();
-            dto.setId(room.getId());
-            dto.setLab(room.isIsLab());
-            dto.setProjector(room.isHasProjector());
-            dto.setSize(room.getSize());
-
-            result.getRooms().add(dto);
-        });
-        //end rooms
-
-        //fill courses
         courses.forEach(course -> {
-            CoursePlanDTO dto = new CoursePlanDTO();
-            dto.setId(course.getId());
-            dto.setNeedLab(course.isNeedLab());
-            dto.setNeedProjector(course.isNeedProjector());
-            dto.setPracticalCredit(course.getPracticalCredit());
-            dto.setPracticalHours(course.getPracticalHours());
-            dto.setTheoreticalCredit(course.getTheoreticalCredit());
-            dto.setTheoreticalHours(course.getTheoreticalHours());
+            ir.sp.base.service.dto.custom.CourseDTO c = new ir.sp.base.service.dto.custom.CourseDTO();
+            c.setId(course.getId());
+            c.setName(course.getName());
+            c.setNeedLab(course.isNeedLab());
+            c.setNeedProjector(course.isNeedProjector());
+            c.setPracticalCredit(course.getPracticalCredit());
+            c.setPracticalHour(course.getPracticalHours());
+            c.setTheoreticalCredit(course.getTheoreticalCredit());
+            c.setTheoreticalHour(course.getTheoreticalHours());
 
-            result.getCourses().add(dto);
+            result.getCourses().add(c);
         });
-        //end courses
-        return result;
-    }
 
-    default TimePlanDTO getTime(ClassTime classTime, List<TimePlanDTO> preferenceHours) {
-        TimePlanDTO timeDTO = new TimePlanDTO();
-        timeDTO.setDay(classTime.getDay().ordinal());
-        timeDTO.setStartTime(classTime.getStartTime());
-        timeDTO.setEndTime(classTime.getEndTime());
-        preferenceHours.add(timeDTO);
-        return timeDTO;
+        profs.forEach(prof -> {
+            ir.sp.base.service.dto.custom.PersonDTO personDTO = new ir.sp.base.service.dto.custom.PersonDTO();
+            personDTO.setId(prof.getId());
+            personDTO.setName(prof.getFirstName() + " " + prof.getLastName());
+            personDTO.setMaxCredits(prof.getMaxCredits());
+            personDTO.setCourseIds(prof.getCourses().stream().map(Course::getId).collect(Collectors.toList()));
+
+            for (ClassTime classTime : prof.getPreferenceTimes()) {
+                ir.sp.base.service.dto.custom.ClassTime ct = new ir.sp.base.service.dto.custom.ClassTime();
+                ct.setDay((short) classTime.getDay().ordinal());
+                ct.setEndTime(classTime.getEndTime());
+                ct.setStartTime(classTime.getStartTime());
+                ct.setPriority(classTime.getPriority());
+                personDTO.getClassTimes().add(ct);
+            }
+            result.getPersons().add(personDTO);
+        });
+
+        rooms.forEach(room -> {
+            ir.sp.base.service.dto.custom.RoomDTO r = new ir.sp.base.service.dto.custom.RoomDTO();
+            r.setId(room.getId());
+            r.setHasProjector(room.isHasProjector());
+            r.setLab(room.isIsLab());
+            r.setName(room.getName());
+            r.setSize(room.getSize());
+            result.getRooms().add(r);
+        });
+
+        return result;
     }
 }

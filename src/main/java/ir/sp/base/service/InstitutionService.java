@@ -3,6 +3,8 @@ package ir.sp.base.service;
 import ir.sp.base.domain.*;
 import ir.sp.base.repository.*;
 import ir.sp.base.service.dto.*;
+import ir.sp.base.service.dto.custom.FeignPlanDTO;
+import ir.sp.base.service.dto.feign.GaModel;
 import ir.sp.base.service.feign.AiFeignClient;
 import ir.sp.base.service.mapper.*;
 import org.slf4j.Logger;
@@ -124,8 +126,10 @@ public class InstitutionService {
         List<ClassRoom> classRooms = classRoomRepository.findAllClassRoomByInstitutionId(id);
         List<Course> courses = courseRepository.findAllByInstitution_Id(id);
 
-        PlanDTO planDTO = institutionMapper.toPlanDTO(id, profs, rooms, courses, classRooms);
-        String s = aiFeignClient.startPlaning(planDTO);
+        FeignPlanDTO feignPlanDTO = institutionMapper.toFeignPlanDTO(id, profs, rooms, courses, classRooms);
+        String s = aiFeignClient.startPlaning(feignPlanDTO);
+//        PlanDTO planDTO = institutionMapper.toPlanDTO(id, profs, rooms, courses, classRooms);
+//        String s = aiFeignClient.startPlaning(planDTO);
         return s;
     }
 
@@ -158,26 +162,7 @@ public class InstitutionService {
         return courseMapper.toDto(courseRepository.findAllByInstitution_Id(institutionId));
     }
 
-    public GetPlanDTO getPlan(Long id) {
-        GetPlanDTO planing = aiFeignClient.getPlaning(id);
-        List<Long> courseIds = planing.getPlan().getEntity().stream().map(Entity::getCourseId).collect(Collectors.toList());
-        List<Long> groupIds = planing.getPlan().getEntity().stream().map(Entity::getGroupId).collect(Collectors.toList());
-        List<Long> profIds = planing.getPlan().getEntity().stream().map(Entity::getProfId).collect(Collectors.toList());
-        List<Long> roomIds = planing.getPlan().getEntity().stream().map(Entity::getRoomId).collect(Collectors.toList());
-        List<Course> courses = courseRepository.findAllByIdIn(courseIds);
-        List<ClassGroup> groups = classGroupRepository.findAllByIdIn(groupIds);
-        List<Person> profs = personRepository.findAllByIdIn(profIds);
-        List<Room> rooms = roomRepository.findAllByIdIn(roomIds);
-
-        for (Entity entity : planing.getPlan().getEntity()) {
-            entity.setGroupName(groups.stream().filter(classGroup -> classGroup.getId().equals(entity.getGroupId())).map(ClassGroup::getName).findFirst().orElse(null));
-            entity.setCourseName(courses.stream().filter(course -> course.getId().equals(entity.getCourseId())).map(Course::getName).findFirst().orElse(null));
-            entity.setProfName(profs.stream().filter(prof -> prof.getId().equals(entity.getProfId())).map(prof -> prof.getFirstName() + " " + prof.getLastName()).findFirst().orElse(null));
-            entity.setRoomName(rooms.stream().filter(room -> room.getId().equals(entity.getRoomId())).map(Room::getName).findFirst().orElse(null));
-            entity.setRoomConflict(new ArrayList());
-            entity.setProfConflict(new ArrayList());
-            entity.setGroupConflict(new ArrayList());
-        }
-        return planing;
+    public GaModel getPlan(Long id) {
+        return aiFeignClient.getPlaning(id);
     }
 }

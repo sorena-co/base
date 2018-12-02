@@ -3,6 +3,8 @@ package ir.sp.base.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import ir.sp.base.service.InstitutionService;
 import ir.sp.base.service.dto.*;
+import ir.sp.base.service.dto.feign.ClassRoomDTO;
+import ir.sp.base.service.dto.feign.GaModel;
 import ir.sp.base.service.util.Utils;
 import ir.sp.base.web.rest.errors.BadRequestAlertException;
 import ir.sp.base.web.rest.util.HeaderUtil;
@@ -143,9 +145,9 @@ public class InstitutionResource {
 
     @GetMapping("/institutions/get-plan/{id}")
     @Timed
-    public ResponseEntity<GetPlanDTO> getPlaning(@PathVariable Long id) {
+    public ResponseEntity<GaModel> getPlaning(@PathVariable Long id) {
         log.debug("REST request to get Institution : {}", id);
-        GetPlanDTO institutionDTO = institutionService.getPlan(id);
+        GaModel institutionDTO = institutionService.getPlan(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(institutionDTO));
     }
 
@@ -206,9 +208,9 @@ public class InstitutionResource {
     @Timed
     @ResponseBody
     public ResponseEntity<Void> getExcel(HttpServletResponse response,
-                         @PathVariable Long id) throws IOException {
+                                         @PathVariable Long id) throws IOException {
         log.debug("REST request to get Institution : {}", id);
-        GetPlanDTO institutionDTO = institutionService.getPlan(id);
+        GaModel institutionDTO = institutionService.getPlan(id);
 
         Workbook workbook = new XSSFWorkbook();
 
@@ -258,16 +260,16 @@ public class InstitutionResource {
 
 
         int rowNum = 1;
-        for (Entity entity : institutionDTO.getPlan().getEntity()) {
+        for (ClassRoomDTO entity : institutionDTO.getClassRooms()) {
             Row row = sheet.createRow(rowNum);
 
-            row.createCell(0).setCellValue(entity.getGroupName());
+            row.createCell(0).setCellValue(entity.getClassGroupName());
             row.createCell(1).setCellValue(entity.getCourseName());
-            row.createCell(2).setCellValue(entity.getProfName());
+            row.createCell(2).setCellValue(entity.getPersonName());
             row.createCell(3).setCellValue(entity.getRoomName());
-            row.createCell(4).setCellValue(Utils.getDayFA(entity.getClassTime().getDay()));
-            row.createCell(5).setCellValue(entity.getClassTime().getStartTime());
-            row.createCell(6).setCellValue(entity.getClassTime().getEndTime());
+            row.createCell(4).setCellValue(Utils.getDayFA(entity.getDay()));
+            row.createCell(5).setCellValue(entity.getStartTime());
+            row.createCell(6).setCellValue(entity.getEndTime());
             rowNum++;
         }
 
