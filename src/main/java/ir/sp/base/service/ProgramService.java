@@ -1,11 +1,15 @@
 package ir.sp.base.service;
 
+import ir.sp.base.domain.Course;
 import ir.sp.base.domain.Program;
 import ir.sp.base.repository.ClassGroupRepository;
+import ir.sp.base.repository.CourseRepository;
 import ir.sp.base.repository.ProgramRepository;
 import ir.sp.base.service.dto.ClassGroupDTO;
+import ir.sp.base.service.dto.CourseDTO;
 import ir.sp.base.service.dto.ProgramDTO;
 import ir.sp.base.service.mapper.ClassGroupMapper;
+import ir.sp.base.service.mapper.CourseMapper;
 import ir.sp.base.service.mapper.ProgramMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**
@@ -31,11 +37,16 @@ public class ProgramService {
     private final ClassGroupRepository classGroupRepository;
     private final ClassGroupMapper classGroupMapper;
 
-    public ProgramService(ProgramRepository programRepository, ProgramMapper programMapper, ClassGroupRepository classGroupRepository, ClassGroupMapper classGroupMapper) {
+    private final CourseRepository courseRepository;
+    private final CourseMapper courseMapper;
+
+    public ProgramService(ProgramRepository programRepository, ProgramMapper programMapper, ClassGroupRepository classGroupRepository, ClassGroupMapper classGroupMapper, CourseRepository courseRepository, CourseMapper courseMapper) {
         this.programRepository = programRepository;
         this.programMapper = programMapper;
         this.classGroupRepository = classGroupRepository;
         this.classGroupMapper = classGroupMapper;
+        this.courseRepository = courseRepository;
+        this.courseMapper = courseMapper;
     }
 
     /**
@@ -90,5 +101,10 @@ public class ProgramService {
     public Page<ClassGroupDTO> findAllClassGroups(Long id, Pageable pageable) {
         return classGroupRepository.findAllByProgram_Id(id, pageable)
             .map(classGroupMapper::toDto);
+    }
+
+    public List<CourseDTO> findAllCourses(Long programId) {
+        List<Course> courses = courseRepository.findAllByProgramId(programId);
+        return courseMapper.toDto(courses);
     }
 }

@@ -19,5 +19,7 @@ import java.util.List;
 public interface ClassGroupRepository extends JpaRepository<ClassGroup, Long> {
     Page<ClassGroup> findAllByProgram_Id(Long programId, Pageable pageable);
 
+    Page<ClassGroup> findAllBySemester_Id(Long semesterId, Pageable pageable);
+
     List<ClassGroup> findAllByIdIn(List<Long> groupIds);
 }

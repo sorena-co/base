@@ -28,4 +28,7 @@ public interface ClassRoomRepository extends JpaRepository<ClassRoom, Long> {
 
 
     Page<ClassRoom> findAllByClassGroup_Id(Long classGroupId, Pageable pageable);
+    List<ClassRoom> findAllByClassGroup_Id(Long classGroupId);
+
+    void deleteAllByClassGroup_Id(Long classGroupId);
 }

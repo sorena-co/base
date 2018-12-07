@@ -1,8 +1,11 @@
 package ir.sp.base.service;
 
 import ir.sp.base.domain.Semester;
+import ir.sp.base.repository.ClassGroupRepository;
 import ir.sp.base.repository.SemesterRepository;
+import ir.sp.base.service.dto.ClassGroupDTO;
 import ir.sp.base.service.dto.SemesterDTO;
+import ir.sp.base.service.mapper.ClassGroupMapper;
 import ir.sp.base.service.mapper.SemesterMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +28,14 @@ public class SemesterService {
 
     private final SemesterMapper semesterMapper;
 
-    public SemesterService(SemesterRepository semesterRepository, SemesterMapper semesterMapper) {
+    private final ClassGroupRepository classGroupRepository;
+    private final ClassGroupMapper classGroupMapper;
+
+    public SemesterService(SemesterRepository semesterRepository, SemesterMapper semesterMapper, ClassGroupRepository classGroupRepository, ClassGroupMapper classGroupMapper) {
         this.semesterRepository = semesterRepository;
         this.semesterMapper = semesterMapper;
+        this.classGroupRepository = classGroupRepository;
+        this.classGroupMapper = classGroupMapper;
     }
 
     /**
@@ -77,5 +85,10 @@ public class SemesterService {
     public void delete(Long id) {
         log.debug("Request to delete Semester : {}", id);
         semesterRepository.delete(id);
+    }
+
+    public Page<ClassGroupDTO> findAllClassGroups(Long id, Pageable pageable) {
+        return classGroupRepository.findAllBySemester_Id(id, pageable)
+            .map(classGroupMapper::toDto);
     }
 }

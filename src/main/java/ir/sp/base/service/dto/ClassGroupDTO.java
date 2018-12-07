@@ -4,9 +4,7 @@ package ir.sp.base.service.dto;
 import ir.sp.base.domain.ClassTime;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A DTO for the ClassGroup entity.
@@ -32,6 +30,8 @@ public class ClassGroupDTO implements Serializable {
     private String institutionName;
 
     private Set<ClassTime> preferenceTimes = new HashSet<>();
+
+    private List<CourseDTO> courses = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -142,5 +142,13 @@ public class ClassGroupDTO implements Serializable {
 
     public void setPreferenceTimes(Set<ClassTime> preferenceTimes) {
         this.preferenceTimes = preferenceTimes;
+    }
+
+    public List<CourseDTO> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<CourseDTO> courses) {
+        this.courses = courses;
     }
 }

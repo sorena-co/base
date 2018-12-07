@@ -1,15 +1,19 @@
 package ir.sp.base.service;
 
 import ir.sp.base.domain.ClassGroup;
+import ir.sp.base.domain.ClassRoom;
 import ir.sp.base.domain.ClassTime;
+import ir.sp.base.domain.Course;
 import ir.sp.base.repository.ClassGroupRepository;
 import ir.sp.base.repository.ClassRoomRepository;
 import ir.sp.base.repository.ClassTimeRepository;
 import ir.sp.base.service.dto.ClassGroupDTO;
 import ir.sp.base.service.dto.ClassRoomDTO;
+import ir.sp.base.service.dto.CourseDTO;
 import ir.sp.base.service.mapper.ClassGroupMapper;
 import ir.sp.base.service.mapper.ClassRoomMapper;
 import ir.sp.base.service.mapper.ClassTimeMapper;
+import ir.sp.base.service.mapper.CourseMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,7 +21,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -39,13 +46,16 @@ public class ClassGroupService {
     private final ClassTimeRepository classTimeRepository;
     private final ClassTimeMapper classTimeMapper;
 
-    public ClassGroupService(ClassGroupRepository classGroupRepository, ClassGroupMapper classGroupMapper, ClassRoomRepository classRoomRepository, ClassRoomMapper classRoomMapper, ClassTimeRepository classTimeRepository, ClassTimeMapper classTimeMapper) {
+    private final CourseMapper courseMapper;
+
+    public ClassGroupService(ClassGroupRepository classGroupRepository, ClassGroupMapper classGroupMapper, ClassRoomRepository classRoomRepository, ClassRoomMapper classRoomMapper, ClassTimeRepository classTimeRepository, ClassTimeMapper classTimeMapper, CourseMapper courseMapper) {
         this.classGroupRepository = classGroupRepository;
         this.classGroupMapper = classGroupMapper;
         this.classRoomRepository = classRoomRepository;
         this.classRoomMapper = classRoomMapper;
         this.classTimeRepository = classTimeRepository;
         this.classTimeMapper = classTimeMapper;
+        this.courseMapper = courseMapper;
     }
 
     /**
@@ -57,16 +67,30 @@ public class ClassGroupService {
     public ClassGroupDTO save(ClassGroupDTO classGroupDTO) {
         log.debug("Request to save ClassGroup : {}", classGroupDTO);
         ClassGroup classGroup = classGroupMapper.toEntity(classGroupDTO);
-        if (classGroupDTO.getId() != null)
+        if (classGroupDTO.getId() != null) {
             classTimeRepository.deleteAllByClassGroup_Id(classGroupDTO.getId());
+            classRoomRepository.deleteAllByClassGroup_Id(classGroupDTO.getId());
+        }
 
         Set<ClassTime> preferenceTimes = classGroupDTO.getPreferenceTimes();
+        List<CourseDTO> courses = classGroupDTO.getCourses();
         classGroup = classGroupRepository.save(classGroup);
         ClassGroup finalClassGroup = classGroup;
         preferenceTimes.forEach(classTime -> {
             classTime.setId(null);
             classTime.setClassGroup(finalClassGroup);
         });
+        ClassGroup finalClassGroup1 = classGroup;
+        List<ClassRoom> classRooms = new ArrayList<>();
+        courses.forEach(courseDTO -> {
+            ClassRoom classRoom = new ClassRoom();
+            classRoom.setClassGroup(finalClassGroup1);
+            classRoom.setCourse(courseMapper.toEntity(courseDTO));
+
+            classRooms.add(classRoom);
+        });
+
+        classRoomRepository.save(classRooms);
         classTimeRepository.save(preferenceTimes);
         return classGroupMapper.toDto(classGroup);
     }
@@ -94,7 +118,11 @@ public class ClassGroupService {
     public ClassGroupDTO findOne(Long id) {
         log.debug("Request to get ClassGroup : {}", id);
         ClassGroup classGroup = classGroupRepository.findOne(id);
-        return classGroupMapper.toDto(classGroup);
+        ClassGroupDTO classGroupDTO = classGroupMapper.toDto(classGroup);
+        List<ClassRoom> classRooms = classRoomRepository.findAllByClassGroup_Id(id);
+        List<Course> courses = classRooms.stream().map(ClassRoom::getCourse).collect(Collectors.toList());
+        classGroupDTO.setCourses(courseMapper.toDto(courses));
+        return classGroupDTO;
     }
 
     /**
