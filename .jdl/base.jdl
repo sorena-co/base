@@ -2,7 +2,6 @@ entity Person{
 	firstName String ,
     lastName String ,
     fatherName String ,
-    code String,
     gender Gender ,
     degree Degree ,
     major String ,
@@ -20,7 +19,6 @@ entity Person{
 }
 entity Institution{
 	name String ,
-    code String,
     population Integer ,
     email String ,
     website String,
@@ -38,12 +36,10 @@ entity Room{
     isLab Boolean
 }
 entity Program{
-	name String ,
-    code String
+	name String
 }
 entity Course{
 	name String ,
-    code String,
     needLab Boolean,
     needProjector Boolean,
     practicalCredit Integer ,
@@ -53,11 +49,11 @@ entity Course{
 }
 entity ClassGroup{
 	name String ,
-    code String
+	size Integer
 }
 entity ClassRoom{
 	name String ,
-    code String
+    Size Integer
 }
 entity Region{
 	name String ,

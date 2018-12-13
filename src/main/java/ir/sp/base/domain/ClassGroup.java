@@ -26,8 +26,8 @@ public class ClassGroup implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "code")
-    private String code;
+    @Column(name = "jhi_size")
+    private Integer size;
 
     @ManyToOne
     private Program program;
@@ -65,17 +65,17 @@ public class ClassGroup implements Serializable {
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
+    public Integer getSize() {
+        return size;
     }
 
-    public ClassGroup code(String code) {
-        this.code = code;
+    public ClassGroup size(Integer size) {
+        this.size = size;
         return this;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
     public Program getProgram() {
@@ -180,7 +180,7 @@ public class ClassGroup implements Serializable {
         return "ClassGroup{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", code='" + getCode() + "'" +
+            ", size=" + getSize() +
             "}";
     }
 }

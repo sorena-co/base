@@ -15,8 +15,6 @@ public class CourseDTO implements Serializable {
 
     private String name;
 
-    private String code;
-
     private Boolean needLab;
 
     private Boolean needProjector;
@@ -47,14 +45,6 @@ public class CourseDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Boolean isNeedLab() {
@@ -147,7 +137,6 @@ public class CourseDTO implements Serializable {
         return "CourseDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", code='" + getCode() + "'" +
             ", needLab='" + isNeedLab() + "'" +
             ", needProjector='" + isNeedProjector() + "'" +
             ", practicalCredit=" + getPracticalCredit() +

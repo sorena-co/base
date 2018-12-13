@@ -16,8 +16,6 @@ public class InstitutionDTO implements Serializable {
 
     private String name;
 
-    private String code;
-
     private Integer population;
 
     private String email;
@@ -54,14 +52,6 @@ public class InstitutionDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Integer getPopulation() {
@@ -178,7 +168,6 @@ public class InstitutionDTO implements Serializable {
         return "InstitutionDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", code='" + getCode() + "'" +
             ", population=" + getPopulation() +
             ", email='" + getEmail() + "'" +
             ", website='" + getWebsite() + "'" +

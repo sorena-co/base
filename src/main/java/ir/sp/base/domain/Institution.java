@@ -28,9 +28,6 @@ public class Institution implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "code")
-    private String code;
-
     @Column(name = "population")
     private Integer population;
 
@@ -90,19 +87,6 @@ public class Institution implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public Institution code(String code) {
-        this.code = code;
-        return this;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Integer getPopulation() {
@@ -311,7 +295,6 @@ public class Institution implements Serializable {
         return "Institution{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", code='" + getCode() + "'" +
             ", population=" + getPopulation() +
             ", email='" + getEmail() + "'" +
             ", website='" + getWebsite() + "'" +

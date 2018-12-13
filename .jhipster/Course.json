@@ -14,10 +14,6 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "code",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "needLab",
             "fieldType": "Boolean"
         },
