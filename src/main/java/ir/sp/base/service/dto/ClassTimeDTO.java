@@ -22,6 +22,8 @@ public class ClassTimeDTO implements Serializable {
 
     private Float priority;
 
+    private Long classRoomId;
+
     private Long personId;
 
     private String personCode;
@@ -68,6 +70,14 @@ public class ClassTimeDTO implements Serializable {
 
     public void setPriority(Float priority) {
         this.priority = priority;
+    }
+
+    public Long getClassRoomId() {
+        return classRoomId;
+    }
+
+    public void setClassRoomId(Long classRoomId) {
+        this.classRoomId = classRoomId;
     }
 
     public Long getPersonId() {

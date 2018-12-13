@@ -23,6 +23,7 @@ public interface ClassRoomMapper extends EntityMapper<ClassRoomDTO, ClassRoom> {
     ClassRoomDTO toDto(ClassRoom classRoom);
 
     @Mapping(source = "classesTimeId", target = "classesTime")
+    @Mapping(target = "preferenceTimes", ignore = true)
     @Mapping(source = "classGroupId", target = "classGroup")
     @Mapping(source = "personId", target = "person")
     @Mapping(source = "courseId", target = "course")
