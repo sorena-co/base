@@ -15,7 +15,6 @@ public interface ClassRoomMapper extends EntityMapper<ClassRoomDTO, ClassRoom> {
     @Mapping(source = "classGroup.id", target = "classGroupId")
     @Mapping(source = "classGroup.name", target = "classGroupName")
     @Mapping(source = "person.id", target = "personId")
-    @Mapping(source = "person.code", target = "personCode")
     @Mapping(source = "course.id", target = "courseId")
     @Mapping(source = "course.name", target = "courseName")
     @Mapping(source = "room.id", target = "roomId")

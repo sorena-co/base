@@ -121,12 +121,13 @@ public class InstitutionService {
     }
 
     public String startPlaning(Long id) {
-        List<Person> profs = personRepository.findAllByInstitution_Id(id);
-        List<Room> rooms = roomRepository.findAllByInstitution_Id(id);
-        List<ClassRoom> classRooms = classRoomRepository.findAllClassRoomByInstitutionId(id);
-        List<Course> courses = courseRepository.findAllByInstitution_Id(id);
+        Semester semester = semesterRepository.findOne(id);
+        List<Person> profs = personRepository.findAllByInstitution_Id(semester.getInstitution().getId());
+        List<Room> rooms = roomRepository.findAllByInstitution_Id(semester.getInstitution().getId());
+        List<ClassRoom> classRooms = classRoomRepository.findAllClassRoomByInstitutionId(semester.getInstitution().getId());
+        List<Course> courses = courseRepository.findAllByInstitution_Id(semester.getInstitution().getId());
 
-        FeignPlanDTO feignPlanDTO = institutionMapper.toFeignPlanDTO(id, profs, rooms, courses, classRooms);
+        FeignPlanDTO feignPlanDTO = institutionMapper.toFeignPlanDTO(semester.getInstitution().getId(), profs, rooms, courses, classRooms, semester);
         String s = aiFeignClient.startPlaning(feignPlanDTO);
 //        PlanDTO planDTO = institutionMapper.toPlanDTO(id, profs, rooms, courses, classRooms);
 //        String s = aiFeignClient.startPlaning(planDTO);
@@ -163,6 +164,7 @@ public class InstitutionService {
     }
 
     public GaModel getPlan(Long id) {
-        return aiFeignClient.getPlaning(id);
+        Semester semester = semesterRepository.findOne(id);
+        return aiFeignClient.getPlaning(semester.getId(), semester.getInstitution().getId());
     }
 }

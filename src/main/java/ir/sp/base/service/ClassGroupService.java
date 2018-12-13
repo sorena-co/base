@@ -73,22 +73,24 @@ public class ClassGroupService {
         }
 
         Set<ClassTime> preferenceTimes = classGroupDTO.getPreferenceTimes();
-        List<CourseDTO> courses = classGroupDTO.getCourses();
+
         classGroup = classGroupRepository.save(classGroup);
-        ClassGroup finalClassGroup = classGroup;
-        preferenceTimes.forEach(classTime -> {
+        for (ClassTime classTime : preferenceTimes) {
             classTime.setId(null);
-            classTime.setClassGroup(finalClassGroup);
-        });
-        ClassGroup finalClassGroup1 = classGroup;
+            classTime.setClassGroup(classGroup);
+        }
+
+
+        List<CourseDTO> courses = classGroupDTO.getCourses();
         List<ClassRoom> classRooms = new ArrayList<>();
-        courses.forEach(courseDTO -> {
+        for (CourseDTO courseDTO : courses) {
             ClassRoom classRoom = new ClassRoom();
-            classRoom.setClassGroup(finalClassGroup1);
+            classRoom.setClassGroup(classGroup);
+            classRoom.setSize(classGroup.getSize());
             classRoom.setCourse(courseMapper.toEntity(courseDTO));
 
             classRooms.add(classRoom);
-        });
+        }
 
         classRoomRepository.save(classRooms);
         classTimeRepository.save(preferenceTimes);

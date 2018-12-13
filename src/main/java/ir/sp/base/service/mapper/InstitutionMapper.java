@@ -38,9 +38,11 @@ public interface InstitutionMapper extends EntityMapper<InstitutionDTO, Institut
         List<Person> profs,
         List<Room> rooms,
         List<Course> courses,
-        List<ClassRoom> classes
-    ) {
+        List<ClassRoom> classes,
+        Semester semester) {
         FeignPlanDTO result = new FeignPlanDTO();
+        result.setInstitutionId(institutionId);
+        result.setSemesterId(semester.getId());
         classes.forEach(classRoom -> {
             ir.sp.base.service.dto.custom.ClassRoomDTO cls = new ir.sp.base.service.dto.custom.ClassRoomDTO();
             cls.setInstitutionId(institutionId);
@@ -48,6 +50,7 @@ public interface InstitutionMapper extends EntityMapper<InstitutionDTO, Institut
             cls.setClassGroupName(classRoom.getClassGroup().getName());
             cls.setCourseId(classRoom.getCourse().getId());
             cls.setCourseName(classRoom.getCourse().getName());
+            cls.setSetSize(classRoom.getSize());
             cls.setNeedLab(classRoom.getCourse().isNeedLab());
             cls.setNeedProjector(classRoom.getCourse().isNeedProjector());
             cls.setPracticalCredit(classRoom.getCourse().getPracticalCredit());

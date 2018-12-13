@@ -13,6 +13,7 @@ public class ClassRoomDTO implements Cloneable {
     private boolean needLab;
     private boolean needProjector;
     private Integer practicalCredit;
+    private Integer setSize;
     private Integer practicalHour;
     private Integer theoreticalCredit;
     private Integer theoreticalHour;
@@ -192,5 +193,13 @@ public class ClassRoomDTO implements Cloneable {
             classRoom.getClassTimes().add((ClassTime) classTime.clone());
         }
         return super.clone();
+    }
+
+    public Integer getSetSize() {
+        return setSize;
+    }
+
+    public void setSetSize(Integer setSize) {
+        this.setSize = setSize;
     }
 }

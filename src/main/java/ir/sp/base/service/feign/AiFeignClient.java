@@ -20,7 +20,8 @@ public interface AiFeignClient {
 //    @RequestMapping(value = "/institution/planing/{institutionId}", method = RequestMethod.GET)
 //    GetPlanDTO getPlaning(@PathVariable(value = "institutionId", name = "institutionId") Long institutionId);
 
-    @RequestMapping(value = "/api/planning/{institutionId}")
-    GaModel getPlaning(@PathVariable(value = "institutionId", name = "institutionId") Long institutionId);
+    @RequestMapping(value = "/api/planning/{institutionId}/{semesterId}")
+    GaModel getPlaning(@PathVariable(value = "semesterId", name = "semesterId") Long semesterId, 
+                       @PathVariable(value = "institutionId", name = "institutionId") Long institutionId);
 
 }

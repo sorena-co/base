@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FeignPlanDTO {
-    List<ClassRoomDTO> classRooms = new ArrayList<>();
-    List<CourseDTO> courses = new ArrayList<>();
-    List<PersonDTO> persons = new ArrayList<>();
-    List<RoomDTO> rooms = new ArrayList<>();
+    private List<ClassRoomDTO> classRooms = new ArrayList<>();
+    private List<CourseDTO> courses = new ArrayList<>();
+    private List<PersonDTO> persons = new ArrayList<>();
+    private List<RoomDTO> rooms = new ArrayList<>();
+    private Long institutionId;
+    private Long semesterId;
 
     public List<ClassRoomDTO> getClassRooms() {
         return classRooms;
@@ -40,5 +42,21 @@ public class FeignPlanDTO {
 
     public void setRooms(List<RoomDTO> rooms) {
         this.rooms = rooms;
+    }
+
+    public Long getInstitutionId() {
+        return institutionId;
+    }
+
+    public void setInstitutionId(Long institutionId) {
+        this.institutionId = institutionId;
+    }
+
+    public Long getSemesterId() {
+        return semesterId;
+    }
+
+    public void setSemesterId(Long semesterId) {
+        this.semesterId = semesterId;
     }
 }

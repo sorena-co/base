@@ -13,7 +13,6 @@ public interface ClassTimeMapper extends EntityMapper<ClassTimeDTO, ClassTime> {
 
     @Mapping(source = "classRoom.id", target = "classRoomId")
     @Mapping(source = "person.id", target = "personId")
-    @Mapping(source = "person.code", target = "personCode")
     @Mapping(source = "classGroup.id", target = "classGroupId")
     @Mapping(source = "classGroup.name", target = "classGroupName")
     ClassTimeDTO toDto(ClassTime classTime);
