@@ -47,9 +47,6 @@ public class InstitutionResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_CODE = "BBBBBBBBBB";
-
     private static final Integer DEFAULT_POPULATION = 1;
     private static final Integer UPDATED_POPULATION = 2;
 
@@ -122,7 +119,6 @@ public class InstitutionResourceIntTest {
     public static Institution createEntity(EntityManager em) {
         Institution institution = new Institution()
             .name(DEFAULT_NAME)
-            .code(DEFAULT_CODE)
             .population(DEFAULT_POPULATION)
             .email(DEFAULT_EMAIL)
             .website(DEFAULT_WEBSITE)
@@ -157,7 +153,6 @@ public class InstitutionResourceIntTest {
         assertThat(institutionList).hasSize(databaseSizeBeforeCreate + 1);
         Institution testInstitution = institutionList.get(institutionList.size() - 1);
         assertThat(testInstitution.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testInstitution.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testInstitution.getPopulation()).isEqualTo(DEFAULT_POPULATION);
         assertThat(testInstitution.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testInstitution.getWebsite()).isEqualTo(DEFAULT_WEBSITE);
@@ -201,7 +196,6 @@ public class InstitutionResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(institution.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].population").value(hasItem(DEFAULT_POPULATION)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].website").value(hasItem(DEFAULT_WEBSITE.toString())))
@@ -225,7 +219,6 @@ public class InstitutionResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(institution.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.population").value(DEFAULT_POPULATION))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
             .andExpect(jsonPath("$.website").value(DEFAULT_WEBSITE.toString()))
@@ -258,7 +251,6 @@ public class InstitutionResourceIntTest {
         em.detach(updatedInstitution);
         updatedInstitution
             .name(UPDATED_NAME)
-            .code(UPDATED_CODE)
             .population(UPDATED_POPULATION)
             .email(UPDATED_EMAIL)
             .website(UPDATED_WEBSITE)
@@ -280,7 +272,6 @@ public class InstitutionResourceIntTest {
         assertThat(institutionList).hasSize(databaseSizeBeforeUpdate);
         Institution testInstitution = institutionList.get(institutionList.size() - 1);
         assertThat(testInstitution.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testInstitution.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testInstitution.getPopulation()).isEqualTo(UPDATED_POPULATION);
         assertThat(testInstitution.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testInstitution.getWebsite()).isEqualTo(UPDATED_WEBSITE);

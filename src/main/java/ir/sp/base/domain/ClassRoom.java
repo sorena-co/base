@@ -26,8 +26,8 @@ public class ClassRoom implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "code")
-    private String code;
+    @Column(name = "jhi_size")
+    private Integer size;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -71,17 +71,17 @@ public class ClassRoom implements Serializable {
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
+    public Integer getSize() {
+        return size;
     }
 
-    public ClassRoom code(String code) {
-        this.code = code;
+    public ClassRoom size(Integer size) {
+        this.size = size;
         return this;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
     public ClassTime getClassesTime() {
@@ -200,7 +200,7 @@ public class ClassRoom implements Serializable {
         return "ClassRoom{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", code='" + getCode() + "'" +
+            ", size=" + getSize() +
             "}";
     }
 }

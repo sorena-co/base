@@ -32,8 +32,8 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "code",
-            "fieldType": "String"
+            "fieldName": "size",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20180812190645",

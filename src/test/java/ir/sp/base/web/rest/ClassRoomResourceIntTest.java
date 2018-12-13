@@ -46,8 +46,8 @@ public class ClassRoomResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_CODE = "BBBBBBBBBB";
+    private static final Integer DEFAULT_SIZE = 1;
+    private static final Integer UPDATED_SIZE = 2;
 
     @Autowired
     private ClassRoomRepository classRoomRepository;
@@ -94,7 +94,7 @@ public class ClassRoomResourceIntTest {
     public static ClassRoom createEntity(EntityManager em) {
         ClassRoom classRoom = new ClassRoom()
             .name(DEFAULT_NAME)
-            .code(DEFAULT_CODE);
+            .size(DEFAULT_SIZE);
         return classRoom;
     }
 
@@ -120,7 +120,7 @@ public class ClassRoomResourceIntTest {
         assertThat(classRoomList).hasSize(databaseSizeBeforeCreate + 1);
         ClassRoom testClassRoom = classRoomList.get(classRoomList.size() - 1);
         assertThat(testClassRoom.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testClassRoom.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testClassRoom.getSize()).isEqualTo(DEFAULT_SIZE);
     }
 
     @Test
@@ -155,7 +155,7 @@ public class ClassRoomResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(classRoom.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())));
+            .andExpect(jsonPath("$.[*].size").value(hasItem(DEFAULT_SIZE)));
     }
 
     @Test
@@ -170,7 +170,7 @@ public class ClassRoomResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(classRoom.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()));
+            .andExpect(jsonPath("$.size").value(DEFAULT_SIZE));
     }
 
     @Test
@@ -194,7 +194,7 @@ public class ClassRoomResourceIntTest {
         em.detach(updatedClassRoom);
         updatedClassRoom
             .name(UPDATED_NAME)
-            .code(UPDATED_CODE);
+            .size(UPDATED_SIZE);
         ClassRoomDTO classRoomDTO = classRoomMapper.toDto(updatedClassRoom);
 
         restClassRoomMockMvc.perform(put("/api/class-rooms")
@@ -207,7 +207,7 @@ public class ClassRoomResourceIntTest {
         assertThat(classRoomList).hasSize(databaseSizeBeforeUpdate);
         ClassRoom testClassRoom = classRoomList.get(classRoomList.size() - 1);
         assertThat(testClassRoom.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testClassRoom.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testClassRoom.getSize()).isEqualTo(UPDATED_SIZE);
     }
 
     @Test

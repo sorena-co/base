@@ -26,10 +26,6 @@
         {
             "fieldName": "name",
             "fieldType": "String"
-        },
-        {
-            "fieldName": "code",
-            "fieldType": "String"
         }
     ],
     "changelogDate": "20180812190643",

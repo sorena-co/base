@@ -46,9 +46,6 @@ public class ProgramResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_CODE = "BBBBBBBBBB";
-
     @Autowired
     private ProgramRepository programRepository;
 
@@ -93,8 +90,7 @@ public class ProgramResourceIntTest {
      */
     public static Program createEntity(EntityManager em) {
         Program program = new Program()
-            .name(DEFAULT_NAME)
-            .code(DEFAULT_CODE);
+            .name(DEFAULT_NAME);
         return program;
     }
 
@@ -120,7 +116,6 @@ public class ProgramResourceIntTest {
         assertThat(programList).hasSize(databaseSizeBeforeCreate + 1);
         Program testProgram = programList.get(programList.size() - 1);
         assertThat(testProgram.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testProgram.getCode()).isEqualTo(DEFAULT_CODE);
     }
 
     @Test
@@ -154,8 +149,7 @@ public class ProgramResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(program.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
     @Test
@@ -169,8 +163,7 @@ public class ProgramResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(program.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
     @Test
@@ -193,8 +186,7 @@ public class ProgramResourceIntTest {
         // Disconnect from session so that the updates on updatedProgram are not directly saved in db
         em.detach(updatedProgram);
         updatedProgram
-            .name(UPDATED_NAME)
-            .code(UPDATED_CODE);
+            .name(UPDATED_NAME);
         ProgramDTO programDTO = programMapper.toDto(updatedProgram);
 
         restProgramMockMvc.perform(put("/api/programs")
@@ -207,7 +199,6 @@ public class ProgramResourceIntTest {
         assertThat(programList).hasSize(databaseSizeBeforeUpdate);
         Program testProgram = programList.get(programList.size() - 1);
         assertThat(testProgram.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testProgram.getCode()).isEqualTo(UPDATED_CODE);
     }
 
     @Test

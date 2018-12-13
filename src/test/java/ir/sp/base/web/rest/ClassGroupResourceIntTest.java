@@ -46,8 +46,8 @@ public class ClassGroupResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_CODE = "BBBBBBBBBB";
+    private static final Integer DEFAULT_SIZE = 1;
+    private static final Integer UPDATED_SIZE = 2;
 
     @Autowired
     private ClassGroupRepository classGroupRepository;
@@ -94,7 +94,7 @@ public class ClassGroupResourceIntTest {
     public static ClassGroup createEntity(EntityManager em) {
         ClassGroup classGroup = new ClassGroup()
             .name(DEFAULT_NAME)
-            .code(DEFAULT_CODE);
+            .size(DEFAULT_SIZE);
         return classGroup;
     }
 
@@ -120,7 +120,7 @@ public class ClassGroupResourceIntTest {
         assertThat(classGroupList).hasSize(databaseSizeBeforeCreate + 1);
         ClassGroup testClassGroup = classGroupList.get(classGroupList.size() - 1);
         assertThat(testClassGroup.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testClassGroup.getCode()).isEqualTo(DEFAULT_CODE);
+        assertThat(testClassGroup.getSize()).isEqualTo(DEFAULT_SIZE);
     }
 
     @Test
@@ -155,7 +155,7 @@ public class ClassGroupResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(classGroup.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())));
+            .andExpect(jsonPath("$.[*].size").value(hasItem(DEFAULT_SIZE)));
     }
 
     @Test
@@ -170,7 +170,7 @@ public class ClassGroupResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(classGroup.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()));
+            .andExpect(jsonPath("$.size").value(DEFAULT_SIZE));
     }
 
     @Test
@@ -194,7 +194,7 @@ public class ClassGroupResourceIntTest {
         em.detach(updatedClassGroup);
         updatedClassGroup
             .name(UPDATED_NAME)
-            .code(UPDATED_CODE);
+            .size(UPDATED_SIZE);
         ClassGroupDTO classGroupDTO = classGroupMapper.toDto(updatedClassGroup);
 
         restClassGroupMockMvc.perform(put("/api/class-groups")
@@ -207,7 +207,7 @@ public class ClassGroupResourceIntTest {
         assertThat(classGroupList).hasSize(databaseSizeBeforeUpdate);
         ClassGroup testClassGroup = classGroupList.get(classGroupList.size() - 1);
         assertThat(testClassGroup.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testClassGroup.getCode()).isEqualTo(UPDATED_CODE);
+        assertThat(testClassGroup.getSize()).isEqualTo(UPDATED_SIZE);
     }
 
     @Test

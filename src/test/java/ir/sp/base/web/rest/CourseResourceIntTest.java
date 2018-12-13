@@ -46,9 +46,6 @@ public class CourseResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_CODE = "BBBBBBBBBB";
-
     private static final Boolean DEFAULT_NEED_LAB = false;
     private static final Boolean UPDATED_NEED_LAB = true;
 
@@ -112,7 +109,6 @@ public class CourseResourceIntTest {
     public static Course createEntity(EntityManager em) {
         Course course = new Course()
             .name(DEFAULT_NAME)
-            .code(DEFAULT_CODE)
             .needLab(DEFAULT_NEED_LAB)
             .needProjector(DEFAULT_NEED_PROJECTOR)
             .practicalCredit(DEFAULT_PRACTICAL_CREDIT)
@@ -144,7 +140,6 @@ public class CourseResourceIntTest {
         assertThat(courseList).hasSize(databaseSizeBeforeCreate + 1);
         Course testCourse = courseList.get(courseList.size() - 1);
         assertThat(testCourse.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testCourse.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testCourse.isNeedLab()).isEqualTo(DEFAULT_NEED_LAB);
         assertThat(testCourse.isNeedProjector()).isEqualTo(DEFAULT_NEED_PROJECTOR);
         assertThat(testCourse.getPracticalCredit()).isEqualTo(DEFAULT_PRACTICAL_CREDIT);
@@ -185,7 +180,6 @@ public class CourseResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(course.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].needLab").value(hasItem(DEFAULT_NEED_LAB.booleanValue())))
             .andExpect(jsonPath("$.[*].needProjector").value(hasItem(DEFAULT_NEED_PROJECTOR.booleanValue())))
             .andExpect(jsonPath("$.[*].practicalCredit").value(hasItem(DEFAULT_PRACTICAL_CREDIT)))
@@ -206,7 +200,6 @@ public class CourseResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(course.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.needLab").value(DEFAULT_NEED_LAB.booleanValue()))
             .andExpect(jsonPath("$.needProjector").value(DEFAULT_NEED_PROJECTOR.booleanValue()))
             .andExpect(jsonPath("$.practicalCredit").value(DEFAULT_PRACTICAL_CREDIT))
@@ -236,7 +229,6 @@ public class CourseResourceIntTest {
         em.detach(updatedCourse);
         updatedCourse
             .name(UPDATED_NAME)
-            .code(UPDATED_CODE)
             .needLab(UPDATED_NEED_LAB)
             .needProjector(UPDATED_NEED_PROJECTOR)
             .practicalCredit(UPDATED_PRACTICAL_CREDIT)
@@ -255,7 +247,6 @@ public class CourseResourceIntTest {
         assertThat(courseList).hasSize(databaseSizeBeforeUpdate);
         Course testCourse = courseList.get(courseList.size() - 1);
         assertThat(testCourse.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testCourse.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testCourse.isNeedLab()).isEqualTo(UPDATED_NEED_LAB);
         assertThat(testCourse.isNeedProjector()).isEqualTo(UPDATED_NEED_PROJECTOR);
         assertThat(testCourse.getPracticalCredit()).isEqualTo(UPDATED_PRACTICAL_CREDIT);

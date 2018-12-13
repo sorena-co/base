@@ -15,7 +15,7 @@ public class ClassGroupDTO implements Serializable {
 
     private String name;
 
-    private String code;
+    private Integer size;
 
     private Long programId;
 
@@ -41,12 +41,12 @@ public class ClassGroupDTO implements Serializable {
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
+    public Integer getSize() {
+        return size;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
     public Long getProgramId() {
@@ -107,7 +107,7 @@ public class ClassGroupDTO implements Serializable {
         return "ClassGroupDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", code='" + getCode() + "'" +
+            ", size=" + getSize() +
             "}";
     }
 }

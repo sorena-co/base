@@ -26,10 +26,6 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "code",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "population",
             "fieldType": "Integer"
         },

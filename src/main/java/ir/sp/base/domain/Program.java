@@ -26,9 +26,6 @@ public class Program implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "code")
-    private String code;
-
     @ManyToOne
     private Institution institution;
 
@@ -62,19 +59,6 @@ public class Program implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public Program code(String code) {
-        this.code = code;
-        return this;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Institution getInstitution() {
@@ -164,7 +148,6 @@ public class Program implements Serializable {
         return "Program{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", code='" + getCode() + "'" +
             "}";
     }
 }

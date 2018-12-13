@@ -39,9 +39,6 @@ public class Person implements Serializable {
     @Column(name = "father_name")
     private String fatherName;
 
-    @Column(name = "code")
-    private String code;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
@@ -149,19 +146,6 @@ public class Person implements Serializable {
 
     public void setFatherName(String fatherName) {
         this.fatherName = fatherName;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public Person code(String code) {
-        this.code = code;
-        return this;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Gender getGender() {
@@ -448,7 +432,6 @@ public class Person implements Serializable {
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             ", fatherName='" + getFatherName() + "'" +
-            ", code='" + getCode() + "'" +
             ", gender='" + getGender() + "'" +
             ", degree='" + getDegree() + "'" +
             ", major='" + getMajor() + "'" +

@@ -23,9 +23,6 @@ public class Course implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "code")
-    private String code;
-
     @Column(name = "need_lab")
     private Boolean needLab;
 
@@ -67,19 +64,6 @@ public class Course implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public Course code(String code) {
-        this.code = code;
-        return this;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Boolean isNeedLab() {
@@ -199,7 +183,6 @@ public class Course implements Serializable {
         return "Course{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", code='" + getCode() + "'" +
             ", needLab='" + isNeedLab() + "'" +
             ", needProjector='" + isNeedProjector() + "'" +
             ", practicalCredit=" + getPracticalCredit() +

@@ -25,10 +25,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="code" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
             <column name="institution_id" type="bigint">
                 <constraints nullable="true" />
             </column>

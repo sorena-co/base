@@ -42,10 +42,6 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "code",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "gender",
             "fieldType": "Gender",
             "fieldValues": "MALE,WOMAN"

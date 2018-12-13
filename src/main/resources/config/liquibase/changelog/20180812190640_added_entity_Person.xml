@@ -33,10 +33,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="code" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
             <column name="gender" type="varchar(255)">
                 <constraints nullable="true" />
             </column>

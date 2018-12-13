@@ -23,8 +23,6 @@ public class PersonDTO implements Serializable {
 
     private String fatherName;
 
-    private String code;
-
     private Gender gender;
 
     private Degree degree;
@@ -93,14 +91,6 @@ public class PersonDTO implements Serializable {
 
     public void setFatherName(String fatherName) {
         this.fatherName = fatherName;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Gender getGender() {
@@ -283,7 +273,6 @@ public class PersonDTO implements Serializable {
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             ", fatherName='" + getFatherName() + "'" +
-            ", code='" + getCode() + "'" +
             ", gender='" + getGender() + "'" +
             ", degree='" + getDegree() + "'" +
             ", major='" + getMajor() + "'" +

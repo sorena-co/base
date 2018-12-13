@@ -60,9 +60,6 @@ public class PersonResourceIntTest {
     private static final String DEFAULT_FATHER_NAME = "AAAAAAAAAA";
     private static final String UPDATED_FATHER_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_CODE = "BBBBBBBBBB";
-
     private static final Gender DEFAULT_GENDER = Gender.MALE;
     private static final Gender UPDATED_GENDER = Gender.WOMAN;
 
@@ -152,7 +149,6 @@ public class PersonResourceIntTest {
             .firstName(DEFAULT_FIRST_NAME)
             .lastName(DEFAULT_LAST_NAME)
             .fatherName(DEFAULT_FATHER_NAME)
-            .code(DEFAULT_CODE)
             .gender(DEFAULT_GENDER)
             .degree(DEFAULT_DEGREE)
             .major(DEFAULT_MAJOR)
@@ -194,7 +190,6 @@ public class PersonResourceIntTest {
         assertThat(testPerson.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
         assertThat(testPerson.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testPerson.getFatherName()).isEqualTo(DEFAULT_FATHER_NAME);
-        assertThat(testPerson.getCode()).isEqualTo(DEFAULT_CODE);
         assertThat(testPerson.getGender()).isEqualTo(DEFAULT_GENDER);
         assertThat(testPerson.getDegree()).isEqualTo(DEFAULT_DEGREE);
         assertThat(testPerson.getMajor()).isEqualTo(DEFAULT_MAJOR);
@@ -245,7 +240,6 @@ public class PersonResourceIntTest {
             .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME.toString())))
-            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
             .andExpect(jsonPath("$.[*].degree").value(hasItem(DEFAULT_DEGREE.toString())))
             .andExpect(jsonPath("$.[*].major").value(hasItem(DEFAULT_MAJOR.toString())))
@@ -276,7 +270,6 @@ public class PersonResourceIntTest {
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
             .andExpect(jsonPath("$.fatherName").value(DEFAULT_FATHER_NAME.toString()))
-            .andExpect(jsonPath("$.code").value(DEFAULT_CODE.toString()))
             .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()))
             .andExpect(jsonPath("$.degree").value(DEFAULT_DEGREE.toString()))
             .andExpect(jsonPath("$.major").value(DEFAULT_MAJOR.toString()))
@@ -316,7 +309,6 @@ public class PersonResourceIntTest {
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
             .fatherName(UPDATED_FATHER_NAME)
-            .code(UPDATED_CODE)
             .gender(UPDATED_GENDER)
             .degree(UPDATED_DEGREE)
             .major(UPDATED_MAJOR)
@@ -345,7 +337,6 @@ public class PersonResourceIntTest {
         assertThat(testPerson.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testPerson.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testPerson.getFatherName()).isEqualTo(UPDATED_FATHER_NAME);
-        assertThat(testPerson.getCode()).isEqualTo(UPDATED_CODE);
         assertThat(testPerson.getGender()).isEqualTo(UPDATED_GENDER);
         assertThat(testPerson.getDegree()).isEqualTo(UPDATED_DEGREE);
         assertThat(testPerson.getMajor()).isEqualTo(UPDATED_MAJOR);

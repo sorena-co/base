@@ -25,10 +25,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="code" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
             <column name="need_lab" type="boolean">
                 <constraints nullable="true" />
             </column>

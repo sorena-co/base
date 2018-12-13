@@ -15,8 +15,6 @@ public class ProgramDTO implements Serializable {
 
     private String name;
 
-    private String code;
-
     private Long institutionId;
 
     private String institutionName;
@@ -37,14 +35,6 @@ public class ProgramDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Long getInstitutionId() {
@@ -97,7 +87,6 @@ public class ProgramDTO implements Serializable {
         return "ProgramDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", code='" + getCode() + "'" +
             "}";
     }
 }
