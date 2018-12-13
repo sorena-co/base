@@ -1,9 +1,12 @@
 package ir.sp.base.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -29,6 +32,10 @@ public class ClassRoom implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private ClassTime classesTime;
+
+    @OneToMany(mappedBy = "classRoom")
+    @JsonIgnore
+    private Set<ClassTime> preferenceTimes = new HashSet<>();
 
     @ManyToOne
     private ClassGroup classGroup;
@@ -88,6 +95,31 @@ public class ClassRoom implements Serializable {
 
     public void setClassesTime(ClassTime classTime) {
         this.classesTime = classTime;
+    }
+
+    public Set<ClassTime> getPreferenceTimes() {
+        return preferenceTimes;
+    }
+
+    public ClassRoom preferenceTimes(Set<ClassTime> classTimes) {
+        this.preferenceTimes = classTimes;
+        return this;
+    }
+
+    public ClassRoom addPreferenceTime(ClassTime classTime) {
+        this.preferenceTimes.add(classTime);
+        classTime.setClassRoom(this);
+        return this;
+    }
+
+    public ClassRoom removePreferenceTime(ClassTime classTime) {
+        this.preferenceTimes.remove(classTime);
+        classTime.setClassRoom(null);
+        return this;
+    }
+
+    public void setPreferenceTimes(Set<ClassTime> classTimes) {
+        this.preferenceTimes = classTimes;
     }
 
     public ClassGroup getClassGroup() {

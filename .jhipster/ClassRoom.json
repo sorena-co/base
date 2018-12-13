@@ -10,6 +10,12 @@
             "otherEntityRelationshipName": "classRoom"
         },
         {
+            "relationshipType": "one-to-many",
+            "relationshipName": "preferenceTime",
+            "otherEntityName": "classTime",
+            "otherEntityRelationshipName": "classRoom"
+        },
+        {
             "relationshipType": "many-to-one",
             "relationshipName": "classGroup",
             "otherEntityName": "classGroup",

@@ -114,6 +114,10 @@ relationship OneToOne{
     ClassRoom {classesTime} to ClassTime
 }
 
+relationship OneToMany{
+    ClassRoom {preferenceTime} to ClassTime
+}
+
 relationship ManyToMany{
     Program {course(name)} to Course,
     Person {course(name)} to Course

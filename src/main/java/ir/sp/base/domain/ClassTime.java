@@ -36,6 +36,9 @@ public class ClassTime implements Serializable {
     private Float priority;
 
     @ManyToOne
+    private ClassRoom classRoom;
+
+    @ManyToOne
     private Person person;
 
     @ManyToOne
@@ -100,6 +103,19 @@ public class ClassTime implements Serializable {
 
     public void setPriority(Float priority) {
         this.priority = priority;
+    }
+
+    public ClassRoom getClassRoom() {
+        return classRoom;
+    }
+
+    public ClassTime classRoom(ClassRoom classRoom) {
+        this.classRoom = classRoom;
+        return this;
+    }
+
+    public void setClassRoom(ClassRoom classRoom) {
+        this.classRoom = classRoom;
     }
 
     public Person getPerson() {
