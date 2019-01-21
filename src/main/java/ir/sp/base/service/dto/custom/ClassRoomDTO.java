@@ -17,9 +17,9 @@ public class ClassRoomDTO implements Cloneable {
     private Integer practicalHour;
     private Integer theoreticalCredit;
     private Integer theoreticalHour;
-    private short day;
-    private short startTime;
-    private short endTime;
+    private int day;
+    private int startTime;
+    private int endTime;
     private long personId;
     private String personName;
     private long roomId;
@@ -106,27 +106,27 @@ public class ClassRoomDTO implements Cloneable {
         this.theoreticalHour = theoreticalHour;
     }
 
-    public short getDay() {
+    public int getDay() {
         return day;
     }
 
-    public void setDay(short day) {
+    public void setDay(int day) {
         this.day = day;
     }
 
-    public short getStartTime() {
+    public int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(short startTime) {
+    public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 
-    public short getEndTime() {
+    public int getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(short endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 

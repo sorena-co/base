@@ -1,6 +1,7 @@
 package ir.sp.base.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import io.swagger.annotations.ApiParam;
 import ir.sp.base.service.SemesterService;
 import ir.sp.base.service.dto.ClassGroupDTO;
 import ir.sp.base.web.rest.errors.BadRequestAlertException;
@@ -127,9 +128,9 @@ public class SemesterResource {
 
     @GetMapping("/semesters/{id}/class-groups")
     @Timed
-    public ResponseEntity<List<ClassGroupDTO>> getAllClassGroup(@PathVariable Long id, Pageable pageable) {
+    public ResponseEntity<List<ClassGroupDTO>> getAllClassGroup(@PathVariable Long id, @RequestParam(required = false) String query, @ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Class Group");
-        Page<ClassGroupDTO> page = semesterService.findAllClassGroups(id, pageable);
+        Page<ClassGroupDTO> page = semesterService.findAllClassGroups(id, query, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

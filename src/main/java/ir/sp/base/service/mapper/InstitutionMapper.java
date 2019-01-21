@@ -4,10 +4,13 @@ import ir.sp.base.domain.*;
 import ir.sp.base.service.dto.*;
 
 import ir.sp.base.service.dto.custom.FeignPlanDTO;
+import ir.sp.base.service.util.Utils;
 import org.mapstruct.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ir.sp.base.service.util.Utils.getDayNumber;
 
 /**
  * Mapper for the entity Institution and its DTO InstitutionDTO.
@@ -59,7 +62,7 @@ public interface InstitutionMapper extends EntityMapper<InstitutionDTO, Institut
             cls.setTheoreticalHour(classRoom.getCourse().getTheoreticalHours());
             for (ClassTime classTime : classRoom.getClassGroup().getPreferenceTimes()) {
                 ir.sp.base.service.dto.custom.ClassTime ct = new ir.sp.base.service.dto.custom.ClassTime();
-                ct.setDay((short) classTime.getDay().ordinal());
+                ct.setDay(getDayNumber(classTime.getDay()));
                 ct.setEndTime(classTime.getEndTime());
                 ct.setStartTime(classTime.getStartTime());
                 ct.setPriority(classTime.getPriority());
@@ -84,13 +87,14 @@ public interface InstitutionMapper extends EntityMapper<InstitutionDTO, Institut
         profs.forEach(prof -> {
             ir.sp.base.service.dto.custom.PersonDTO personDTO = new ir.sp.base.service.dto.custom.PersonDTO();
             personDTO.setId(prof.getId());
+            personDTO.setPriority(prof.getPriority());
             personDTO.setName(prof.getFirstName() + " " + prof.getLastName());
             personDTO.setMaxCredits(prof.getMaxCredits());
             personDTO.setCourseIds(prof.getCourses().stream().map(Course::getId).collect(Collectors.toList()));
 
             for (ClassTime classTime : prof.getPreferenceTimes()) {
                 ir.sp.base.service.dto.custom.ClassTime ct = new ir.sp.base.service.dto.custom.ClassTime();
-                ct.setDay((short) classTime.getDay().ordinal());
+                ct.setDay(getDayNumber(classTime.getDay()));
                 ct.setEndTime(classTime.getEndTime());
                 ct.setStartTime(classTime.getStartTime());
                 ct.setPriority(classTime.getPriority());

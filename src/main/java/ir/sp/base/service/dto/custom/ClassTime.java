@@ -1,16 +1,16 @@
 package ir.sp.base.service.dto.custom;
 
 public class ClassTime implements Cloneable {
-    private short day;
+    private int day;
     private Float startTime;
     private Float endTime;
     private Float priority;
 
-    public short getDay() {
+    public int getDay() {
         return day;
     }
 
-    public void setDay(short day) {
+    public void setDay(int day) {
         this.day = day;
     }
 

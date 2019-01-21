@@ -8,6 +8,7 @@ public class PersonDTO {
     private String name;
     private Integer maxCredits;
     private List<Long> courseIds;
+    private Float priority;
     private List<ClassTime> classTimes = new ArrayList<>();
 
     public long getId() {
@@ -48,5 +49,13 @@ public class PersonDTO {
 
     public void setMaxCredits(Integer maxCredits) {
         this.maxCredits = maxCredits;
+    }
+
+    public Float getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Float priority) {
+        this.priority = priority;
     }
 }

@@ -1,7 +1,9 @@
 package ir.sp.base.service;
 
+import com.querydsl.core.types.dsl.PathBuilder;
 import ir.sp.base.domain.*;
 import ir.sp.base.repository.*;
+import ir.sp.base.repository.dsl.PredicatesBuilder;
 import ir.sp.base.service.dto.*;
 import ir.sp.base.service.dto.custom.FeignPlanDTO;
 import ir.sp.base.service.dto.feign.GaModel;
@@ -124,8 +126,8 @@ public class InstitutionService {
         Semester semester = semesterRepository.findOne(id);
         List<Person> profs = personRepository.findAllByInstitution_Id(semester.getInstitution().getId());
         List<Room> rooms = roomRepository.findAllByInstitution_Id(semester.getInstitution().getId());
-        List<ClassRoom> classRooms = classRoomRepository.findAllClassRoomByInstitutionId(semester.getInstitution().getId());
-        List<Course> courses = courseRepository.findAllByInstitution_Id(semester.getInstitution().getId());
+        List<ClassRoom> classRooms = classRoomRepository.findAllClassRoomByInstitutionId(semester.getInstitution().getId(), semester.getId());
+        List<Course> courses = courseRepository.findAllByInstitution_IdAndSemesterId(semester.getInstitution().getId(), semester.getId());
 
         FeignPlanDTO feignPlanDTO = institutionMapper.toFeignPlanDTO(semester.getInstitution().getId(), profs, rooms, courses, classRooms, semester);
         String s = aiFeignClient.startPlaning(feignPlanDTO);
@@ -134,9 +136,18 @@ public class InstitutionService {
         return s;
     }
 
-    public Page<ProgramDTO> findAllPrograms(Long institutionId, Pageable pageable) {
-        return programRepository.findAllByInstitution_Id(institutionId, pageable)
-            .map(programMapper::toDto);
+    public Page<ProgramDTO> findAllPrograms(Long institutionId, String query, Pageable pageable) {
+        Page<Program> result;
+        if (query != null) {
+            com.querydsl.core.types.dsl.BooleanExpression booleanExpression = new PredicatesBuilder().build(query, new PathBuilder<>(Program.class, "program"), null);
+            com.querydsl.core.types.dsl.BooleanExpression customerExpression = QProgram.program.institution.id.eq(institutionId);
+            booleanExpression = booleanExpression != null ? booleanExpression.and(customerExpression) : customerExpression;
+            result = programRepository.findAll(booleanExpression, pageable);
+        } else {
+            result = programRepository.findAllByInstitution_Id(institutionId, pageable);
+
+        }
+        return result.map(programMapper::toDto);
     }
 
     public Page<PersonDTO> findAllPersons(Long institutionId, Pageable pageable) {

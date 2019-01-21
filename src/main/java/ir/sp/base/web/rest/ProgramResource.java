@@ -1,6 +1,7 @@
 package ir.sp.base.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import io.swagger.annotations.ApiParam;
 import ir.sp.base.service.ProgramService;
 import ir.sp.base.service.dto.ClassGroupDTO;
 import ir.sp.base.service.dto.CourseDTO;
@@ -91,9 +92,12 @@ public class ProgramResource {
      */
     @GetMapping("/programs")
     @Timed
-    public ResponseEntity<List<ProgramDTO>> getAllPrograms(Pageable pageable) {
+    public ResponseEntity<List<ProgramDTO>> getAllPrograms(
+        @RequestParam(required = false) String query,
+        @ApiParam Pageable pageable
+    ) {
         log.debug("REST request to get a page of Programs");
-        Page<ProgramDTO> page = programService.findAll(pageable);
+        Page<ProgramDTO> page = programService.findAll(query,pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/programs");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

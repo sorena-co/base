@@ -18,16 +18,19 @@ import java.util.List;
 @Repository
 public interface ClassRoomRepository extends JpaRepository<ClassRoom, Long> {
     @Query(
-        "select classRoom from ClassRoom classRoom " +
-            "inner join classRoom.classGroup classGroup " +
+        "select distinct classRoom from ClassRoom classRoom " +
+            "inner join fetch classRoom.classGroup classGroup " +
             "inner join classGroup.program program " +
+            "inner join classGroup.semester semester " +
             "inner join program.institution institution " +
-            "where institution.id = :institutionId"
+            "left join fetch classGroup.preferenceTimes " +
+            "where institution.id = :institutionId and semester.id=:semesterId"
     )
-    List<ClassRoom> findAllClassRoomByInstitutionId(@Param("institutionId") Long institutionId);
+    List<ClassRoom> findAllClassRoomByInstitutionId(@Param("institutionId") Long institutionId, @Param("semesterId") Long semesterId);
 
 
     Page<ClassRoom> findAllByClassGroup_Id(Long classGroupId, Pageable pageable);
+
     List<ClassRoom> findAllByClassGroup_Id(Long classGroupId);
 
     void deleteAllByClassGroup_Id(Long classGroupId);

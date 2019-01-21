@@ -3,6 +3,7 @@ package ir.sp.base.repository;
 import ir.sp.base.domain.Program;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ProgramRepository extends JpaRepository<Program, Long> {
+public interface ProgramRepository extends JpaRepository<Program, Long>,QueryDslPredicateExecutor<Program> {
     Page<Program> findAllByInstitution_Id(Long institutionId, Pageable pageable);
     @Query("select distinct program from Program program left join fetch program.courses")
     List<Program> findAllWithEagerRelationships();

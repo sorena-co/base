@@ -3,7 +3,7 @@ package ir.sp.base.service.util;
 import ir.sp.base.domain.enumeration.Day;
 
 public class Utils {
-    public static String getDayFA(short day) {
+    public static String getDayFA(int day) {
         switch (day) {
             case 0: {
                 return "شنبه";
@@ -31,6 +31,28 @@ public class Utils {
             }
         }
     }
+
+    public static Integer getDayNumber(Day day) {
+        switch (day) {
+            case SATURDAY:
+                return 0;
+            case SUNDAY:
+                return 1;
+            case MONDAY:
+                return 2;
+            case TUESDAY:
+                return 3;
+            case WEDNESDAY:
+                return 4;
+            case THURSDAY:
+                return 5;
+            case FRIDAY:
+                return 6;
+            default:
+                return null;
+        }
+    }
+
     public static String getDayFA(Day day) {
         switch (day) {
             case SATURDAY: {

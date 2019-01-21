@@ -1,10 +1,12 @@
 package ir.sp.base.service;
 
+import com.querydsl.core.types.dsl.PathBuilder;
 import ir.sp.base.domain.Course;
 import ir.sp.base.domain.Program;
 import ir.sp.base.repository.ClassGroupRepository;
 import ir.sp.base.repository.CourseRepository;
 import ir.sp.base.repository.ProgramRepository;
+import ir.sp.base.repository.dsl.PredicatesBuilder;
 import ir.sp.base.service.dto.ClassGroupDTO;
 import ir.sp.base.service.dto.CourseDTO;
 import ir.sp.base.service.dto.ProgramDTO;
@@ -65,14 +67,20 @@ public class ProgramService {
     /**
      * Get all the programs.
      *
+     * @param query
      * @param pageable the pagination information
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public Page<ProgramDTO> findAll(Pageable pageable) {
+    public Page<ProgramDTO> findAll(String query, Pageable pageable) {
         log.debug("Request to get all Programs");
-        return programRepository.findAll(pageable)
-            .map(programMapper::toDto);
+        Page<Program> result;
+        if (query != null) {
+            result = programRepository.findAll(new PredicatesBuilder().build(query, new PathBuilder<>(Program.class, "vehicleModel"), null), pageable);
+        } else {
+            result = programRepository.findAll(pageable);
+        }
+        return result.map(programMapper::toDto);
     }
 
     /**

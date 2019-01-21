@@ -30,7 +30,14 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     Page<Course> findAllByInstitution_Id(Long institutionId, Pageable pageable);
 
-    List<Course> findAllByInstitution_Id(Long institutionId);
+    @Query(
+        "select distinct course from Semester semester " +
+            "inner join semester.classGroups classGroups " +
+            "inner join classGroups.classRooms classRooms " +
+            "inner join classRooms.course course " +
+            "where semester.id=:semesterId and semester.institution.id=:institutionId"
+    )
+    List<Course> findAllByInstitution_IdAndSemesterId(@Param("institutionId") Long institutionId, @Param("semesterId") Long semesterId);
 
     List<Course> findAllByIdIn(List<Long> courseIds);
 
@@ -40,4 +47,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
             "where program.id=:programId"
     )
     List<Course> findAllByProgramId(@Param("programId") Long programId);
+
+    List<Course> findAllByInstitution_Id(Long institutionId);
 }

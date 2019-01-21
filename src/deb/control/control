@@ -6,3 +6,4 @@ Architecture: all
 Maintainer: JHipster
 Description: [[description]]
 Distribution: production
+JAVA_OPTS:"-Xms 256m -Xmx 512m"

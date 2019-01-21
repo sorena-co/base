@@ -1,12 +1,17 @@
 package ir.sp.base.service;
 
+import com.querydsl.core.types.dsl.PathBuilder;
+import ir.sp.base.domain.ClassGroup;
+import ir.sp.base.domain.QClassGroup;
 import ir.sp.base.domain.Semester;
 import ir.sp.base.repository.ClassGroupRepository;
 import ir.sp.base.repository.SemesterRepository;
+import ir.sp.base.repository.dsl.PredicatesBuilder;
 import ir.sp.base.service.dto.ClassGroupDTO;
 import ir.sp.base.service.dto.SemesterDTO;
 import ir.sp.base.service.mapper.ClassGroupMapper;
 import ir.sp.base.service.mapper.SemesterMapper;
+import javafx.beans.binding.BooleanExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -87,8 +92,17 @@ public class SemesterService {
         semesterRepository.delete(id);
     }
 
-    public Page<ClassGroupDTO> findAllClassGroups(Long id, Pageable pageable) {
-        return classGroupRepository.findAllBySemester_Id(id, pageable)
-            .map(classGroupMapper::toDto);
+    public Page<ClassGroupDTO> findAllClassGroups(Long id, String query, Pageable pageable) {
+        Page<ClassGroup> result;
+        if (query != null) {
+            com.querydsl.core.types.dsl.BooleanExpression booleanExpression = new PredicatesBuilder().build(query, new PathBuilder<>(ClassGroup.class, "classGroup"), null);
+            com.querydsl.core.types.dsl.BooleanExpression customerExpression = QClassGroup.classGroup.semester.id.eq(id);
+            booleanExpression = booleanExpression != null ? booleanExpression.and(customerExpression) : customerExpression;
+            result = classGroupRepository.findAll(booleanExpression, pageable);
+        } else {
+            result = classGroupRepository.findAllBySemester_Id(id, pageable);
+
+        }
+        return result.map(classGroupMapper::toDto);
     }
 }

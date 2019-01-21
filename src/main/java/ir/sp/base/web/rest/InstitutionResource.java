@@ -1,6 +1,7 @@
 package ir.sp.base.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import io.swagger.annotations.ApiParam;
 import ir.sp.base.service.InstitutionService;
 import ir.sp.base.service.dto.*;
 import ir.sp.base.service.dto.feign.ClassRoomDTO;
@@ -151,11 +152,11 @@ public class InstitutionResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(institutionDTO));
     }
 
-    @GetMapping("/institutions/{institutionId}/programs")
+    @GetMapping("/institutions/{id}/programs")
     @Timed
-    public ResponseEntity<List<ProgramDTO>> getAllPrograms(@PathVariable Long institutionId, Pageable pageable) {
+    public ResponseEntity<List<ProgramDTO>> getAllPrograms(@PathVariable Long id, @RequestParam(required = false) String query, @ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Institutions");
-        Page<ProgramDTO> page = institutionService.findAllPrograms(institutionId, pageable);
+        Page<ProgramDTO> page = institutionService.findAllPrograms(id, query,pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

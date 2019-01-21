@@ -10,13 +10,13 @@ public class ClassRoomDTO {
     private String courseName;
     private boolean needLab;
     private boolean needProjector;
-    private short practicalCredit;
-    private short practicalHour;
-    private short theoreticalCredit;
-    private short theoreticalHour;
-    private short day;
-    private short startTime;
-    private short endTime;
+    private int practicalCredit;
+    private int practicalHour;
+    private int theoreticalCredit;
+    private int theoreticalHour;
+    private int day;
+    private int startTime;
+    private int endTime;
     private long personId;
     private String personName;
     private long roomId;
@@ -70,59 +70,59 @@ public class ClassRoomDTO {
         this.needProjector = needProjector;
     }
 
-    public short getPracticalCredit() {
+    public int getPracticalCredit() {
         return practicalCredit;
     }
 
-    public void setPracticalCredit(short practicalCredit) {
+    public void setPracticalCredit(int practicalCredit) {
         this.practicalCredit = practicalCredit;
     }
 
-    public short getPracticalHour() {
+    public int getPracticalHour() {
         return practicalHour;
     }
 
-    public void setPracticalHour(short practicalHour) {
+    public void setPracticalHour(int practicalHour) {
         this.practicalHour = practicalHour;
     }
 
-    public short getTheoreticalCredit() {
+    public int getTheoreticalCredit() {
         return theoreticalCredit;
     }
 
-    public void setTheoreticalCredit(short theoreticalCredit) {
+    public void setTheoreticalCredit(int theoreticalCredit) {
         this.theoreticalCredit = theoreticalCredit;
     }
 
-    public short getTheoreticalHour() {
+    public int getTheoreticalHour() {
         return theoreticalHour;
     }
 
-    public void setTheoreticalHour(short theoreticalHour) {
+    public void setTheoreticalHour(int theoreticalHour) {
         this.theoreticalHour = theoreticalHour;
     }
 
-    public short getDay() {
+    public int getDay() {
         return day;
     }
 
-    public void setDay(short day) {
+    public void setDay(int day) {
         this.day = day;
     }
 
-    public short getStartTime() {
+    public int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(short startTime) {
+    public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 
-    public short getEndTime() {
+    public int getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(short endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 
