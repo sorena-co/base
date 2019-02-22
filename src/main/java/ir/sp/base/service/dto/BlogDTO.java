@@ -25,6 +25,7 @@ public class BlogDTO implements Serializable {
     private String imageContentType;
 
     @NotNull
+    @Lob
     private String text;
 
     public Long getId() {

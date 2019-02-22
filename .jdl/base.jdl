@@ -76,7 +76,7 @@ entity Blog{
     title String required,
     summary String required,
     image ImageBlob required,
-    text String required
+    text TextBlob required
 }
 
 entity Comment{

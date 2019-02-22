@@ -26,7 +26,8 @@
         },
         {
             "fieldName": "text",
-            "fieldType": "String",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text",
             "fieldValidateRules": [
                 "required"
             ]
