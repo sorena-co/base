@@ -36,7 +36,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="text" type="varchar(255)">
+            <column name="text" type="clob">
                 <constraints nullable="false" />
             </column>
 

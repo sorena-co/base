@@ -38,6 +38,7 @@ public class Blog implements Serializable {
     private String imageContentType;
 
     @NotNull
+    @Lob
     @Column(name = "text", nullable = false)
     private String text;
 
