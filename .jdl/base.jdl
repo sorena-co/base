@@ -72,6 +72,21 @@ entity Semester{
     startDate ZonedDateTime ,
     endDate ZonedDateTime
 }
+entity Blog{
+    title String required,
+    summary String required,
+    image ImageBlob required,
+    text String required
+}
+
+entity Comment{
+    title String required,
+    comment String required,
+    fullName String required,
+    email String required,
+    active Boolean
+}
+
 enum InstitutionType {
 	EDUCATION,GYM
 }
@@ -103,7 +118,8 @@ relationship ManyToOne{
     ClassGroup {program(name)} to Program{classGroup(name)},
     ClassGroup{semester(name) } to Semester{classGroup(name)},
     Semester{institution(name) } to Institution{semester(name)},
-    Course {institution(name)} to Institution
+    Course {institution(name)} to Institution,
+    Comment{parent(title)} to Comment
 }
 
 relationship OneToOne{
