@@ -9,12 +9,6 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "person",
-            "otherEntityName": "person",
-            "otherEntityField": "code"
-        },
-        {
-            "relationshipType": "many-to-one",
             "relationshipName": "classGroup",
             "otherEntityName": "classGroup",
             "otherEntityField": "name"

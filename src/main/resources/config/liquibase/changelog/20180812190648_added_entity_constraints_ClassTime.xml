@@ -14,12 +14,6 @@
                                  referencedColumnNames="id"
                                  referencedTableName="class_room"/>
 
-        <addForeignKeyConstraint baseColumnNames="person_id"
-                                 baseTableName="class_time"
-                                 constraintName="fk_class_time_person_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="person"/>
-
         <addForeignKeyConstraint baseColumnNames="class_group_id"
                                  baseTableName="class_time"
                                  constraintName="fk_class_time_class_group_id"

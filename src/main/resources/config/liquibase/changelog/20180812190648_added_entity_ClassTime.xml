@@ -41,10 +41,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="person_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="class_group_id" type="bigint">
                 <constraints nullable="true" />
             </column>

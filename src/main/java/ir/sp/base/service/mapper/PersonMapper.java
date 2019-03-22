@@ -16,7 +16,6 @@ public interface PersonMapper extends EntityMapper<PersonDTO, Person> {
     PersonDTO toDto(Person person);
 
     @Mapping(source = "regionId", target = "region")
-    @Mapping(target = "preferenceTimes", ignore = true)
     Person toEntity(PersonDTO personDTO);
 
     default Person fromId(Long id) {

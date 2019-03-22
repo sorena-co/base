@@ -111,7 +111,6 @@ relationship ManyToOne{
     Institution { region(name)} to Region,
     Program{ institution(name) } to Institution,
     Room {institution(name)} to Institution,
-    ClassTime {person(code)} to Person{preferenceTime},
     ClassTime {classGroup(name)} to ClassGroup{preferenceTime},
     ClassRoom {classGroup(name)} to ClassGroup{classRooms(name)},
     ClassRoom {person(code)} to Person,

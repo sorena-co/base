@@ -14,12 +14,6 @@
             "otherEntityName": "course",
             "otherEntityField": "name",
             "ownerSide": true
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "preferenceTime",
-            "otherEntityName": "classTime",
-            "otherEntityRelationshipName": "person"
         }
     ],
     "fields": [
