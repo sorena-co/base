@@ -61,10 +61,6 @@ public class Institution implements Serializable {
 
     @OneToMany(mappedBy = "institution")
     @JsonIgnore
-    private Set<Person> persons = new HashSet<>();
-
-    @OneToMany(mappedBy = "institution")
-    @JsonIgnore
     private Set<Semester> semesters = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -217,31 +213,6 @@ public class Institution implements Serializable {
 
     public void setRegion(Region region) {
         this.region = region;
-    }
-
-    public Set<Person> getPersons() {
-        return persons;
-    }
-
-    public Institution persons(Set<Person> people) {
-        this.persons = people;
-        return this;
-    }
-
-    public Institution addPersons(Person person) {
-        this.persons.add(person);
-        person.setInstitution(this);
-        return this;
-    }
-
-    public Institution removePersons(Person person) {
-        this.persons.remove(person);
-        person.setInstitution(null);
-        return this;
-    }
-
-    public void setPersons(Set<Person> people) {
-        this.persons = people;
     }
 
     public Set<Semester> getSemesters() {

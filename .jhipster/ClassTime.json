@@ -18,6 +18,12 @@
             "relationshipName": "classGroup",
             "otherEntityName": "classGroup",
             "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "institutionPerson",
+            "otherEntityName": "institutionPerson",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [

@@ -16,7 +16,6 @@ public interface InstitutionMapper extends EntityMapper<InstitutionDTO, Institut
     InstitutionDTO toDto(Institution institution);
 
     @Mapping(source = "regionId", target = "region")
-    @Mapping(target = "persons", ignore = true)
     @Mapping(target = "semesters", ignore = true)
     Institution toEntity(InstitutionDTO institutionDTO);
 

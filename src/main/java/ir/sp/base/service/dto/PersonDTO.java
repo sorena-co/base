@@ -55,10 +55,6 @@ public class PersonDTO implements Serializable {
 
     private String regionName;
 
-    private Long institutionId;
-
-    private String institutionName;
-
     private Set<CourseDTO> courses = new HashSet<>();
 
     public Long getId() {
@@ -219,22 +215,6 @@ public class PersonDTO implements Serializable {
 
     public void setRegionName(String regionName) {
         this.regionName = regionName;
-    }
-
-    public Long getInstitutionId() {
-        return institutionId;
-    }
-
-    public void setInstitutionId(Long institutionId) {
-        this.institutionId = institutionId;
-    }
-
-    public String getInstitutionName() {
-        return institutionName;
-    }
-
-    public void setInstitutionName(String institutionName) {
-        this.institutionName = institutionName;
     }
 
     public Set<CourseDTO> getCourses() {

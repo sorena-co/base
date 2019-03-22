@@ -87,9 +87,6 @@ public class Person implements Serializable {
     @ManyToOne
     private Region region;
 
-    @ManyToOne
-    private Institution institution;
-
     @ManyToMany
     @JoinTable(name = "person_course",
                joinColumns = @JoinColumn(name="people_id", referencedColumnName="id"),
@@ -341,19 +338,6 @@ public class Person implements Serializable {
 
     public void setRegion(Region region) {
         this.region = region;
-    }
-
-    public Institution getInstitution() {
-        return institution;
-    }
-
-    public Person institution(Institution institution) {
-        this.institution = institution;
-        return this;
-    }
-
-    public void setInstitution(Institution institution) {
-        this.institution = institution;
     }
 
     public Set<Course> getCourses() {

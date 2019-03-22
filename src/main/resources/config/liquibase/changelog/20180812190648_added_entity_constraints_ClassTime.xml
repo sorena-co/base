@@ -26,5 +26,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="class_group"/>
 
+        <addForeignKeyConstraint baseColumnNames="institution_person_id"
+                                 baseTableName="class_time"
+                                 constraintName="fk_class_time_institution_person_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="institution_person"/>
+
     </changeSet>
 </databaseChangeLog>

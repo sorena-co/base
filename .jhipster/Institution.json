@@ -9,12 +9,6 @@
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "persons",
-            "otherEntityName": "person",
-            "otherEntityRelationshipName": "institution"
-        },
-        {
-            "relationshipType": "one-to-many",
             "relationshipName": "semester",
             "otherEntityName": "semester",
             "otherEntityRelationshipName": "institution"

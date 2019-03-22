@@ -14,12 +14,6 @@
                                  referencedColumnNames="id"
                                  referencedTableName="region"/>
 
-        <addForeignKeyConstraint baseColumnNames="institution_id"
-                                 baseTableName="person"
-                                 constraintName="fk_person_institution_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="institution"/>
-
         <addForeignKeyConstraint baseColumnNames="people_id"
                                  baseTableName="person_course"
                                  constraintName="fk_person_course_people_id"

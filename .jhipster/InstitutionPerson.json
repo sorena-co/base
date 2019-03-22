@@ -1,0 +1,31 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "preferenceTime",
+            "otherEntityName": "classTime",
+            "otherEntityRelationshipName": "institutionPerson"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "institution",
+            "otherEntityName": "institution",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "person",
+            "otherEntityName": "person",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20190322112252",
+    "entityTableName": "institution_person",
+    "dto": "mapstruct",
+    "pagination": "pager",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "base"
+}
