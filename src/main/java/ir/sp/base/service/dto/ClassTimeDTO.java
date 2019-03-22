@@ -32,6 +32,8 @@ public class ClassTimeDTO implements Serializable {
 
     private String classGroupName;
 
+    private Long institutionPersonId;
+
     public Long getId() {
         return id;
     }
@@ -110,6 +112,14 @@ public class ClassTimeDTO implements Serializable {
 
     public void setClassGroupName(String classGroupName) {
         this.classGroupName = classGroupName;
+    }
+
+    public Long getInstitutionPersonId() {
+        return institutionPersonId;
+    }
+
+    public void setInstitutionPersonId(Long institutionPersonId) {
+        this.institutionPersonId = institutionPersonId;
     }
 
     @Override

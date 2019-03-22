@@ -44,6 +44,9 @@ public class ClassTime implements Serializable {
     @ManyToOne
     private ClassGroup classGroup;
 
+    @ManyToOne
+    private InstitutionPerson institutionPerson;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -142,6 +145,19 @@ public class ClassTime implements Serializable {
 
     public void setClassGroup(ClassGroup classGroup) {
         this.classGroup = classGroup;
+    }
+
+    public InstitutionPerson getInstitutionPerson() {
+        return institutionPerson;
+    }
+
+    public ClassTime institutionPerson(InstitutionPerson institutionPerson) {
+        this.institutionPerson = institutionPerson;
+        return this;
+    }
+
+    public void setInstitutionPerson(InstitutionPerson institutionPerson) {
+        this.institutionPerson = institutionPerson;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

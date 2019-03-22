@@ -259,7 +259,7 @@ public class PersonDTO implements Serializable {
         }
 
         PersonDTO personDTO = (PersonDTO) o;
-        if (personDTO.getId() == null || getId() == null) {
+        if(personDTO.getId() == null || getId() == null) {
             return false;
         }
         return Objects.equals(getId(), personDTO.getId());
@@ -292,13 +292,5 @@ public class PersonDTO implements Serializable {
             ", priority=" + getPriority() +
             ", personType='" + getPersonType() + "'" +
             "}";
-    }
-
-    public Set<ClassTime> getPreferenceTimes() {
-        return preferenceTimes;
-    }
-
-    public void setPreferenceTimes(Set<ClassTime> preferenceTimes) {
-        this.preferenceTimes = preferenceTimes;
     }
 }

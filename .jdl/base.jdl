@@ -87,6 +87,10 @@ entity Comment{
     active Boolean
 }
 
+entity InstitutionPerson{
+
+}
+
 enum InstitutionType {
 	EDUCATION,GYM
 }
@@ -114,7 +118,8 @@ relationship ManyToOne{
     ClassRoom {course(name)} to Course,
     ClassRoom {room(name)} to Room,
     Person { region(name)} to Region{ Person(fullName)},
-    Person {institution(name)} to Institution{persons(code)},
+    InstitutionPerson {institution(name)} to Institution,
+    InstitutionPerson {person} to Person,
     ClassGroup {program(name)} to Program{classGroup(name)},
     ClassGroup{semester(name) } to Semester{classGroup(name)},
     Semester{institution(name) } to Institution{semester(name)},
@@ -127,7 +132,8 @@ relationship OneToOne{
 }
 
 relationship OneToMany{
-    ClassRoom {preferenceTime} to ClassTime
+    ClassRoom {preferenceTime} to ClassTime,
+    InstitutionPerson {preferenceTime} to ClassTime
 }
 
 relationship ManyToMany{

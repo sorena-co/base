@@ -8,12 +8,6 @@
             "otherEntityField": "name"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "institution",
-            "otherEntityName": "institution",
-            "otherEntityField": "name"
-        },
-        {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "",
             "relationshipName": "course",
