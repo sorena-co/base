@@ -1,14 +1,12 @@
 package ir.sp.base.repository;
 
-import ir.sp.base.domain.Course;
 import ir.sp.base.domain.Person;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
-
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -24,9 +22,22 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Query("select person from Person person left join fetch person.courses where person.id =:id")
     Person findOneWithEagerRelationships(@Param("id") Long id);
+
+    @Query(
+        "select person from InstitutionPerson institutionPerson " +
+            "inner join institutionPerson.person person " +
+            "inner join institutionPerson.institution institution " +
+            "where institution.id = :institutionId "
+    )
     List<Person> findAllByInstitution_Id(Long institutionId);
 
-    Page<Person> findAllByInstitution_Id(Long institutionId, Pageable pageable);
+    @Query(
+        "select person from InstitutionPerson institutionPerson " +
+            "inner join institutionPerson.person person " +
+            "inner join institutionPerson.institution institution " +
+            "where institution.id = :institutionId "
+    )
+    Page<Person> findAllByInstitution_Id(@Param("institutionId") Long institutionId, Pageable pageable);
 
     List<Person> findAllByIdIn(List<Long> profIds);
 

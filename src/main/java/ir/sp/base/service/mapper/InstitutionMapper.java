@@ -91,14 +91,14 @@ public interface InstitutionMapper extends EntityMapper<InstitutionDTO, Institut
             personDTO.setMaxCredits(prof.getMaxCredits());
             personDTO.setCourseIds(prof.getCourses().stream().map(Course::getId).collect(Collectors.toList()));
 
-            for (ClassTime classTime : prof.getPreferenceTimes()) {
+          /*  for (ClassTime classTime : prof.getPreferenceTimes()) {
                 ir.sp.base.service.dto.custom.ClassTime ct = new ir.sp.base.service.dto.custom.ClassTime();
                 ct.setDay(getDayNumber(classTime.getDay()));
                 ct.setEndTime(classTime.getEndTime());
                 ct.setStartTime(classTime.getStartTime());
                 ct.setPriority(classTime.getPriority());
                 personDTO.getClassTimes().add(ct);
-            }
+            }*/
             result.getPersons().add(personDTO);
         });
 

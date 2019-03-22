@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
+
+import ir.sp.base.domain.ClassTime;
 import ir.sp.base.domain.enumeration.Gender;
 import ir.sp.base.domain.enumeration.Degree;
 import ir.sp.base.domain.enumeration.PersonType;
@@ -56,6 +58,10 @@ public class PersonDTO implements Serializable {
     private String regionName;
 
     private Set<CourseDTO> courses = new HashSet<>();
+
+    private Long institutionId;
+
+    private Set<ClassTime> preferenceTimes = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -268,5 +274,21 @@ public class PersonDTO implements Serializable {
             ", priority=" + getPriority() +
             ", personType='" + getPersonType() + "'" +
             "}";
+    }
+
+    public Long getInstitutionId() {
+        return institutionId;
+    }
+
+    public void setInstitutionId(Long institutionId) {
+        this.institutionId = institutionId;
+    }
+
+    public Set<ClassTime> getPreferenceTimes() {
+        return preferenceTimes;
+    }
+
+    public void setPreferenceTimes(Set<ClassTime> preferenceTimes) {
+        this.preferenceTimes = preferenceTimes;
     }
 }
