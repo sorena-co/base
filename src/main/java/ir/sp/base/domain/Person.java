@@ -1,6 +1,5 @@
 package ir.sp.base.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -92,10 +91,6 @@ public class Person implements Serializable {
                joinColumns = @JoinColumn(name="people_id", referencedColumnName="id"),
                inverseJoinColumns = @JoinColumn(name="courses_id", referencedColumnName="id"))
     private Set<Course> courses = new HashSet<>();
-
-    @OneToMany(mappedBy = "person")
-    @JsonIgnore
-    private Set<ClassTime> preferenceTimes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -361,31 +356,6 @@ public class Person implements Serializable {
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
-    }
-
-    public Set<ClassTime> getPreferenceTimes() {
-        return preferenceTimes;
-    }
-
-    public Person preferenceTimes(Set<ClassTime> classTimes) {
-        this.preferenceTimes = classTimes;
-        return this;
-    }
-
-    public Person addPreferenceTime(ClassTime classTime) {
-        this.preferenceTimes.add(classTime);
-        classTime.setPerson(this);
-        return this;
-    }
-
-    public Person removePreferenceTime(ClassTime classTime) {
-        this.preferenceTimes.remove(classTime);
-        classTime.setPerson(null);
-        return this;
-    }
-
-    public void setPreferenceTimes(Set<ClassTime> classTimes) {
-        this.preferenceTimes = classTimes;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

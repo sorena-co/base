@@ -39,9 +39,6 @@ public class ClassTime implements Serializable {
     private ClassRoom classRoom;
 
     @ManyToOne
-    private Person person;
-
-    @ManyToOne
     private ClassGroup classGroup;
 
     @ManyToOne
@@ -119,19 +116,6 @@ public class ClassTime implements Serializable {
 
     public void setClassRoom(ClassRoom classRoom) {
         this.classRoom = classRoom;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public ClassTime person(Person person) {
-        this.person = person;
-        return this;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     public ClassGroup getClassGroup() {
