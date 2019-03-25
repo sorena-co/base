@@ -6,14 +6,6 @@
             "relationshipName": "region",
             "otherEntityName": "region",
             "otherEntityField": "name"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "",
-            "relationshipName": "course",
-            "otherEntityName": "course",
-            "otherEntityField": "name",
-            "ownerSide": true
         }
     ],
     "fields": [

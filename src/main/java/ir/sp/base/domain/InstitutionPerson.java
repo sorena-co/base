@@ -27,6 +27,10 @@ public class InstitutionPerson implements Serializable {
     @JsonIgnore
     private Set<ClassTime> preferenceTimes = new HashSet<>();
 
+    @OneToMany(mappedBy = "institutionPerson")
+    @JsonIgnore
+    private Set<Course> courses = new HashSet<>();
+
     @ManyToOne
     private Institution institution;
 
@@ -65,6 +69,31 @@ public class InstitutionPerson implements Serializable {
 
     public void setPreferenceTimes(Set<ClassTime> classTimes) {
         this.preferenceTimes = classTimes;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public InstitutionPerson courses(Set<Course> courses) {
+        this.courses = courses;
+        return this;
+    }
+
+    public InstitutionPerson addCourse(Course course) {
+        this.courses.add(course);
+        course.setInstitutionPerson(this);
+        return this;
+    }
+
+    public InstitutionPerson removeCourse(Course course) {
+        this.courses.remove(course);
+        course.setInstitutionPerson(null);
+        return this;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 
     public Institution getInstitution() {

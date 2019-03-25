@@ -17,6 +17,7 @@ public interface InstitutionPersonMapper extends EntityMapper<InstitutionPersonD
     InstitutionPersonDTO toDto(InstitutionPerson institutionPerson);
 
     @Mapping(target = "preferenceTimes", ignore = true)
+    @Mapping(target = "courses", ignore = true)
     @Mapping(source = "institutionId", target = "institution")
     @Mapping(source = "personId", target = "person")
     InstitutionPerson toEntity(InstitutionPersonDTO institutionPersonDTO);

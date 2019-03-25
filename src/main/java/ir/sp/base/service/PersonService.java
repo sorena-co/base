@@ -65,7 +65,7 @@ public class PersonService {
     @Transactional(readOnly = true)
     public PersonDTO findOne(Long id) {
         log.debug("Request to get Person : {}", id);
-        Person person = personRepository.findOneWithEagerRelationships(id);
+        Person person = personRepository.findOne(id);
         return personMapper.toDto(person);
     }
 
