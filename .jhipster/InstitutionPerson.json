@@ -8,6 +8,12 @@
             "otherEntityRelationshipName": "institutionPerson"
         },
         {
+            "relationshipType": "one-to-many",
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "otherEntityRelationshipName": "institutionPerson"
+        },
+        {
             "relationshipType": "many-to-one",
             "relationshipName": "institution",
             "otherEntityName": "institution",

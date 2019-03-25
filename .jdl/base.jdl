@@ -132,12 +132,12 @@ relationship OneToOne{
 
 relationship OneToMany{
     ClassRoom {preferenceTime} to ClassTime,
-    InstitutionPerson {preferenceTime} to ClassTime
+    InstitutionPerson {preferenceTime} to ClassTime,
+    InstitutionPerson {course(name)} to Course
 }
 
 relationship ManyToMany{
-    Program {course(name)} to Course,
-    Person {course(name)} to Course
+    Program {course(name)} to Course
 }
 
 dto * with mapstruct
