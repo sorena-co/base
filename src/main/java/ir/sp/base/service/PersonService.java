@@ -1,11 +1,11 @@
 package ir.sp.base.service;
 
+import ir.sp.base.domain.Course;
 import ir.sp.base.domain.InstitutionPerson;
 import ir.sp.base.domain.Person;
 import ir.sp.base.repository.*;
 import ir.sp.base.security.AuthoritiesConstants;
 import ir.sp.base.service.dto.ClassTimeDTO;
-import ir.sp.base.service.dto.CourseDTO;
 import ir.sp.base.service.dto.PersonDTO;
 import ir.sp.base.service.dto.feign.UserDTO;
 import ir.sp.base.service.feign.UaaFeignClient;
@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -87,7 +88,7 @@ public class PersonService {
         } else {
             InstitutionPerson institutionPerson = institutionPersonRepository.findFirstByInstitution_IdAndPerson_Id(personDTO.getInstitutionId(), personDTO.getId());
             classTimeRepository.deleteAllByInstitutionPerson_Id(institutionPerson.getId());
-            courseRepository.deleteAllByInstitutionPerson_Id(institutionPerson.getId());
+//            courseRepository.deleteAllByInstitutionPerson_Id(institutionPerson.getId());
 
             createCourseAndPreferenceTime(personDTO, institutionPerson);
         }
@@ -103,18 +104,6 @@ public class PersonService {
             user = uaaFeignClient.register(user);
         }
 
-
-//        if (personDTO.getId() != null)
-//            classTimeRepository.deleteAllByPerson_Id(personDTO.getId());
-
-        /*person = personRepository.save(person);
-        Set<ClassTime> preferenceTimes = personDTO.getPreferenceTimes();
-        Person finalPerson = person;
-        preferenceTimes.forEach(classTime -> {
-            classTime.setId(null);
-            classTime.setPerson(finalPerson);
-//        });*/
-//        classTimeRepository.save(preferenceTimes);
         return personMapper.toDto(person);
     }
 
@@ -122,11 +111,10 @@ public class PersonService {
         for (ClassTimeDTO preferenceTime : personDTO.getPreferenceTimes()) {
             preferenceTime.setInstitutionPersonId(institutionPerson.getId());
         }
-        for (CourseDTO course : personDTO.getCourses()) {
-            course.setInstitutionPersonId(institutionPerson.getId());
-        }
         classTimeRepository.save(classTimeMapper.toEntity(new ArrayList<>(personDTO.getPreferenceTimes())));
-        courseRepository.save(courseMapper.toEntity(new ArrayList<>(personDTO.getCourses())));
+        List<Course> save = courseRepository.save(courseMapper.toEntity(new ArrayList<>(personDTO.getCourses())));
+        institutionPerson.setCourses(new HashSet<>(save));
+        institutionPersonRepository.save(institutionPerson);
     }
 
     /**

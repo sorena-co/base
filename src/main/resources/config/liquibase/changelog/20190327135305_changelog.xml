@@ -1,0 +1,28 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="mohammad (generated)" id="1553694796167-1">
+        <createTable tableName="institution_person_course">
+            <column name="institution_people_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="courses_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1553694796167-2">
+        <addPrimaryKey columnNames="institution_people_id, courses_id" tableName="institution_person_course"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1553694796167-3">
+        <addForeignKeyConstraint baseColumnNames="courses_id" baseTableName="institution_person_course" constraintName="FK1j5r9xuex1fbxp6i2hfnpvsd6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1553694796167-4">
+        <addForeignKeyConstraint baseColumnNames="institution_people_id" baseTableName="institution_person_course" constraintName="FKtbm3ymdgy9he06n2h04wlr73f" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="institution_person"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1553694796167-5">
+        <dropForeignKeyConstraint baseTableName="course" constraintName="FKkn0jnfbouv74kcus99fddv4lm"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1553694796167-6">
+        <dropColumn columnName="institution_person_id" tableName="course"/>
+    </changeSet>
+</databaseChangeLog>

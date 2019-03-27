@@ -49,11 +49,12 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     List<Course> findAllByInstitution_Id(Long institutionId);
 
-    void deleteAllByInstitutionPerson_Id(Long id);
+//    void deleteAllByInstitutionPerson_Id(Long id);
 
     @Query(
         "select course from Course course " +
-            "inner join course.institutionPerson institutionPerson " +
+            "inner join InstitutionPerson institutionPerson " +
+            "inner join institutionPerson.courses courses on courses.id = course.id " +
             "inner join institutionPerson.person person " +
             "inner join institutionPerson.institution institution " +
             "where institution.id = :institutionId and person.id = :personId"
