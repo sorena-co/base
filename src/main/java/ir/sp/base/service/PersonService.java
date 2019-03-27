@@ -1,16 +1,16 @@
 package ir.sp.base.service;
 
-import ir.sp.base.domain.ClassTime;
 import ir.sp.base.domain.InstitutionPerson;
 import ir.sp.base.domain.Person;
-import ir.sp.base.repository.ClassTimeRepository;
-import ir.sp.base.repository.InstitutionPersonRepository;
-import ir.sp.base.repository.InstitutionRepository;
-import ir.sp.base.repository.PersonRepository;
+import ir.sp.base.repository.*;
 import ir.sp.base.security.AuthoritiesConstants;
+import ir.sp.base.service.dto.ClassTimeDTO;
+import ir.sp.base.service.dto.CourseDTO;
 import ir.sp.base.service.dto.PersonDTO;
 import ir.sp.base.service.dto.feign.UserDTO;
 import ir.sp.base.service.feign.UaaFeignClient;
+import ir.sp.base.service.mapper.ClassTimeMapper;
+import ir.sp.base.service.mapper.CourseMapper;
 import ir.sp.base.service.mapper.PersonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,18 +39,27 @@ public class PersonService {
 
     private final ClassTimeRepository classTimeRepository;
 
+    private final ClassTimeMapper classTimeMapper;
+
     private final InstitutionPersonRepository institutionPersonRepository;
 
     private final InstitutionRepository institutionRepository;
 
+    private final CourseRepository courseRepository;
+
+    private final CourseMapper courseMapper;
+
     private final UaaFeignClient uaaFeignClient;
 
-    public PersonService(PersonRepository personRepository, PersonMapper personMapper, ClassTimeRepository classTimeRepository, InstitutionPersonRepository institutionPersonRepository, InstitutionRepository institutionRepository, UaaFeignClient uaaFeignClient) {
+    public PersonService(PersonRepository personRepository, PersonMapper personMapper, ClassTimeRepository classTimeRepository, ClassTimeMapper classTimeMapper, InstitutionPersonRepository institutionPersonRepository, InstitutionRepository institutionRepository, CourseRepository courseRepository, CourseMapper courseMapper, UaaFeignClient uaaFeignClient) {
         this.personRepository = personRepository;
         this.personMapper = personMapper;
         this.classTimeRepository = classTimeRepository;
+        this.classTimeMapper = classTimeMapper;
         this.institutionPersonRepository = institutionPersonRepository;
         this.institutionRepository = institutionRepository;
+        this.courseRepository = courseRepository;
+        this.courseMapper = courseMapper;
         this.uaaFeignClient = uaaFeignClient;
     }
 
@@ -73,18 +83,13 @@ public class PersonService {
             institutionPerson.setInstitution(institutionRepository.findOne(personDTO.getInstitutionId()));
 
             institutionPerson = institutionPersonRepository.save(institutionPerson);
-            for (ClassTime preferenceTime : personDTO.getPreferenceTimes()) {
-                preferenceTime.setInstitutionPerson(institutionPerson);
-            }
-            classTimeRepository.save(personDTO.getPreferenceTimes());
+            createCourseAndPreferenceTime(personDTO, institutionPerson);
         } else {
             InstitutionPerson institutionPerson = institutionPersonRepository.findFirstByInstitution_IdAndPerson_Id(personDTO.getInstitutionId(), personDTO.getId());
             classTimeRepository.deleteAllByInstitutionPerson_Id(institutionPerson.getId());
+            courseRepository.deleteAllByInstitutionPerson_Id(institutionPerson.getId());
 
-            for (ClassTime preferenceTime : personDTO.getPreferenceTimes()) {
-                preferenceTime.setInstitutionPerson(institutionPerson);
-            }
-            classTimeRepository.save(personDTO.getPreferenceTimes());
+            createCourseAndPreferenceTime(personDTO, institutionPerson);
         }
 
         if (user == null || user.getId() == null) {
@@ -113,6 +118,17 @@ public class PersonService {
         return personMapper.toDto(person);
     }
 
+    private void createCourseAndPreferenceTime(PersonDTO personDTO, InstitutionPerson institutionPerson) {
+        for (ClassTimeDTO preferenceTime : personDTO.getPreferenceTimes()) {
+            preferenceTime.setInstitutionPersonId(institutionPerson.getId());
+        }
+        for (CourseDTO course : personDTO.getCourses()) {
+            course.setInstitutionPersonId(institutionPerson.getId());
+        }
+        classTimeRepository.save(classTimeMapper.toEntity(new ArrayList<>(personDTO.getPreferenceTimes())));
+        courseRepository.save(courseMapper.toEntity(new ArrayList<>(personDTO.getCourses())));
+    }
+
     /**
      * Get all the people.
      *
@@ -136,7 +152,9 @@ public class PersonService {
     public PersonDTO findOne(Long id) {
         log.debug("Request to get Person : {}", id);
         Person person = personRepository.findOne(id);
-        return personMapper.toDto(person);
+        PersonDTO personDTO = personMapper.toDto(person);
+
+        return personDTO;
     }
 
     /**
@@ -148,5 +166,17 @@ public class PersonService {
         log.debug("Request to delete Person : {}", id);
 //        institutionPersonRepository.findFirstByInstitution_IdAndPerson_Id()
         personRepository.delete(id);
+    }
+
+    public PersonDTO findOneByInstitution(Long personId, Long institutionId) {
+
+        InstitutionPerson institutionPerson = institutionPersonRepository.findFirstByInstitution_IdAndPerson_IdWithFetch(institutionId, personId);
+
+        PersonDTO personDTO = personMapper.toDto(institutionPerson.getPerson());
+
+        personDTO.setCourses(courseMapper.toDto(new ArrayList<>(institutionPerson.getCourses())));
+        personDTO.setPreferenceTimes(classTimeMapper.toDto(new ArrayList<>(institutionPerson.getPreferenceTimes())));
+        personDTO.setInstitutionId(institutionPerson.getInstitution().getId());
+        return personDTO;
     }
 }

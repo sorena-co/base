@@ -1,12 +1,12 @@
 package ir.sp.base.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import io.github.jhipster.web.util.ResponseUtil;
 import ir.sp.base.service.PersonService;
+import ir.sp.base.service.dto.PersonDTO;
 import ir.sp.base.web.rest.errors.BadRequestAlertException;
 import ir.sp.base.web.rest.util.HeaderUtil;
 import ir.sp.base.web.rest.util.PaginationUtil;
-import ir.sp.base.service.dto.PersonDTO;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -29,10 +28,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class PersonResource {
 
-    private final Logger log = LoggerFactory.getLogger(PersonResource.class);
-
     private static final String ENTITY_NAME = "person";
-
+    private final Logger log = LoggerFactory.getLogger(PersonResource.class);
     private final PersonService personService;
 
     public PersonResource(PersonService personService) {
@@ -122,5 +119,13 @@ public class PersonResource {
         log.debug("REST request to delete Person : {}", id);
         personService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/people/{id}/institution/{institutionId}")
+    @Timed
+    public ResponseEntity<PersonDTO> getPersonByInstitution(@PathVariable Long id, @PathVariable Long institutionId) {
+        log.debug("REST request to get Person : {}", id);
+        PersonDTO personDTO = personService.findOneByInstitution(id,institutionId);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(personDTO));
     }
 }

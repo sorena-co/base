@@ -21,12 +21,6 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
-    @Query("select distinct person from Person person left join fetch person.courses")
-    List<Person> findAllWithEagerRelationships();
-
-    @Query("select person from Person person left join fetch person.courses where person.id =:id")
-    Person findOneWithEagerRelationships(@Param("id") Long id);
-
     @Query(
         "select person from InstitutionPerson institutionPerson " +
             "inner join institutionPerson.person person " +

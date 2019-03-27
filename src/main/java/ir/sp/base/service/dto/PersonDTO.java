@@ -1,14 +1,15 @@
 package ir.sp.base.service.dto;
 
 
-import java.time.ZonedDateTime;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
-import ir.sp.base.domain.enumeration.Gender;
 import ir.sp.base.domain.enumeration.Degree;
+import ir.sp.base.domain.enumeration.Gender;
 import ir.sp.base.domain.enumeration.PersonType;
+
+import java.io.Serializable;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * A DTO for the Person entity.
@@ -54,6 +55,13 @@ public class PersonDTO implements Serializable {
     private Long regionId;
 
     private String regionName;
+
+    private List<CourseDTO> courses = new ArrayList<>();
+
+    private Long institutionId;
+
+    private List<ClassTimeDTO> preferenceTimes = new ArrayList<>();
+
 
     public Long getId() {
         return id;
@@ -225,7 +233,7 @@ public class PersonDTO implements Serializable {
         }
 
         PersonDTO personDTO = (PersonDTO) o;
-        if(personDTO.getId() == null || getId() == null) {
+        if (personDTO.getId() == null || getId() == null) {
             return false;
         }
         return Objects.equals(getId(), personDTO.getId());
@@ -258,5 +266,29 @@ public class PersonDTO implements Serializable {
             ", priority=" + getPriority() +
             ", personType='" + getPersonType() + "'" +
             "}";
+    }
+
+    public List<CourseDTO> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<CourseDTO> courses) {
+        this.courses = courses;
+    }
+
+    public Long getInstitutionId() {
+        return institutionId;
+    }
+
+    public void setInstitutionId(Long institutionId) {
+        this.institutionId = institutionId;
+    }
+
+    public List<ClassTimeDTO> getPreferenceTimes() {
+        return preferenceTimes;
+    }
+
+    public void setPreferenceTimes(List<ClassTimeDTO> preferenceTimes) {
+        this.preferenceTimes = preferenceTimes;
     }
 }

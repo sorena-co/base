@@ -1,6 +1,7 @@
 package ir.sp.base.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import ir.sp.base.service.InstitutionService;
 import ir.sp.base.service.dto.*;
@@ -10,7 +11,6 @@ import ir.sp.base.service.util.Utils;
 import ir.sp.base.web.rest.errors.BadRequestAlertException;
 import ir.sp.base.web.rest.util.HeaderUtil;
 import ir.sp.base.web.rest.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -26,10 +26,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -40,10 +42,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class InstitutionResource {
 
-    private final Logger log = LoggerFactory.getLogger(InstitutionResource.class);
-
     private static final String ENTITY_NAME = "institution";
-
+    private final Logger log = LoggerFactory.getLogger(InstitutionResource.class);
     private final InstitutionService institutionService;
 
     public InstitutionResource(InstitutionService institutionService) {
@@ -156,7 +156,7 @@ public class InstitutionResource {
     @Timed
     public ResponseEntity<List<ProgramDTO>> getAllPrograms(@PathVariable Long id, @RequestParam(required = false) String query, @ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Institutions");
-        Page<ProgramDTO> page = institutionService.findAllPrograms(id, query,pageable);
+        Page<ProgramDTO> page = institutionService.findAllPrograms(id, query, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -297,4 +297,21 @@ public class InstitutionResource {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/institutions/{institutionId}/courses/person/{personId}")
+    @Timed
+    public ResponseEntity<List<CourseDTO>> getAllCourseAllForPerson(@PathVariable Long institutionId,
+                                                                    @PathVariable Long personId) {
+        log.debug("REST request to get a page of Institutions");
+        List<CourseDTO> page = institutionService.findAllCoursesForPerson(institutionId, personId);
+        return new ResponseEntity<>(page, HttpStatus.OK);
+    }
+
+    @GetMapping("/institutions/person/{personId}")
+    @Timed
+    public ResponseEntity<List<InstitutionDTO>> getAllInstitutionByPerson(
+        @PathVariable Long personId) {
+        log.debug("REST request to get a page of Institutions");
+        List<InstitutionDTO> page = institutionService.findAllInstitutionByPerson(personId);
+        return new ResponseEntity<>(page, HttpStatus.OK);
+    }
 }

@@ -1,0 +1,20 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="mohammad (generated)" id="1553517579512-1">
+        <addColumn tableName="course">
+            <column name="institution_person_id" type="int8"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1553517579512-2">
+        <addForeignKeyConstraint baseColumnNames="institution_person_id" baseTableName="course" constraintName="FKkn0jnfbouv74kcus99fddv4lm" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="institution_person"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1553517579512-3">
+        <dropForeignKeyConstraint baseTableName="person_course" constraintName="FK1alfonvy4laona4b38ek2r4se"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1553517579512-4">
+        <dropForeignKeyConstraint baseTableName="person_course" constraintName="FKjwl6xtjn4krlpc50en7uncmpv"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1553517579512-5">
+        <dropTable tableName="person_course"/>
+    </changeSet>
+</databaseChangeLog>

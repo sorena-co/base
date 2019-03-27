@@ -89,7 +89,8 @@ public interface InstitutionMapper extends EntityMapper<InstitutionDTO, Institut
             personDTO.setPriority(prof.getPriority());
             personDTO.setName(prof.getFirstName() + " " + prof.getLastName());
             personDTO.setMaxCredits(prof.getMaxCredits());
-            personDTO.setCourseIds(prof.getCourses().stream().map(Course::getId).collect(Collectors.toList()));
+            //todo fix this
+//            personDTO.setCourseIds(prof.getCourses().stream().map(Course::getId).collect(Collectors.toList()));
 
           /*  for (ClassTime classTime : prof.getPreferenceTimes()) {
                 ir.sp.base.service.dto.custom.ClassTime ct = new ir.sp.base.service.dto.custom.ClassTime();

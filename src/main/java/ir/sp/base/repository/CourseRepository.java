@@ -3,12 +3,11 @@ package ir.sp.base.repository;
 import ir.sp.base.domain.Course;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.*;
-import org.springframework.data.repository.query.Param;
-
-import java.nio.channels.FileChannel;
 import java.util.List;
 
 
@@ -49,4 +48,16 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findAllByProgramId(@Param("programId") Long programId);
 
     List<Course> findAllByInstitution_Id(Long institutionId);
+
+    void deleteAllByInstitutionPerson_Id(Long id);
+
+    @Query(
+        "select course from Course course " +
+            "inner join course.institutionPerson institutionPerson " +
+            "inner join institutionPerson.person person " +
+            "inner join institutionPerson.institution institution " +
+            "where institution.id = :institutionId and person.id = :personId"
+    )
+    List<Course> findAllCourseByInstitutionForPerson(@Param("institutionId") Long institutionId, @Param("personId") Long personId);
+
 }

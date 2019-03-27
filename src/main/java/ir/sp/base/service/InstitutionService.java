@@ -16,9 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 /**
@@ -177,5 +175,13 @@ public class InstitutionService {
     public GaModel getPlan(Long id) {
         Semester semester = semesterRepository.findOne(id);
         return aiFeignClient.getPlaning(semester.getId(), semester.getInstitution().getId());
+    }
+
+    public List<CourseDTO> findAllCoursesForPerson(Long institutionId, Long personId) {
+        return courseMapper.toDto(courseRepository.findAllCourseByInstitutionForPerson(institutionId, personId));
+    }
+
+    public List<InstitutionDTO> findAllInstitutionByPerson(Long personId) {
+        return institutionMapper.toDto(institutionRepository.findAllByPerson(personId));
     }
 }
