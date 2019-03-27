@@ -8,12 +8,6 @@
             "otherEntityRelationshipName": "institutionPerson"
         },
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "course",
-            "otherEntityName": "course",
-            "otherEntityRelationshipName": "institutionPerson"
-        },
-        {
             "relationshipType": "many-to-one",
             "relationshipName": "institution",
             "otherEntityName": "institution",
@@ -24,6 +18,14 @@
             "relationshipName": "person",
             "otherEntityName": "person",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "otherEntityField": "name",
+            "ownerSide": true
         }
     ],
     "fields": [],

@@ -32,6 +32,17 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         
+        <createTable tableName="institution_person_course">
+            <column name="courses_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="institution_people_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="institution_people_id, courses_id" tableName="institution_person_course"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

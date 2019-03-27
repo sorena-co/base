@@ -44,9 +44,6 @@ public class Course implements Serializable {
     @ManyToOne
     private Institution institution;
 
-    @ManyToOne
-    private InstitutionPerson institutionPerson;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -158,19 +155,6 @@ public class Course implements Serializable {
 
     public void setInstitution(Institution institution) {
         this.institution = institution;
-    }
-
-    public InstitutionPerson getInstitutionPerson() {
-        return institutionPerson;
-    }
-
-    public Course institutionPerson(InstitutionPerson institutionPerson) {
-        this.institutionPerson = institutionPerson;
-        return this;
-    }
-
-    public void setInstitutionPerson(InstitutionPerson institutionPerson) {
-        this.institutionPerson = institutionPerson;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

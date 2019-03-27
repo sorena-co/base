@@ -20,5 +20,16 @@
                                  referencedColumnNames="id"
                                  referencedTableName="person"/>
 
+        <addForeignKeyConstraint baseColumnNames="institution_people_id"
+                                 baseTableName="institution_person_course"
+                                 constraintName="fk_institution_person_course_institution_people_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="institution_person"/>
+        <addForeignKeyConstraint baseColumnNames="courses_id"
+                                 baseTableName="institution_person_course"
+                                 constraintName="fk_institution_person_course_courses_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course"/>
+        
     </changeSet>
 </databaseChangeLog>
