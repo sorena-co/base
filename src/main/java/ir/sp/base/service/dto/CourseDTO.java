@@ -31,8 +31,6 @@ public class CourseDTO implements Serializable {
 
     private String institutionName;
 
-    private Long institutionPersonId;
-
     public Long getId() {
         return id;
     }
@@ -111,14 +109,6 @@ public class CourseDTO implements Serializable {
 
     public void setInstitutionName(String institutionName) {
         this.institutionName = institutionName;
-    }
-
-    public Long getInstitutionPersonId() {
-        return institutionPersonId;
-    }
-
-    public void setInstitutionPersonId(Long institutionPersonId) {
-        this.institutionPersonId = institutionPersonId;
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity InstitutionPerson and its DTO InstitutionPersonDTO.
  */
-@Mapper(componentModel = "spring", uses = {InstitutionMapper.class, PersonMapper.class})
+@Mapper(componentModel = "spring", uses = {InstitutionMapper.class, PersonMapper.class, CourseMapper.class})
 public interface InstitutionPersonMapper extends EntityMapper<InstitutionPersonDTO, InstitutionPerson> {
 
     @Mapping(source = "institution.id", target = "institutionId")
@@ -17,7 +17,6 @@ public interface InstitutionPersonMapper extends EntityMapper<InstitutionPersonD
     InstitutionPersonDTO toDto(InstitutionPerson institutionPerson);
 
     @Mapping(target = "preferenceTimes", ignore = true)
-    @Mapping(target = "courses", ignore = true)
     @Mapping(source = "institutionId", target = "institution")
     @Mapping(source = "personId", target = "person")
     InstitutionPerson toEntity(InstitutionPersonDTO institutionPersonDTO);

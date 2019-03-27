@@ -6,12 +6,6 @@
             "relationshipName": "institution",
             "otherEntityName": "institution",
             "otherEntityField": "name"
-        },
-        {
-            "relationshipName": "institutionPerson",
-            "otherEntityName": "institutionPerson",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
         }
     ],
     "fields": [
