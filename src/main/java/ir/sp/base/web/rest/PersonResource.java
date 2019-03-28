@@ -125,7 +125,25 @@ public class PersonResource {
     @Timed
     public ResponseEntity<PersonDTO> getPersonByInstitution(@PathVariable Long id, @PathVariable Long institutionId) {
         log.debug("REST request to get Person : {}", id);
-        PersonDTO personDTO = personService.findOneByInstitution(id,institutionId);
+        PersonDTO personDTO = personService.findOneByInstitution(id, institutionId);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(personDTO));
     }
+
+    @GetMapping("/people/search/find-by-email")
+    @Timed
+    public ResponseEntity<PersonDTO> getPersonByEmail(@RequestParam(value = "email") String email) {
+        log.debug("REST request to get Person : {}", email);
+        PersonDTO personDTO = personService.findOneByEmail(email);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(personDTO));
+    }
+
+    @GetMapping("/people/search/find-by-national-id")
+    @Timed
+    public ResponseEntity<PersonDTO> getPersonByNationalId(@RequestParam(value = "nationalId") String nationalId) {
+        log.debug("REST request to get Person : {}", nationalId);
+        PersonDTO personDTO = personService.findOneByNationalId(nationalId);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(personDTO));
+    }
+
+
 }

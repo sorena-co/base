@@ -9,10 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import org.springframework.stereotype.Repository;
-
-import org.springframework.data.jpa.repository.*;
-
 
 
 /**
@@ -39,4 +35,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     List<Person> findAllByIdIn(List<Long> profIds);
 
+    Person findFirstByEmail(String email);
+
+    Person findFirstByNationalId(String nationalId);
 }

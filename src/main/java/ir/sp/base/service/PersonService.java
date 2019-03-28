@@ -77,8 +77,8 @@ public class PersonService {
         authorities.add(AuthoritiesConstants.TEACHER);
         UserDTO user = uaaFeignClient.getUser(personDTO.getEmail());
 
+        person = personRepository.save(person);
         if (personDTO.getId() == null) { // this request for save person.
-            person = personRepository.save(person);
             InstitutionPerson institutionPerson = new InstitutionPerson();
             institutionPerson.setPerson(person);
             institutionPerson.setInstitution(institutionRepository.findOne(personDTO.getInstitutionId()));
@@ -87,7 +87,15 @@ public class PersonService {
             createCourseAndPreferenceTime(personDTO, institutionPerson);
         } else {
             InstitutionPerson institutionPerson = institutionPersonRepository.findFirstByInstitution_IdAndPerson_Id(personDTO.getInstitutionId(), personDTO.getId());
-            classTimeRepository.deleteAllByInstitutionPerson_Id(institutionPerson.getId());
+            if (institutionPerson == null) {
+                institutionPerson = new InstitutionPerson();
+                institutionPerson.setPerson(person);
+                institutionPerson.setInstitution(institutionRepository.findOne(personDTO.getInstitutionId()));
+
+                institutionPerson = institutionPersonRepository.save(institutionPerson);
+            } else {
+                classTimeRepository.deleteAllByInstitutionPerson_Id(institutionPerson.getId());
+            }
 //            courseRepository.deleteAllByInstitutionPerson_Id(institutionPerson.getId());
 
             createCourseAndPreferenceTime(personDTO, institutionPerson);
@@ -166,5 +174,13 @@ public class PersonService {
         personDTO.setPreferenceTimes(classTimeMapper.toDto(new ArrayList<>(institutionPerson.getPreferenceTimes())));
         personDTO.setInstitutionId(institutionPerson.getInstitution().getId());
         return personDTO;
+    }
+
+    public PersonDTO findOneByEmail(String email) {
+        return personMapper.toDto(personRepository.findFirstByEmail(email));
+    }
+
+    public PersonDTO findOneByNationalId(String nationalId) {
+        return personMapper.toDto(personRepository.findFirstByNationalId(nationalId));
     }
 }
