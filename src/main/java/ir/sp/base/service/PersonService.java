@@ -183,4 +183,8 @@ public class PersonService {
     public PersonDTO findOneByNationalId(String nationalId) {
         return personMapper.toDto(personRepository.findFirstByNationalId(nationalId));
     }
+
+    public PersonDTO updateProfile(PersonDTO personDTO) {
+        return personMapper.toDto(personRepository.save(personMapper.toEntity(personDTO)));
+    }
 }

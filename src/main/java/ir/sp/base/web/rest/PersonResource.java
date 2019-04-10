@@ -78,6 +78,19 @@ public class PersonResource {
             .body(result);
     }
 
+    @PutMapping("/people/profile")
+    @Timed
+    public ResponseEntity<PersonDTO> updateProfile(@RequestBody PersonDTO personDTO) throws URISyntaxException {
+        log.debug("REST request to update Person : {}", personDTO);
+        if (personDTO.getId() == null) {
+            return createPerson(personDTO);
+        }
+        PersonDTO result = personService.updateProfile(personDTO);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, personDTO.getId().toString()))
+            .body(result);
+    }
+
     /**
      * GET  /people : get all the people.
      *
