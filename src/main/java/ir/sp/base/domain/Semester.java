@@ -30,6 +30,9 @@ public class Semester implements Serializable {
     @Column(name = "code")
     private String code;
 
+    @Column(name = "trans_id")
+    private String transId;
+
     @Column(name = "start_date")
     private ZonedDateTime startDate;
 
@@ -172,5 +175,13 @@ public class Semester implements Serializable {
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
             "}";
+    }
+
+    public String getTransId() {
+        return transId;
+    }
+
+    public void setTransId(String transId) {
+        this.transId = transId;
     }
 }

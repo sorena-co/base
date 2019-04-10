@@ -1,14 +1,16 @@
 package ir.sp.base.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import ir.sp.base.service.SemesterService;
 import ir.sp.base.service.dto.ClassGroupDTO;
+import ir.sp.base.service.dto.SemesterDTO;
+import ir.sp.base.service.dto.payment.PaymentResponseDTO;
+import ir.sp.base.service.dto.payment.PrePaymentDTO;
 import ir.sp.base.web.rest.errors.BadRequestAlertException;
 import ir.sp.base.web.rest.util.HeaderUtil;
 import ir.sp.base.web.rest.util.PaginationUtil;
-import ir.sp.base.service.dto.SemesterDTO;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -31,10 +32,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class SemesterResource {
 
-    private final Logger log = LoggerFactory.getLogger(SemesterResource.class);
-
     private static final String ENTITY_NAME = "semester";
-
+    private final Logger log = LoggerFactory.getLogger(SemesterResource.class);
     private final SemesterService semesterService;
 
     public SemesterResource(SemesterService semesterService) {
@@ -133,5 +132,19 @@ public class SemesterResource {
         Page<ClassGroupDTO> page = semesterService.findAllClassGroups(id, query, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/institutions");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @PostMapping("/semesters/pre-payment")
+    @Timed
+    public ResponseEntity<PaymentResponseDTO> prePayment(@RequestBody PrePaymentDTO prePayment) throws URISyntaxException {
+        PaymentResponseDTO result = semesterService.prePayment(prePayment);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @PostMapping("/semesters/verify/{institutionId}")
+    @Timed
+    public ResponseEntity<PaymentResponseDTO> prePayment(@RequestBody PrePaymentDTO prePayment, @PathVariable Long institutionId) throws URISyntaxException {
+        PaymentResponseDTO result = semesterService.verify(prePayment, institutionId);
+        return ResponseEntity.ok().body(result);
     }
 }

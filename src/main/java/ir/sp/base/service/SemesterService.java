@@ -9,15 +9,22 @@ import ir.sp.base.repository.SemesterRepository;
 import ir.sp.base.repository.dsl.PredicatesBuilder;
 import ir.sp.base.service.dto.ClassGroupDTO;
 import ir.sp.base.service.dto.SemesterDTO;
+import ir.sp.base.service.dto.payment.PaymentResponseDTO;
+import ir.sp.base.service.dto.payment.PrePaymentDTO;
 import ir.sp.base.service.mapper.ClassGroupMapper;
 import ir.sp.base.service.mapper.SemesterMapper;
-import javafx.beans.binding.BooleanExpression;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+
+import java.time.ZonedDateTime;
 
 
 /**
@@ -104,5 +111,48 @@ public class SemesterService {
 
         }
         return result.map(classGroupMapper::toDto);
+    }
+
+    public PaymentResponseDTO prePayment(PrePaymentDTO prePayment) {
+        PaymentResponseDTO result;
+        prePayment.setApi("test");
+        String url = "https://pay.ir/pg/send";
+
+        result = getPaymentResponseDTO(prePayment, url);
+
+        return result;
+    }
+
+    public PaymentResponseDTO verify(PrePaymentDTO prePayment, Long institutionId) {
+        PaymentResponseDTO result;
+        prePayment.setApi("test");
+        String url = "https://pay.ir/pg/verify";
+
+        result = getPaymentResponseDTO(prePayment, url);
+
+        Boolean existTransId = semesterRepository.existsByTransId(result.getTransId());
+
+        if (result.getStatus().equals(1) && !existTransId) {
+            SemesterDTO semesterDTO = new SemesterDTO();
+            semesterDTO.setInstitutionId(institutionId);
+            semesterDTO.setName("ترم جدید");
+            semesterDTO.setStartDate(ZonedDateTime.now());
+            semesterDTO.setEndDate(ZonedDateTime.now().plusDays(7));
+            semesterDTO.setTransId(result.getTransId());
+            this.save(semesterDTO);
+        }
+        return result;
+    }
+
+    private PaymentResponseDTO getPaymentResponseDTO(PrePaymentDTO prePayment, String url) {
+        PaymentResponseDTO result;
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<PrePaymentDTO> request = new HttpEntity<>(prePayment);
+        ResponseEntity<PaymentResponseDTO> response = restTemplate
+            .exchange(url, HttpMethod.POST, request, PaymentResponseDTO.class);
+
+
+        result = response.getBody();
+        return result;
     }
 }

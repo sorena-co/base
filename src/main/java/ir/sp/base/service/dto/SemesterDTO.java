@@ -1,10 +1,8 @@
 package ir.sp.base.service.dto;
 
 
-import java.time.ZonedDateTime;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -17,6 +15,8 @@ public class SemesterDTO implements Serializable {
     private String name;
 
     private String code;
+
+    private String transId;
 
     private ZonedDateTime startDate;
 
@@ -92,7 +92,7 @@ public class SemesterDTO implements Serializable {
         }
 
         SemesterDTO semesterDTO = (SemesterDTO) o;
-        if(semesterDTO.getId() == null || getId() == null) {
+        if (semesterDTO.getId() == null || getId() == null) {
             return false;
         }
         return Objects.equals(getId(), semesterDTO.getId());
@@ -112,5 +112,13 @@ public class SemesterDTO implements Serializable {
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
             "}";
+    }
+
+    public String getTransId() {
+        return transId;
+    }
+
+    public void setTransId(String transId) {
+        this.transId = transId;
     }
 }
