@@ -23,7 +23,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
             "inner join institutionPerson.institution institution " +
             "where institution.id = :institutionId "
     )
-    List<Person> findAllByInstitution_Id(Long institutionId);
+    List<Person> findAllByInstitution_Id(@Param("institutionId") Long institutionId);
 
     @Query(
         "select person from InstitutionPerson institutionPerson " +

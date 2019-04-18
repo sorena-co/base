@@ -1,11 +1,10 @@
 package ir.sp.base.service.mapper;
 
 import ir.sp.base.domain.*;
-import ir.sp.base.service.dto.*;
-
+import ir.sp.base.service.dto.InstitutionDTO;
 import ir.sp.base.service.dto.custom.FeignPlanDTO;
-import ir.sp.base.service.util.Utils;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,7 +40,7 @@ public interface InstitutionMapper extends EntityMapper<InstitutionDTO, Institut
         List<Room> rooms,
         List<Course> courses,
         List<ClassRoom> classes,
-        Semester semester) {
+        Semester semester, List<InstitutionPerson> institutionPeople) {
         FeignPlanDTO result = new FeignPlanDTO();
         result.setInstitutionId(institutionId);
         result.setSemesterId(semester.getId());
@@ -84,22 +83,23 @@ public interface InstitutionMapper extends EntityMapper<InstitutionDTO, Institut
         });
 
         profs.forEach(prof -> {
+            InstitutionPerson institutionPerson = institutionPeople.stream().filter(person -> person.getPerson().equals(prof)).findFirst().orElse(null);
             ir.sp.base.service.dto.custom.PersonDTO personDTO = new ir.sp.base.service.dto.custom.PersonDTO();
             personDTO.setId(prof.getId());
             personDTO.setPriority(prof.getPriority());
             personDTO.setName(prof.getFirstName() + " " + prof.getLastName());
             personDTO.setMaxCredits(prof.getMaxCredits());
             //todo fix this
-//            personDTO.setCourseIds(prof.getCourses().stream().map(Course::getId).collect(Collectors.toList()));
+            personDTO.setCourseIds(institutionPerson.getCourses().stream().map(Course::getId).collect(Collectors.toList()));
 
-          /*  for (ClassTime classTime : prof.getPreferenceTimes()) {
+            for (ClassTime classTime : institutionPerson.getPreferenceTimes()) {
                 ir.sp.base.service.dto.custom.ClassTime ct = new ir.sp.base.service.dto.custom.ClassTime();
                 ct.setDay(getDayNumber(classTime.getDay()));
                 ct.setEndTime(classTime.getEndTime());
                 ct.setStartTime(classTime.getStartTime());
                 ct.setPriority(classTime.getPriority());
                 personDTO.getClassTimes().add(ct);
-            }*/
+            }
             result.getPersons().add(personDTO);
         });
 

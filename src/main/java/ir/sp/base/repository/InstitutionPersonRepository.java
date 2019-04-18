@@ -1,12 +1,13 @@
 package ir.sp.base.repository;
 
 import ir.sp.base.domain.InstitutionPerson;
+import ir.sp.base.domain.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.*;
+import java.util.List;
 
 
 /**
@@ -25,5 +26,7 @@ public interface InstitutionPersonRepository extends JpaRepository<InstitutionPe
             "left join fetch ip.preferenceTimes preferenceTimes " +
             "where institution.id = :institutionId and person.id = :personId "
     )
-    InstitutionPerson findFirstByInstitution_IdAndPerson_IdWithFetch(@Param("institutionId") Long institutionId,@Param("personId") Long personId);
+    InstitutionPerson findFirstByInstitution_IdAndPerson_IdWithFetch(@Param("institutionId") Long institutionId, @Param("personId") Long personId);
+
+    List<InstitutionPerson> findAllByInstitution_IdAndPersonIn(Long institutionId, List<Person> profs);
 }

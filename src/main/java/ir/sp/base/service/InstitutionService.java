@@ -53,7 +53,10 @@ public class InstitutionService {
 
     private final ClassGroupRepository classGroupRepository;
 
-    public InstitutionService(InstitutionRepository institutionRepository, InstitutionMapper institutionMapper, AiFeignClient aiFeignClient, PersonRepository personRepository, RoomRepository roomRepository, ClassRoomRepository classRoomRepository, CourseRepository courseRepository, CourseMapper courseMapper, ProgramRepository programRepository, ProgramMapper programMapper, RoomMapper roomMapper, PersonMapper personMapper, SemesterRepository semesterRepository, SemesterMapper semesterMapper, ClassGroupRepository classGroupRepository) {
+    private final InstitutionPersonRepository institutionPersonRepository;
+    private final InstitutionPersonMapper institutionPersonMapper;
+
+    public InstitutionService(InstitutionRepository institutionRepository, InstitutionMapper institutionMapper, AiFeignClient aiFeignClient, PersonRepository personRepository, RoomRepository roomRepository, ClassRoomRepository classRoomRepository, CourseRepository courseRepository, CourseMapper courseMapper, ProgramRepository programRepository, ProgramMapper programMapper, RoomMapper roomMapper, PersonMapper personMapper, SemesterRepository semesterRepository, SemesterMapper semesterMapper, ClassGroupRepository classGroupRepository, InstitutionPersonRepository institutionPersonRepository, InstitutionPersonMapper institutionPersonMapper) {
         this.institutionRepository = institutionRepository;
         this.institutionMapper = institutionMapper;
         this.aiFeignClient = aiFeignClient;
@@ -69,6 +72,8 @@ public class InstitutionService {
         this.semesterRepository = semesterRepository;
         this.semesterMapper = semesterMapper;
         this.classGroupRepository = classGroupRepository;
+        this.institutionPersonRepository = institutionPersonRepository;
+        this.institutionPersonMapper = institutionPersonMapper;
     }
 
     /**
@@ -126,8 +131,8 @@ public class InstitutionService {
         List<Room> rooms = roomRepository.findAllByInstitution_Id(semester.getInstitution().getId());
         List<ClassRoom> classRooms = classRoomRepository.findAllClassRoomByInstitutionId(semester.getInstitution().getId(), semester.getId());
         List<Course> courses = courseRepository.findAllByInstitution_IdAndSemesterId(semester.getInstitution().getId(), semester.getId());
-
-        FeignPlanDTO feignPlanDTO = institutionMapper.toFeignPlanDTO(semester.getInstitution().getId(), profs, rooms, courses, classRooms, semester);
+        List<InstitutionPerson> institutionPeople = institutionPersonRepository.findAllByInstitution_IdAndPersonIn(semester.getInstitution().getId(), profs);
+        FeignPlanDTO feignPlanDTO = institutionMapper.toFeignPlanDTO(semester.getInstitution().getId(), profs, rooms, courses, classRooms, semester,institutionPeople);
         String s = aiFeignClient.startPlaning(feignPlanDTO);
 //        PlanDTO planDTO = institutionMapper.toPlanDTO(id, profs, rooms, courses, classRooms);
 //        String s = aiFeignClient.startPlaning(planDTO);
