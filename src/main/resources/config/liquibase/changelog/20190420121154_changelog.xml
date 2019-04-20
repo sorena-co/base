@@ -1,0 +1,330 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="mohammad (generated)" id="1555762324388-1">
+        <createSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-2">
+        <createTable tableName="blog">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="blogPK"/>
+            </column>
+            <column name="image" type="OID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_content_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="summary" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-3">
+        <createTable tableName="class_group">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="class_groupPK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="jhi_size" type="INT"/>
+            <column name="program_id" type="BIGINT"/>
+            <column name="semester_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-4">
+        <createTable tableName="class_room">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="class_roomPK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="jhi_size" type="INT"/>
+            <column name="class_group_id" type="BIGINT"/>
+            <column name="classes_time_id" type="BIGINT"/>
+            <column name="course_id" type="BIGINT"/>
+            <column name="person_id" type="BIGINT"/>
+            <column name="room_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-5">
+        <createTable tableName="class_time">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="class_timePK"/>
+            </column>
+            <column name="day" type="VARCHAR(255)"/>
+            <column name="end_time" type="FLOAT4"/>
+            <column name="priority" type="FLOAT4"/>
+            <column name="start_time" type="FLOAT4"/>
+            <column name="class_group_id" type="BIGINT"/>
+            <column name="class_room_id" type="BIGINT"/>
+            <column name="institution_person_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-6">
+        <createTable tableName="comment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="commentPK"/>
+            </column>
+            <column name="active" type="BOOLEAN"/>
+            <column name="jhi_comment" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-7">
+        <createTable tableName="course">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="coursePK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="need_lab" type="BOOLEAN"/>
+            <column name="need_projector" type="BOOLEAN"/>
+            <column name="practical_credit" type="INT"/>
+            <column name="practical_hours" type="INT"/>
+            <column name="theoretical_credit" type="INT"/>
+            <column name="theoretical_hours" type="INT"/>
+            <column name="institution_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-8">
+        <createTable tableName="institution">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="institutionPK"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="fax_number" type="VARCHAR(255)"/>
+            <column name="institution_type" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="phone_number_1" type="VARCHAR(255)"/>
+            <column name="phone_number_2" type="VARCHAR(255)"/>
+            <column name="population" type="INT"/>
+            <column name="postal_code" type="VARCHAR(255)"/>
+            <column name="website" type="VARCHAR(255)"/>
+            <column name="region_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-9">
+        <createTable tableName="institution_person">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="institution_personPK"/>
+            </column>
+            <column name="institution_id" type="BIGINT"/>
+            <column name="person_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-10">
+        <createTable tableName="institution_person_course">
+            <column name="institution_people_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="courses_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-11">
+        <createTable tableName="jhi_persistent_audit_event">
+            <column autoIncrement="true" name="event_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_persistent_audit_eventPK"/>
+            </column>
+            <column name="event_date" type="datetime"/>
+            <column name="event_type" type="VARCHAR(255)"/>
+            <column name="principal" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-12">
+        <createTable tableName="jhi_persistent_audit_evt_data">
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-13">
+        <createTable tableName="person">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="personPK"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="birth_certificate" type="VARCHAR(255)"/>
+            <column name="birth_date" type="datetime"/>
+            <column name="jhi_degree" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="father_name" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="gender" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="major" type="VARCHAR(255)"/>
+            <column name="max_credits" type="INT"/>
+            <column name="mobile_number" type="VARCHAR(255)"/>
+            <column name="national_id" type="VARCHAR(255)"/>
+            <column name="person_type" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(255)"/>
+            <column name="postal_code" type="VARCHAR(255)"/>
+            <column name="priority" type="FLOAT4"/>
+            <column name="region_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-14">
+        <createTable tableName="program">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="programPK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="institution_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-15">
+        <createTable tableName="program_course">
+            <column name="programs_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="courses_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-16">
+        <createTable tableName="region">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="regionPK"/>
+            </column>
+            <column name="code" type="VARCHAR(255)"/>
+            <column name="lvl" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="parent_region_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-17">
+        <createTable tableName="room">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="roomPK"/>
+            </column>
+            <column name="has_projector" type="BOOLEAN"/>
+            <column name="is_lab" type="BOOLEAN"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="jhi_size" type="INT"/>
+            <column name="institution_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-18">
+        <createTable tableName="semester">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="semesterPK"/>
+            </column>
+            <column name="code" type="VARCHAR(255)"/>
+            <column name="end_date" type="datetime"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="start_date" type="datetime"/>
+            <column name="trans_id" type="VARCHAR(255)"/>
+            <column name="institution_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-19">
+        <addPrimaryKey columnNames="institution_people_id, courses_id" tableName="institution_person_course"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-20">
+        <addPrimaryKey columnNames="event_id, name" tableName="jhi_persistent_audit_evt_data"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-21">
+        <addPrimaryKey columnNames="programs_id, courses_id" tableName="program_course"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-22">
+        <addUniqueConstraint columnNames="classes_time_id" constraintName="UC_CLASS_ROOMCLASSES_TIME_ID_COL" tableName="class_room"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-23">
+        <addForeignKeyConstraint baseColumnNames="courses_id" baseTableName="institution_person_course" constraintName="FK1j5r9xuex1fbxp6i2hfnpvsd6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-24">
+        <addForeignKeyConstraint baseColumnNames="region_id" baseTableName="institution" constraintName="FK1qh02e7tj0ev6wvniptoyof47" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="region"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-25">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="jhi_persistent_audit_evt_data" constraintName="FK2ehnyx2si4tjd2nt4q7y40v8m" deferrable="false" initiallyDeferred="false" referencedColumnNames="event_id" referencedTableName="jhi_persistent_audit_event"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-26">
+        <addForeignKeyConstraint baseColumnNames="class_room_id" baseTableName="class_time" constraintName="FK4ne20bc0ba6uqb6vbmhmw0id2" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="class_room"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-27">
+        <addForeignKeyConstraint baseColumnNames="program_id" baseTableName="class_group" constraintName="FK4u9ura4d1cpguq86xglsmumhe" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="program"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-28">
+        <addForeignKeyConstraint baseColumnNames="class_group_id" baseTableName="class_time" constraintName="FK6b0xoaeonh0i3u50pt23aitho" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="class_group"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-29">
+        <addForeignKeyConstraint baseColumnNames="courses_id" baseTableName="program_course" constraintName="FK84x7fev30qj8jcm7wgq7d1ivd" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-30">
+        <addForeignKeyConstraint baseColumnNames="class_group_id" baseTableName="class_room" constraintName="FKa22lprnq0we767pym7st1e05f" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="class_group"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-31">
+        <addForeignKeyConstraint baseColumnNames="semester_id" baseTableName="class_group" constraintName="FKade1ho62pjadksvjra1tqww3j" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="semester"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-32">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="institution_person" constraintName="FKb3v2ewspj1h1veq1m85nxsb1x" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-33">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="class_room" constraintName="FKcsrbdiajqi5xalk6trmw42u2h" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-34">
+        <addForeignKeyConstraint baseColumnNames="parent_id" baseTableName="comment" constraintName="FKde3rfu96lep00br5ov0mdieyt" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="comment"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-35">
+        <addForeignKeyConstraint baseColumnNames="institution_id" baseTableName="course" constraintName="FKeia6xjuespxibcj584q9k69b1" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="institution"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-36">
+        <addForeignKeyConstraint baseColumnNames="parent_region_id" baseTableName="region" constraintName="FKeojo2oralh7nh9d3jkyxseuyj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="region"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-37">
+        <addForeignKeyConstraint baseColumnNames="institution_id" baseTableName="program" constraintName="FKfr6h2e2bsg8m0csg2ncuidaxu" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="institution"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-38">
+        <addForeignKeyConstraint baseColumnNames="institution_id" baseTableName="institution_person" constraintName="FKgnpegmd46lqg2c2g6beqja002" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="institution"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-39">
+        <addForeignKeyConstraint baseColumnNames="region_id" baseTableName="person" constraintName="FKi6yy93s6d5q911wjn1e4bd1ff" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="region"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-40">
+        <addForeignKeyConstraint baseColumnNames="institution_id" baseTableName="semester" constraintName="FKkcce2hntl0lqdfnju4gxl9ejp" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="institution"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-41">
+        <addForeignKeyConstraint baseColumnNames="classes_time_id" baseTableName="class_room" constraintName="FKlpclxbqjdopjktl8p1xxwd3ng" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="class_time"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-42">
+        <addForeignKeyConstraint baseColumnNames="programs_id" baseTableName="program_course" constraintName="FKmwdg3efvo2mg3cus29bwswfwb" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="program"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-43">
+        <addForeignKeyConstraint baseColumnNames="institution_id" baseTableName="room" constraintName="FKna9e191cd4gbqwrtg28sa5krs" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="institution"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-44">
+        <addForeignKeyConstraint baseColumnNames="room_id" baseTableName="class_room" constraintName="FKntm5vmy5rixofn6bbf7bq7g6m" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="room"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-45">
+        <addForeignKeyConstraint baseColumnNames="course_id" baseTableName="class_room" constraintName="FKotwagfpc3bld59u96tht3jce9" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-46">
+        <addForeignKeyConstraint baseColumnNames="institution_person_id" baseTableName="class_time" constraintName="FKquugwesklqdbues3qqlioprv4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="institution_person"/>
+    </changeSet>
+    <changeSet author="mohammad (generated)" id="1555762324388-47">
+        <addForeignKeyConstraint baseColumnNames="institution_people_id" baseTableName="institution_person_course" constraintName="FKtbm3ymdgy9he06n2h04wlr73f" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="institution_person"/>
+    </changeSet>
+</databaseChangeLog>

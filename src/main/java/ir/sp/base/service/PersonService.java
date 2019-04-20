@@ -75,6 +75,7 @@ public class PersonService {
         Person person = personMapper.toEntity(personDTO);
         Set<String> authorities = new HashSet<>();
         authorities.add(AuthoritiesConstants.TEACHER);
+        System.out.println("get user information with email : " + person.getEmail());
         UserDTO user = uaaFeignClient.getUser(personDTO.getEmail());
 
         person = personRepository.save(person);
